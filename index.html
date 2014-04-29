@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+  <input type="file">
+  <script src="aurora.js"></script>
+  <script src="flac.js"></script>
+  <script>
+    (function () {
+      var player;
+      document.querySelector("input[type=file]").onchange = function(e) {
+        if (player) {
+          player.stop();
+        }
+        player = AV.Player.fromFile(e.target.files[0]);
+        player.on('error', function (e) {
+          throw e;
+        });
+        console.log(player)
+
+        player.on('metadata', function (data) {
+          console.log(data);
+          if (data.coverArt) {
+            console.log(data.coverArt.toBlobURL());
+          }
+        });
+
+        player.play();
+        player.startPlaying();
+      };
+    }());
+  </script>
+</body>
+</html>
