@@ -2,3 +2,4 @@ public/vendor
 *.min.js
 *.css
 .sass-cache
+node_modules/*
