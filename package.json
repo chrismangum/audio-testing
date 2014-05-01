@@ -22,6 +22,7 @@
     "gulp-uglify": "^0.2.1",
     "gulp-compass": "^1.1.6",
     "gulp-nodemon": "^1.0.2",
-    "gulp-jade": "^0.4.2"
+    "gulp-jade": "^0.4.2",
+    "lodash": "^2.4.1"
   }
 }
