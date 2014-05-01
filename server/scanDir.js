@@ -1,6 +1,7 @@
 var fs = require('fs'),
   _ = require('lodash'),
-  path = require('path');
+  path = require('path'),
+  async = require('async');
 
 require('../public/js/aurora.js');
 require('../public/js/flac.js');
@@ -17,22 +18,28 @@ var validExtensions = [
   '.flac',
   '.mp3'
 ];
-
-var ignored = ['node_modules', 'vendor', '.git'];
+var items = [];
 
 function getFtype(mode) {
   return ftypes[mode.toString(8).slice(0, 2)];
 }
 
-function logMetaData(path) {
-  fs.readFile(path, function (err, data) {
+function getTrackMetaData(track, callback) {
+  fs.readFile(track.filePath, function (err, data) {
     var player;
     if (err) throw err;
     player = AV.Player.fromBuffer(new Uint8Array(data));
     player.preload();
-    player.on('metadata', function (data) {
-      console.log('Metadata for: ' + path);
-      console.log(_.pick(data, ['title', 'artist', 'album', 'genre']));
+    player.on('metadata', function () {
+      track = _.extend(track,
+        _.pick(player.metadata, [
+          'title',
+          'artist',
+          'album',
+          'genre'
+        ])
+      );
+      callback(err, track);
     });
   });
 }
@@ -41,22 +48,35 @@ function hasValidExt(fileName) {
   return validExtensions.indexOf(path.extname(fileName)) !== -1;
 }
 
+function getTotalSize(tracks) {
+  var totalSize = 0;
+  _.each(tracks, function (track) {
+    totalSize += track.fileSize;
+  });
+  return totalSize;
+}
+
 function scanDir(filePath) {
-  var items = {};
   _.each(fs.readdirSync(filePath), function (item, i) {
-    if (ignored.indexOf(item) === -1) {
-      var stat = fs.statSync(filePath + item);
-      stat.type = getFtype(stat.mode);
-      if (stat.type === 'directory') {
-        stat.children = scanDir(filePath + item + '/');
-      } else if (hasValidExt(item)) {
-        logMetaData(filePath + item);
-      }
-      items[item] = _.pick(stat, 'type', 'children');
+    var stat = fs.statSync(filePath + item);
+    stat.type = getFtype(stat.mode);
+    if (stat.type === 'directory') {
+      scanDir(filePath + item + '/');
+    } else if (hasValidExt(item)) {
+      items.push({
+        fileName: item,
+        filePath: filePath + item,
+        fileSize: stat.size
+      });
     }
   });
   return items;
 }
 
-exports.scan = scanDir;
+function getMetaData(tracks, callback) {
+  async.map(tracks, getTrackMetaData, callback);
+}
 
+exports.scan = scanDir;
+exports.getTotalSize = getTotalSize;
+exports.getMetaData = getMetaData;

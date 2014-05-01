@@ -15,9 +15,13 @@ app.set('json spaces', 0);
 app.use('/static', express.static(path.join(__dirname, '../public')));
 app.use('/target', express.static(target));
 app.get('/dir', function (req, res) {
-  res.json({
-    target: target,
-    files: scanDir.scan(target + '/')
+  var tracks = scanDir.scan(target + '/');
+  var totalSize = scanDir.getTotalSize(tracks);
+  scanDir.getMetaData(tracks, function (err, result) {
+    res.json({
+      tracks: result,
+      totalSize: totalSize
+    });
   });
 });
 app.get('*', function (req, res) {
