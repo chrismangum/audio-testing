@@ -1,6 +1,6 @@
 
 timer = null
-player = AV.Player.fromURL 'static/test.m4a'
+player = AV.Player.fromURL 'target/12 - Masser.mp3'
 
 player.on 'error', (e) ->
   throw e

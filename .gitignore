@@ -3,5 +3,4 @@ public/vendor
 *.css
 .sass-cache
 public/*.html
-*.m4a
 target
