@@ -3,6 +3,7 @@ var express = require('express'),
   path = require('path'),
   fs = require('fs'),
   scanDir = require('./scanDir'),
+  _ = require('lodash'),
   app = express();
 
 var target;
@@ -17,13 +18,17 @@ app.use('/target', express.static(target));
 app.get('/dir', function (req, res) {
   var tracks = scanDir.scan(target + '/');
   var totalSize = scanDir.getTotalSize(tracks);
-  //scanDir.getMetaData(tracks, function (err, tracks) {
+  scanDir.getMetaData(tracks, function (err, tracks) {
+    trackObj = {}
+    _.each(tracks, function (track) {
+      trackObj[track.filePath] = _.omit(track, 'filePath');
+    });
     res.json({
-      tracks: tracks,
+      tracks: trackObj,
       totalSize: totalSize,
       totalCnt: Object.keys(tracks).length
     });
-  //});
+  });
 });
 app.get('*', function (req, res) {
   res.sendfile(path.join(__dirname, "../public/index.html"));
