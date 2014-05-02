@@ -17,9 +17,9 @@ app.use('/target', express.static(target));
 app.get('/dir', function (req, res) {
   var tracks = scanDir.scan(target + '/');
   var totalSize = scanDir.getTotalSize(tracks);
-  scanDir.getMetaData(tracks, function (err, result) {
+  scanDir.getMetaData(tracks, function (err, tracks) {
     res.json({
-      tracks: result,
+      tracks: tracks,
       totalSize: totalSize
     });
   });

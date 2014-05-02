@@ -1,12 +1,8 @@
 var fs = require('fs'),
   _ = require('lodash'),
   path = require('path'),
-  async = require('async');
-
-require('../public/js/aurora.js');
-require('../public/js/flac.js');
-require('../public/js/mp3.js');
-require('../public/js/aac.js');
+  async = require('async'),
+  exec = require('child_process').exec;
 
 var ftypes = {
   '40': 'directory',
@@ -18,30 +14,17 @@ var validExtensions = [
   '.flac',
   '.mp3'
 ];
-var items = [];
 
 function getFtype(mode) {
   return ftypes[mode.toString(8).slice(0, 2)];
 }
 
 function getTrackMetaData(track, callback) {
-  fs.readFile(track.filePath, function (err, data) {
-    var player;
-    if (err) throw err;
-    player = AV.Player.fromBuffer(new Uint8Array(data));
-    player.preload();
-    player.on('metadata', function () {
-      track = _.extend(track,
-        _.pick(player.metadata, [
-          'title',
-          'artist',
-          'album',
-          'genre'
-        ])
-      );
-      callback(err, track);
-    });
-  });
+  exec('./getTrackMetaData.js "' + track.filePath + '"',
+    function (err, stdout, stderr) {
+      callback(err, _.extend(track, JSON.parse(stdout)[0]));
+    }
+  );
 }
 
 function hasValidExt(fileName) {
@@ -57,11 +40,12 @@ function getTotalSize(tracks) {
 }
 
 function scanDir(filePath) {
+  var items = [];
   _.each(fs.readdirSync(filePath), function (item, i) {
     var stat = fs.statSync(filePath + item);
     stat.type = getFtype(stat.mode);
     if (stat.type === 'directory') {
-      scanDir(filePath + item + '/');
+      items = items.concat(scanDir(filePath + item + '/'));
     } else if (hasValidExt(item)) {
       items.push({
         fileName: item,
@@ -74,7 +58,7 @@ function scanDir(filePath) {
 }
 
 function getMetaData(tracks, callback) {
-  async.map(tracks, getTrackMetaData, callback);
+  async.mapSeries(tracks, getTrackMetaData, callback);
 }
 
 exports.scan = scanDir;
