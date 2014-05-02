@@ -25,6 +25,8 @@ function getTrackMetaData(track, callback) {
   });
 }
 
-async.map(process.argv.slice(2), getTrackMetaData, function (err, result) {
-  process.stdout.write(JSON.stringify(result));
-});
+async.map(process.argv.slice(2), getTrackMetaData,
+  function (err, result) {
+    process.stdout.write(JSON.stringify(result));
+  }
+);

@@ -41,7 +41,7 @@ function getTotalSize(tracks) {
 
 function scanDir(filePath) {
   var items = [];
-  _.each(fs.readdirSync(filePath), function (item, i) {
+  _.each(fs.readdirSync(filePath), function (item) {
     var stat = fs.statSync(filePath + item);
     stat.type = getFtype(stat.mode);
     if (stat.type === 'directory') {
