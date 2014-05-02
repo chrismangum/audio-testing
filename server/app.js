@@ -17,12 +17,13 @@ app.use('/target', express.static(target));
 app.get('/dir', function (req, res) {
   var tracks = scanDir.scan(target + '/');
   var totalSize = scanDir.getTotalSize(tracks);
-  scanDir.getMetaData(tracks, function (err, tracks) {
+  //scanDir.getMetaData(tracks, function (err, tracks) {
     res.json({
       tracks: tracks,
-      totalSize: totalSize
+      totalSize: totalSize,
+      totalCnt: Object.keys(tracks).length
     });
-  });
+  //});
 });
 app.get('*', function (req, res) {
   res.sendfile(path.join(__dirname, "../public/index.html"));
