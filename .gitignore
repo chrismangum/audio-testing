@@ -4,3 +4,4 @@ public/vendor
 .sass-cache
 public/*.html
 target
+cache.json
