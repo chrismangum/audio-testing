@@ -216,12 +216,14 @@
   .main {
     padding-bottom: $player-height;
     padding-left: $sidebar-width;
+    min-width: $app-min-width;
     width: 100%;
     background: $light-blue;
     .toolbar {
       position: absolute;
       left: 0;
       padding-left: $sidebar-width;
+      min-width: $app-min-width;
       width: 100%;
       height: $toolbar-height;
       background: $blue;
