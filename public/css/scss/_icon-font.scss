@@ -1,0 +1,102 @@
+@font-face {
+  font-family: "icon-font";
+  src: url('../fonts/icon-font.eot');
+  src: url('../fonts/icon-font.eot?#iefix') format('eot'),
+    url('../fonts/icon-font.woff') format('woff'),
+    url('../fonts/icon-font.ttf') format('truetype'),
+    url('../fonts/icon-font.svg#icon-font') format('svg');
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+%icon,
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  position: relative;
+  display:inline-block;
+  font-family:"icon-font";
+  font-style:normal;
+  font-weight:normal;
+  line-height:1;
+  overflow: hidden;
+  speak:none;
+  text-decoration:inherit;
+  text-transform:none;
+  text-rendering:optimizeLegibility;
+  vertical-align:middle;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+@function icon-char($filename) {
+  $char: "";
+
+  @if $filename == albums {
+    $char: "\E001";
+  }
+  @if $filename == next {
+    $char: "\E002";
+  }
+  @if $filename == play {
+    $char: "\E003";
+  }
+  @if $filename == playlist {
+    $char: "\E004";
+  }
+  @if $filename == prev {
+    $char: "\E005";
+  }
+  @if $filename == repeat {
+    $char: "\E006";
+  }
+  @if $filename == search {
+    $char: "\E007";
+  }
+  @if $filename == shuffle {
+    $char: "\E008";
+  }
+  @if $filename == volume {
+    $char: "\E009";
+  }
+
+  @return $char;
+}
+
+@mixin icon($filename, $insert: before) {
+  &:#{$insert} {
+    content: icon-char($filename);
+  }
+}
+
+.icon-albums {
+  @include icon(albums);
+}
+.icon-next {
+  @include icon(next);
+}
+.icon-play {
+  @include icon(play);
+}
+.icon-playlist {
+  @include icon(playlist);
+}
+.icon-prev {
+  @include icon(prev);
+}
+.icon-repeat {
+  @include icon(repeat);
+}
+.icon-search {
+  @include icon(search);
+}
+.icon-shuffle {
+  @include icon(shuffle);
+}
+.icon-volume {
+  @include icon(volume);
+}

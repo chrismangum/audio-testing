@@ -24,6 +24,9 @@
     "gulp-nodemon": "^1.0.2",
     "gulp-jade": "^0.4.2",
     "lodash": "^2.4.1",
-    "async": "^0.8.0"
+    "async": "^0.8.0",
+    "gulp-iconfont": "0.0.11",
+    "gulp-iconfont-css": "0.0.9",
+    "gulp-svgmin": "~0.4.5"
   }
 }

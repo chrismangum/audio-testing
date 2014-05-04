@@ -21,3 +21,8 @@ $('.play').on 'click', ->
 $('.pause').on 'click', ->
   player.pause()
   clearInterval timer
+
+$(window).on("resize", ->
+  $(".main").css height: ($(window).height()) + "px"
+  return
+).resize()

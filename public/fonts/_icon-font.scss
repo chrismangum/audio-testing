@@ -1,0 +1,55 @@
+@font-face {
+  font-family: "<%= fontName %>";
+  src: url('<%= fontPath %><%= fontName %>.eot');
+  src: url('<%= fontPath %><%= fontName %>.eot?#iefix') format('eot'),
+    url('<%= fontPath %><%= fontName %>.woff') format('woff'),
+    url('<%= fontPath %><%= fontName %>.ttf') format('truetype'),
+    url('<%= fontPath %><%= fontName %>.svg#<%= fontName %>') format('svg');
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+%icon,
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  position: relative;
+  display:inline-block;
+  font-family:"<%= fontName %>";
+  font-style:normal;
+  font-weight:normal;
+  line-height:1;
+  overflow: hidden;
+  speak:none;
+  text-decoration:inherit;
+  text-transform:none;
+  text-rendering:optimizeLegibility;
+  vertical-align:middle;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+@function icon-char($filename) {
+  $char: "";
+<% _.each(glyphs, function(glyph) { %>
+  @if $filename == <%= glyph.fileName %> {
+    $char: "\<%= glyph.codePoint %>";
+  }<% }); %>
+
+  @return $char;
+}
+
+@mixin icon($filename, $insert: before) {
+  &:#{$insert} {
+    content: icon-char($filename);
+  }
+}
+
+<% _.each(glyphs, function(glyph) { %>.icon-<%= glyph.fileName %> {
+  @include icon(<%= glyph.fileName %>);
+}
+<% }); %>
