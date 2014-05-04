@@ -46,7 +46,7 @@ gulp.task('nodemon', function () {
 gulp.task('watch', function () {
   gulp.watch(paths.js, ['scripts']);
   gulp.watch(paths.jade, ['jade']);
-  gulp.watch(paths.stylus, ['stylus']);
+  gulp.watch(paths.scss, ['compass']);
 });
 
 gulp.task('default', ['scripts', 'jade', 'compass', 'watch', 'nodemon']);
