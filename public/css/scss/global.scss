@@ -73,6 +73,7 @@
   }
 
   .button {
+    padding: 0;
     border: 0;
     background: none;
     transition: all .2s ease;
@@ -103,51 +104,64 @@
       flex: 1;
     }
     .sidebar-title {
+      position: relative;
       padding: 8px 12px;
       color: $blue;
       text-transform: uppercase;
       font-weight: 600;
       font-size: 12px;
       line-height: 14px;
+      .button {
+        position: absolute;
+        top: 0;
+        right: 4px;
+        width: 30px;
+        height: 30px;
+        color: inherit;
+        font-size: 12px;
+        &:hover {
+          color: $white;
+        }
+      }
     }
     ul {
       margin: 0 0 8px 0;
       padding: 0;
       list-style: none;
-    }
-    a {
-      position: relative;
-      display: block;
-      padding: 4px 10px;
-      color: $lighter-blue;
-      font-weight: 600;
-      font-size: 13px;
-      line-height: 1.8;
-      &:hover {
-        background: $dark-blue;
-        color: $white;
-      }
-      &:before {
-        @extend %icon;
+      a {
         position: relative;
-        top: -1px;
-        margin-right: 4px;
-        font-size: 22px;
-      }
-      &.songs {
-        @extend .icon-songs;
-      }
-      &.artists {
-        @extend .icon-artists;
-      }
-      &.albums {
-        @extend .icon-albums;
-      }
-      &.genres {
-        @extend .icon-genres;
-      }
-      &.playlist {
-        @extend .icon-playlist;
+        display: block;
+        padding: 4px 10px;
+        color: $lighter-blue;
+        font-weight: 600;
+        font-size: 13px;
+        line-height: 1.8;
+        &:hover {
+          background: $dark-blue;
+          color: $white;
+        }
+        &:before {
+          @extend %icon;
+          position: relative;
+          top: -1px;
+          margin-right: 4px;
+          font-size: 22px;
+        }
+        &.songs {
+          @extend .icon-songs;
+        }
+        &.artists {
+          @extend .icon-artists;
+        }
+        &.albums {
+          @extend .icon-albums;
+        }
+        &.genres {
+          @extend .icon-genres;
+        }
+        &.playlist {
+          @extend .icon-playlist;
+        }
       }
     }
     .now-playing {
