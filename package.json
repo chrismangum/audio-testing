@@ -27,6 +27,7 @@
     "async": "^0.8.0",
     "gulp-iconfont": "0.0.11",
     "gulp-iconfont-css": "0.0.9",
-    "gulp-svgmin": "~0.4.5"
+    "gulp-svgmin": "~0.4.5",
+    "socket.io": "^0.9.16"
   }
 }
