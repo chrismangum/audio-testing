@@ -4,9 +4,13 @@ var express = require('express'),
   fs = require('fs'),
   scanDir = require('./scanDir'),
   _ = require('lodash'),
-  app = express();
+  app = express(),
+  server = require('http').createServer(app),
+  io = require('socket.io').listen(server);
 
-var target;
+server.listen(3000);
+
+var target, server;
 process.chdir(path.join(__dirname, '../target'));
 target = process.cwd();
 process.chdir(__dirname);
@@ -18,7 +22,7 @@ app.use('/target', express.static(target));
 app.get('/dir', function (req, res) {
   var tracks = scanDir.scan(target + '/');
   var totalSize = scanDir.getTotalSize(tracks);
-  scanDir.getMetaData(tracks, function (err, tracks) {
+  //scanDir.getMetaData(tracks, function (err, tracks) {
     trackObj = {}
     _.each(tracks, function (track) {
       trackObj[track.filePath] = _.omit(track, 'filePath');
@@ -28,11 +32,17 @@ app.get('/dir', function (req, res) {
       totalSize: totalSize,
       totalCnt: Object.keys(tracks).length
     });
-  });
+  //});
 });
 app.get('*', function (req, res) {
   res.sendfile(path.join(__dirname, "../public/index.html"));
 });
 
-http.createServer(app).listen(3000);
+io.sockets.on('connection', function (socket) {
+  console.log('socket connected!');
+  socket.on('disconnect', function (socket) {
+    console.log('socket disconnected!');
+  });
+});
+
 
