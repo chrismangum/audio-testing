@@ -75,15 +75,15 @@ class Json
     @socket = socket if socket
     if @exists
       @emit()
-    else if @target.exists
+    else
       if fs.existsSync '../cache.json'
         @exists = true
         @json = JSON.parse fs.readFileSync('../cache.json').toString()
         @emit()
-      else
+      else if @target.exists
         @scan()
-    else
-      socket.emit 'promptTarget'
+      else
+        socket.emit 'promptTarget'
 
   save: ->
     fs.writeFileSync '../cache.json', JSON.stringify @json
