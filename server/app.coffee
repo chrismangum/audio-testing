@@ -43,7 +43,7 @@ class Scanner
   getTotalSize: (tracks) ->
     totalSize = 0
     _.each tracks, (track) ->
-      totalSize += track.fileSize;
+      totalSize += track.fileSize
     totalSize
 
   scan: (filePath = @filePath) ->
