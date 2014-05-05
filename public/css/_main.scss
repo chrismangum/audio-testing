@@ -19,23 +19,26 @@
         position: relative;
         float: right;
         width: $sidebar-width;
-        color: $lighter-blue;
         .icon-search {
           position: absolute;
           top: 10px;
           left: 10px;
+          color: $light-blue;
           line-height: 1;
         }
         input {
+          @include placeholder($light-blue);
           padding: 0 15px 0 30px;
           width: 100%;
           height: $toolbar-height;
           background: $darker-blue;
+          color: $white;
         }
       }
     }
     .media-list {
-      @extend %scroll-panel;
+      overflow: scroll;
       padding-top: $toolbar-height;
+      height: 100%;
     }
   }
