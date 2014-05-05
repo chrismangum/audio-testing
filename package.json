@@ -24,6 +24,7 @@
     "gulp-nodemon": "^1.0.2",
     "gulp-jade": "^0.4.2",
     "lodash": "^2.4.1",
-    "async": "^0.8.0"
+    "async": "^0.8.0",
+    "socket.io": "^0.9.16"
   }
 }
