@@ -2,9 +2,11 @@ var gulp = require('gulp'),
   coffee = require('gulp-coffee'),
   uglify = require('gulp-uglify'),
   concat = require('gulp-concat'),
-  compass = require('gulp-compass'),
   nodemon = require('gulp-nodemon'),
   jade = require('gulp-jade');
+  compass = require('gulp-compass'),
+  prefix = require('gulp-autoprefixer');
+  minifyCss = require('gulp-minify-css');
   svgmin = require('gulp-svgmin');
   iconfont = require('gulp-iconfont');
   iconfontCss = require('gulp-iconfont-css');
@@ -12,7 +14,7 @@ var gulp = require('gulp'),
 var paths = {
   js: 'public/js/*.coffee',
   jade: 'views/*.jade',
-  scss: 'public/css/scss/*.scss',
+  scss: 'public/css/*.scss',
   svg: 'public/svg/*.svg'
 };
 
@@ -24,13 +26,15 @@ gulp.task('scripts', function () {
     .pipe(gulp.dest('public/js'));
 });
 
-gulp.task('compass', ['iconfont'], function () {
+gulp.task('css', ['iconfont'], function () {
   return gulp.src(paths.scss)
     .pipe(compass({
-      style: 'compressed',
-      sass: 'public/css/scss',
+      sass: 'public/css',
       css: 'public/css'
-    }));
+    }))
+    .pipe(prefix("last 1 version"))
+    .pipe(minifyCss())
+    .pipe(gulp.dest('public/css'))
 });
 
 gulp.task('iconfont', function(){
@@ -39,7 +43,7 @@ gulp.task('iconfont', function(){
     .pipe(iconfontCss({
       fontName: 'icon-font',
       path: 'public/fonts/_icon-font.scss',
-      targetPath: '../../public/css/scss/_icon-font.scss',
+      targetPath: '../../public/css/_icon-font.scss',
       fontPath: '../fonts/'
     }))
     .pipe(iconfont({
@@ -66,8 +70,8 @@ gulp.task('nodemon', function () {
 gulp.task('watch', function () {
   gulp.watch(paths.js, ['scripts']);
   gulp.watch(paths.jade, ['jade']);
-  gulp.watch(paths.scss, ['compass']);
+  gulp.watch(paths.scss, ['css']);
   gulp.watch(paths.svg, ['iconfont']);
 });
 
-gulp.task('default', ['scripts', 'jade', 'compass', 'watch', 'nodemon']);
+gulp.task('default', ['scripts', 'jade', 'css', 'watch', 'nodemon']);

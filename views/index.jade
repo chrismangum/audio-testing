@@ -25,14 +25,15 @@ html
             a.playlist Smooth Jams
           li
             a.playlist Hibbity Hoppity
-      .now-playing
+      .now-playing-container
         .sidebar-title Now Playing
-          button.button
+          button.button.toggle-now-playing
             span.icon-arrow-down
-        .now-playing-info
-          .track-name Billie Jean
-          .track-info Michael Jackson - Thriller
-        img.now-playing-artwork(src="static/img/thriller.jpg")
+        .now-playing
+          .now-playing-info
+            .track-name Billie Jean
+            .track-info Michael Jackson - Thriller
+          img.now-playing-artwork(src="static/img/thriller.jpg")
     .main
       .toolbar
         .search
@@ -70,3 +71,4 @@ html
     script(src="/socket.io/socket.io.js")
     script(src="static/vendor/jquery/dist/jquery.min.js")
     script(src="static/js/app.min.js")
+    script(src="static/js/temp.js")

@@ -80,6 +80,12 @@
     &:hover {
       cursor: pointer;
     }
+    &.flip-icon {
+      > .icon-arrow-down {
+        top: 2px;
+        transform: rotateX(180deg);
+      }
+    }
   }
 
 
@@ -164,15 +170,23 @@
         }
       }
     }
-    .now-playing {
+    .now-playing-container {
       position: relative;
       display: flex;
       flex-direction: column;
-      align-items: center;
       .sidebar-title {
         width: 100%;
         background: $blue;
         color: $light-blue;
+      }
+      .now-playing {
+        position: relative;
+        height: 200px;
+        transition: all .3s ease-in-out;
+        background: $darker-blue;
+        &.hidden {
+          margin-bottom: -200px;
+        }
       }
       .now-playing-info {
         position: absolute;
@@ -202,6 +216,7 @@
         }
       }
       .now-playing-artwork {
+        display: block;
         width: 100%;
         height: auto;
       }
