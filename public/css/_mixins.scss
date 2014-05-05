@@ -1,0 +1,13 @@
+/*==========================================================================
+  Mixins
+  ==========================================================================*/
+
+  // Tint
+  @function tint($color, $percent){
+    @return mix(white, $color, $percent);
+  }
+
+  // Shade
+  @function shade($color, $percent){
+    @return mix(black, $color, $percent);
+  }

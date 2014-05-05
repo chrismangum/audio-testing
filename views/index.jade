@@ -3,18 +3,69 @@ html
   head
     title
       | Audio Testing
-    link(rel="stylesheet", href="static/vendor/bootstrap/dist/css/bootstrap.min.css")
-    link(rel="stylesheet", href="static/css/global.css")
+    link(rel="stylesheet", href="static/css/styles.css")
   body
-    .container.text-center
-      .controls
-        button.btn.btn-default.play
-          i.glyphicon.glyphicon-play
-        button.btn.btn-default.pause
-          i.glyphicon.glyphicon-pause
-      br
+    .sidebar
+      .sidebar-container
+        .sidebar-title Browse
+        ul
+          li
+            a.icon-songs Songs
+          li
+            a.icon-artists Artists
+          li
+            a.icon-albums Albums
+          li
+            a.icon-genres Genres
+        .sidebar-title Playlists
+          button.button
+            span.icon-add
+        ul.playlists
+          li
+            a.icon-playlist Smooth Jams
+          li
+            a.icon-playlist Hibbity Hoppity
+      .now-playing-container
+        .sidebar-title Now Playing
+          button.button.toggle-now-playing
+            span.icon-arrow-down
+        .now-playing
+          .now-playing-info-container
+            .now-playing-info-bg(style="background-image: url('static/img/thriller.jpg')")
+            .now-playing-info
+              .track-name Billie Jean
+              .track-info Michael Jackson - Thriller
+          img.now-playing-artwork(src="static/img/thriller.jpg")
+    .main
+      .toolbar
+        .search
+          span.icon-search
+          input(type="text", placeholder="Search")
+      .media-list
+        input(type="file")
+  .player
+    .player-col-side
+      button.button
+        span.icon-prev
+      button.button
+        span.icon-play
+      button.button
+        span.icon-next
+    .player-col-middle
       .progress
-        .progress-bar(role="progressbar")
+        .time.time-passed 1:10
+        .time.time-remain 4:32
+        .progress-bar-container
+          .progress-bar
+          .progress-bar.progress-bar-played
+            .progress-tick
+    .player-col-side
+      button.button
+        span.icon-repeat
+      button.button
+        span.icon-shuffle
+      button.button
+        span.icon-volume
     script(src="static/js/aurora.js")
     script(src="static/js/flac.js")
     script(src="static/js/mp3.js")
@@ -22,5 +73,5 @@ html
     script(src="static/js/alac.js")
     script(src="/socket.io/socket.io.js")
     script(src="static/vendor/jquery/dist/jquery.min.js")
-    script(src="static/vendor/bootstrap/dist/js/bootstrap.min.js")
     script(src="static/js/app.min.js")
+    script(src="static/js/temp.js")

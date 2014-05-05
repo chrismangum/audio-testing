@@ -2,7 +2,13 @@ public/vendor
 *.min.js
 *.css
 .sass-cache
+node_modules/*
 public/*.html
 target
 cache.json
 server/app.js
+public/css/_icon-font.scss
+public/fonts/icon-font.eot
+public/fonts/icon-font.svg
+public/fonts/icon-font.ttf
+public/fonts/icon-font.woff

@@ -1,0 +1,49 @@
+/*==========================================================================
+  Global Styles
+  ==========================================================================*/
+
+  * {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  body {
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    min-width: $app-min-width;
+    font-family: "Source Sans Pro", sans-serif;
+  }
+
+  a {
+    text-decoration: none;
+    transition: all .2s ease;
+    &:hover {
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+
+  input {
+    padding: 10px;
+    border: none;
+  }
+
+  .button {
+    padding: 0;
+    border: 0;
+    background: none;
+    transition: all .2s ease;
+    &:hover {
+      cursor: pointer;
+    }
+    &.flip-icon {
+      > .icon-arrow-down {
+        top: 2px;
+        transform: rotateX(180deg);
+      }
+    }
+  }

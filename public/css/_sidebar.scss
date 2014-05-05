@@ -1,0 +1,125 @@
+/*==========================================================================
+  Sidebar
+  ==========================================================================*/
+
+  .sidebar {
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: $player-height;
+    width: $sidebar-width;
+    height: 100%;
+    color: $lighter-blue;
+    .sidebar-container {
+      @extend %scroll-panel;
+      padding-top: 8px;
+      background: $darker-blue;
+      flex: 1;
+    }
+    .sidebar-title {
+      position: relative;
+      padding: 8px 12px;
+      color: $blue;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 14px;
+      .button {
+        position: absolute;
+        top: 0;
+        right: 4px;
+        width: 30px;
+        height: 30px;
+        color: inherit;
+        font-size: 12px;
+        &:hover {
+          color: $white;
+        }
+      }
+    }
+    ul {
+      margin: 0 0 8px 0;
+      padding: 0;
+      list-style: none;
+      a {
+        position: relative;
+        display: block;
+        padding: 4px 10px;
+        color: $lighter-blue;
+        font-weight: 600;
+        font-size: 13px;
+        line-height: 1.8;
+        &:hover {
+          background: $dark-blue;
+          color: $white;
+        }
+        &:before {
+          @extend %icon;
+          position: relative;
+          top: -1px;
+          margin-right: 4px;
+          font-size: 22px;
+        }
+      }
+    }
+    .now-playing-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      .sidebar-title {
+        background: $blue;
+        color: $light-blue;
+      }
+      .now-playing {
+        position: relative;
+        background-color: $darker-blue;
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        transition: all .3s ease-in-out;
+      }
+      .now-playing-info-container {
+        position: absolute;
+        bottom: 0;
+        z-index: 2;
+        overflow: hidden;
+        width: 100%;
+        .now-playing-info-bg {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          padding: 1px; // Fixes overflow: hidden issue
+          margin: -1px; // http://stackoverflow.com/a/13182878
+          background-position: bottom;
+          background-size: cover;
+          background-repeat: no-repeat;
+          filter: blur(5px);
+        }
+        .now-playing-info {
+          position: relative;
+          z-index: 2;
+          padding: 12px;
+          background: rgba($darker-blue, .8);
+        }
+        .track-name {
+          color: $white;
+          font-weight: 600;
+          font-size: 13px;
+        }
+        .track-info {
+          color: $lighter-blue;
+          font-weight: 300;
+          font-size: 12px;
+        }
+      }
+      .now-playing-artwork {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
