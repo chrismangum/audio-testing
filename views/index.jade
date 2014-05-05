@@ -4,7 +4,8 @@ html
     title
       | Audio Testing
     link(rel="stylesheet", href="static/css/styles.css")
-  body
+    link(rel="stylesheet", href="static/vendor/ng-grid/ng-grid.css")
+  body(ng-app="app")
     .sidebar
       .sidebar-container
         .sidebar-title Browse
@@ -36,13 +37,13 @@ html
               .track-name Billie Jean
               .track-info Michael Jackson - Thriller
           img.now-playing-artwork(src="static/img/thriller.jpg")
-    .main
+    .main(ng-controller="main")
       .toolbar
         .search
           span.icon-search
           input(type="text", placeholder="Search")
       .media-list
-        input(type="file")
+        div(style="height: 100%",ng-grid="gridOptions")
   .player
     .player-col-side
       button.button
@@ -73,5 +74,9 @@ html
     script(src="static/js/alac.js")
     script(src="/socket.io/socket.io.js")
     script(src="static/vendor/jquery/dist/jquery.min.js")
+    script(src="static/vendor/angular/angular.js")
+    script(src="static/vendor/ng-grid/build/ng-grid.js")
+    script(src="static/vendor/lodash/dist/lodash.js")
     script(src="static/js/app.min.js")
     script(src="static/js/temp.js")
+
