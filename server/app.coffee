@@ -1,7 +1,6 @@
 express = require 'express'
 path = require 'path'
 fs = require 'fs'
-scanDir = require './scanDir'
 _ = require 'lodash'
 app = express()
 async = require 'async'
@@ -11,7 +10,6 @@ io = require('socket.io').listen server
 
 target = null
 json = null
-scanned = true
 
 server.listen 3000
 process.chdir __dirname
@@ -22,6 +20,44 @@ app.use '/static', express.static path.join __dirname, '../public'
 app.get '/', (req, res) ->
   res.sendfile path.join __dirname, '../public/index.html'
 
+class Scanner
+  constructor: (@filePath) ->
+
+  ftypes:
+    '40': 'directory'
+    '12': 'symlink'
+    '10': 'file'
+
+  validExtensions: [
+    '.m4a'
+    '.flac'
+    '.mp3'
+  ]
+
+  getFtype: (mode) ->
+    @ftypes[mode.toString(8).slice 0, 2]
+
+  hasValidExt: (fileName) ->
+    @validExtensions.indexOf(path.extname fileName) isnt -1
+
+  getTotalSize: (tracks) ->
+    totalSize = 0
+    _.each tracks, (track) ->
+      totalSize += track.fileSize;
+    totalSize
+
+  scan: (filePath = @filePath) ->
+    items = {}
+    _.each fs.readdirSync(filePath), (item) =>
+      stat = fs.statSync filePath + item
+      stat.type = @getFtype stat.mode
+      if stat.type is 'directory'
+        items = _.extend items, @scan filePath + item + '/'
+      else if @hasValidExt item
+        items[filePath + item] =
+          fileName: item
+          fileSize: stat.size
+    items
 
 class Json
   constructor: (@target, @socket) ->
@@ -39,20 +75,23 @@ class Json
     @socket = socket if socket
     if @exists
       @emit()
-    else 
+    else if @target.exists
       if fs.existsSync '../cache.json'
         @exists = true
         @json = JSON.parse fs.readFileSync('../cache.json').toString()
         @emit()
       else
         @scan()
+    else
+      socket.emit 'promptTarget'
 
   save: ->
     fs.writeFileSync '../cache.json', JSON.stringify @json
 
   scan: ->
-    tracks = scanDir.scan @target.target + '/'
-    totalSize = scanDir.getTotalSize tracks
+    scanner = new Scanner @target.target + '/'
+    tracks = scanner.scan()
+    totalSize = scanner.getTotalSize tracks
     @json =
       tracks: tracks
       totalSize: totalSize
@@ -115,14 +154,10 @@ class Target
 io.sockets.on 'connection', (socket) ->
   unless target?
     target = new Target()
-
-  unless target.exists
-    socket.emit 'promptTarget'
+  unless json?
+    json = new Json target, socket
   else
-    unless json?
-      json = new Json target, socket
-    else
-      json.check socket
+    json.check socket
 
   socket.on 'target', (path) ->
     target.create path
