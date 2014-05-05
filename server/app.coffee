@@ -53,13 +53,10 @@ class Json
   scan: ->
     tracks = scanDir.scan @target.target + '/'
     totalSize = scanDir.getTotalSize tracks
-    trackObj = {}
-    _.each tracks, (track) ->
-      trackObj[track.filePath] = _.omit track, 'filePath'
     @json =
-      tracks: trackObj
+      tracks: tracks
       totalSize: totalSize
-      totalCnt: Object.keys(tracks).length
+      totalCnt: _.keys(tracks).length
     @save()
     @emit()
 

@@ -30,18 +30,17 @@ function getTotalSize(tracks) {
 }
 
 function scanDir(filePath) {
-  var items = [];
+  var items = {};
   _.each(fs.readdirSync(filePath), function (item) {
     var stat = fs.statSync(filePath + item);
     stat.type = getFtype(stat.mode);
     if (stat.type === 'directory') {
-      items = items.concat(scanDir(filePath + item + '/'));
+      items = _.extend(items, scanDir(filePath + item + '/'));
     } else if (hasValidExt(item)) {
-      items.push({
-        filePath: filePath + item,
+      items[filePath + item] = {
         fileName: item,
         fileSize: stat.size
-      });
+      };
     }
   });
   return items;
