@@ -20,12 +20,11 @@
         float: right;
         width: $sidebar-width;
         color: $lighter-blue;
-        &:before {
-          @extend %icon;
-          @extend .icon-search;
+        .icon-search {
           position: absolute;
-          top: 12px;
+          top: 10px;
           left: 10px;
+          line-height: 1;
         }
         input {
           padding: 0 15px 0 30px;

@@ -3,12 +3,12 @@ var gulp = require('gulp'),
   uglify = require('gulp-uglify'),
   concat = require('gulp-concat'),
   nodemon = require('gulp-nodemon'),
-  jade = require('gulp-jade');
-  compass = require('gulp-compass'),
-  prefix = require('gulp-autoprefixer');
-  minifyCss = require('gulp-minify-css');
-  svgmin = require('gulp-svgmin');
-  iconfont = require('gulp-iconfont');
+  jade = require('gulp-jade'),
+  sass = require('gulp-sass'),
+  prefix = require('gulp-autoprefixer'),
+  minifyCss = require('gulp-minify-css'),
+  svgmin = require('gulp-svgmin'),
+  iconfont = require('gulp-iconfont'),
   iconfontCss = require('gulp-iconfont-css');
 
 var paths = {
@@ -28,10 +28,7 @@ gulp.task('scripts', function () {
 
 gulp.task('css', ['iconfont'], function () {
   return gulp.src(paths.scss)
-    .pipe(compass({
-      sass: 'public/css',
-      css: 'public/css'
-    }))
+    .pipe(sass())
     .pipe(prefix("last 2 versions"))
     .pipe(minifyCss())
     .pipe(gulp.dest('public/css'))

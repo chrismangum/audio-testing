@@ -20,7 +20,6 @@
     "gulp-coffee": "^1.4.1",
     "gulp-concat": "^2.2.0",
     "gulp-uglify": "^0.2.1",
-    "gulp-compass": "^1.1.6",
     "gulp-nodemon": "^1.0.2",
     "gulp-jade": "^0.4.2",
     "lodash": "^2.4.1",
@@ -30,6 +29,7 @@
     "gulp-svgmin": "~0.4.5",
     "socket.io": "^0.9.16",
     "gulp-autoprefixer": "0.0.7",
-    "gulp-minify-css": "~0.3.4"
+    "gulp-minify-css": "~0.3.4",
+    "gulp-sass": "~0.7.1"
   }
 }
