@@ -7,17 +7,25 @@ var gulp = require('gulp'),
   jade = require('gulp-jade');
 
 var paths = {
-  js: 'public/js/*.coffee',
+  clientJS: 'public/js/*.coffee',
+  serverJS: 'server/*.coffee',
   jade: 'views/*.jade',
   scss: 'public/css/scss/*.scss'
 };
 
-gulp.task('scripts', function () {
-  gulp.src(paths.js)
+gulp.task('clientJS', function () {
+  gulp.src(paths.clientJS)
     .pipe(coffee())
     //.pipe(uglify())
     .pipe(concat('app.min.js'))
     .pipe(gulp.dest('public/js'));
+});
+
+gulp.task('serverJS', function () {
+  gulp.src(paths.serverJS)
+    .pipe(coffee())
+    .pipe(concat('app.js'))
+    .pipe(gulp.dest('server'));
 });
 
 gulp.task('compass', function () {
@@ -44,9 +52,10 @@ gulp.task('nodemon', function () {
 });
 
 gulp.task('watch', function () {
-  gulp.watch(paths.js, ['scripts']);
+  gulp.watch(paths.clientJS, ['clientJS']);
+  gulp.watch(paths.serverJS, ['serverJS']);
   gulp.watch(paths.jade, ['jade']);
   gulp.watch(paths.scss, ['compass']);
 });
 
-gulp.task('default', ['scripts', 'jade', 'compass', 'watch', 'nodemon']);
+gulp.task('default', ['clientJS', 'serverJS', 'jade', 'compass', 'watch', 'nodemon']);

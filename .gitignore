@@ -5,3 +5,4 @@ public/vendor
 public/*.html
 target
 cache.json
+server/app.js
