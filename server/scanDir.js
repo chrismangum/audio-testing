@@ -1,8 +1,6 @@
 var fs = require('fs'),
   _ = require('lodash'),
-  path = require('path'),
-  async = require('async'),
-  exec = require('child_process').exec;
+  path = require('path');
 
 var ftypes = {
   '40': 'directory',
@@ -17,14 +15,6 @@ var validExtensions = [
 
 function getFtype(mode) {
   return ftypes[mode.toString(8).slice(0, 2)];
-}
-
-function getTrackMetaData(track, callback) {
-  exec('./getTrackMetaData.js "' + track.filePath + '"',
-    function (err, stdout, stderr) {
-      callback(err, _.extend(track, JSON.parse(stdout)[0]));
-    }
-  );
 }
 
 function hasValidExt(fileName) {
@@ -57,10 +47,5 @@ function scanDir(filePath) {
   return items;
 }
 
-function getMetaData(tracks, callback) {
-  async.mapSeries(tracks, getTrackMetaData, callback);
-}
-
 exports.scan = scanDir;
 exports.getTotalSize = getTotalSize;
-exports.getMetaData = getMetaData;
