@@ -83,7 +83,7 @@ class Json
       else if @target.exists
         @scan()
       else
-        socket.emit 'promptTarget'
+        @socket.emit 'promptTarget'
 
   save: ->
     fs.writeFileSync '../cache.json', JSON.stringify @json
