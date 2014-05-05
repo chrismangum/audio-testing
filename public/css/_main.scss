@@ -1,0 +1,42 @@
+/*==========================================================================
+  Main
+  ==========================================================================*/
+
+  .main {
+    padding-bottom: $player-height;
+    padding-left: $sidebar-width;
+    min-width: $app-min-width;
+    background: $light-blue;
+    .toolbar {
+      position: absolute;
+      left: 0;
+      padding-left: $sidebar-width;
+      min-width: $app-min-width;
+      width: 100%;
+      height: $toolbar-height;
+      background: $blue;
+      .search {
+        position: relative;
+        float: right;
+        width: $sidebar-width;
+        color: $lighter-blue;
+        &:before {
+          @extend %icon;
+          @extend .icon-search;
+          position: absolute;
+          top: 12px;
+          left: 10px;
+        }
+        input {
+          padding: 0 15px 0 30px;
+          width: 100%;
+          height: $toolbar-height;
+          background: $darker-blue;
+        }
+      }
+    }
+    .media-list {
+      @extend %scroll-panel;
+      padding-top: $toolbar-height;
+    }
+  }

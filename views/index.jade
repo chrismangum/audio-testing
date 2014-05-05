@@ -3,36 +3,38 @@ html
   head
     title
       | Audio Testing
-    link(rel="stylesheet", href="static/css/global.css")
+    link(rel="stylesheet", href="static/css/styles.css")
   body
     .sidebar
       .sidebar-container
         .sidebar-title Browse
         ul
           li
-            a.songs Songs
+            a.icon-songs Songs
           li
-            a.artists Artists
+            a.icon-artists Artists
           li
-            a.albums Albums
+            a.icon-albums Albums
           li
-            a.genres Genres
+            a.icon-genres Genres
         .sidebar-title Playlists
           button.button
             span.icon-add
         ul.playlists
           li
-            a.playlist Smooth Jams
+            a.icon-playlist Smooth Jams
           li
-            a.playlist Hibbity Hoppity
+            a.icon-playlist Hibbity Hoppity
       .now-playing-container
         .sidebar-title Now Playing
           button.button.toggle-now-playing
             span.icon-arrow-down
         .now-playing
-          .now-playing-info
-            .track-name Billie Jean
-            .track-info Michael Jackson - Thriller
+          .now-playing-info-container
+            .now-playing-info-bg(style="background-image: url('static/img/thriller.jpg')")
+            .now-playing-info
+              .track-name Billie Jean
+              .track-info Michael Jackson - Thriller
           img.now-playing-artwork(src="static/img/thriller.jpg")
     .main
       .toolbar

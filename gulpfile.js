@@ -32,7 +32,7 @@ gulp.task('css', ['iconfont'], function () {
       sass: 'public/css',
       css: 'public/css'
     }))
-    .pipe(prefix("last 1 version"))
+    .pipe(prefix("last 2 versions"))
     .pipe(minifyCss())
     .pipe(gulp.dest('public/css'))
 });
