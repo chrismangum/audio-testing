@@ -102,8 +102,8 @@
         .now-playing-info {
           position: relative;
           z-index: 2;
-          padding: 14px 12px;
-          background: rgba(0,0,0,0.8);
+          padding: 12px;
+          background: rgba($darker-blue, .8);
         }
         .track-name {
           color: $white;
