@@ -6,14 +6,17 @@ app.controller 'main', ['$scope', ($scope) ->
   $scope.data = {}
 
   $scope.gridOptions =
-    data: 'dataValues'
-    showFilter: true
     columnDefs: [
       { field: 'title' }
       { field: 'artist' }
       { field: 'album' }
       { field: 'genre' }
     ]
+    data: 'dataValues'
+    enableColumnResize: true
+    enableColumnReordering: true
+    multiSelect: false
+    showFilter: true
 
   socket = io.connect 'http://localhost'
   socket.on 'metadata', (data) ->
