@@ -47,7 +47,7 @@ html
       button.button
         span.icon-prev
       button.button
-        span.icon-play
+        span(ng-click="togglePlayback()", class="{{nowPlaying ? 'icon-play' : 'icon-play'}}")
       button.button
         span.icon-next
     .player-col-middle
