@@ -26,6 +26,11 @@ app.controller 'main', ['$scope', ($scope) ->
     multiSelect: false
     headerRowHeight: 26
     rowHeight: 26
+    rowTemplate:
+      '<div ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}">
+        <div class="ngVerticalBar ngVerticalBarVisible" ng-style="{height: rowHeight}">&nbsp;</div>
+        <div ng-cell></div>
+      </div>'
     selectedItems: []
     showFilter: true
 

@@ -3533,7 +3533,7 @@ angular.module('ngGrid').run(['$templateCache', function($templateCache) {
   $templateCache.put('headerRowTemplate.html',
     "<div ng-style=\"{ height: col.headerRowHeight }\" ng-repeat=\"col in renderedColumns\" ng-class=\"col.colIndex()\" class=\"ngHeaderCell\">\r" +
     "\n" +
-    "\t<div class=\"ngVerticalBar\" ng-style=\"{height: col.headerRowHeight}\" ng-class=\"{ ngVerticalBarVisible: !$last }\">&nbsp;</div>\r" +
+    "\t<div class=\"ngVerticalBar ngVerticalBarVisible\" ng-style=\"{height: col.headerRowHeight}\">&nbsp;</div>\r" +
     "\n" +
     "\t<div ng-header-cell></div>\r" +
     "\n" +
