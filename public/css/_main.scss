@@ -8,41 +8,52 @@
     padding-left: $sidebar-width;
     min-width: $app-min-width;
     background: $light-blue;
-    .toolbar {
-      position: absolute;
-      left: 0;
-      z-index: 1;
-      padding-left: $sidebar-width;
-      min-width: $app-min-width;
-      width: 100%;
-      height: $toolbar-height;
-      background: $blue;
-      .search {
-        position: relative;
-        float: right;
-        width: $sidebar-width;
-        .icon-search {
-          position: absolute;
-          top: 10px;
-          left: 10px;
-          color: $light-blue;
-          line-height: 1;
-        }
-        input {
-          @include placeholder($light-blue);
-          padding: 0 15px 0 30px;
-          width: 100%;
-          height: $toolbar-height;
-          background: $darker-blue;
-          color: $white;
-        }
+  }
+  .toolbar {
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    padding-left: $sidebar-width;
+    min-width: $app-min-width;
+    width: 100%;
+    height: $toolbar-height;
+    background: $blue;
+    .search {
+      position: relative;
+      float: right;
+      width: $sidebar-width;
+      .icon-search {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        color: $light-blue;
+        line-height: 1;
+      }
+      input {
+        @include placeholder($light-blue);
+        padding: 0 15px 0 30px;
+        width: 100%;
+        height: $toolbar-height;
+        background: $darker-blue;
+        color: $white;
       }
     }
-    .media-list {
-      padding-top: $toolbar-height;
-      height: 100%;
-      color: $media-list-color;
-      font-size: 13px;
-      line-height: 1;
+  }
+  .media-list {
+    padding-top: $toolbar-height;
+    height: 100%;
+    color: $media-list-color;
+    font-size: 13px;
+    line-height: 1;
+  }
+  .now-playing-indicator {
+    &:before {
+      @extend %icon;
+      @extend .icon-volume;
+      position: absolute;
+      top: 4px;
+      right: 0;
+      display: block;
+      font-size: 18px;
     }
   }
