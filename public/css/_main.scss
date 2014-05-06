@@ -37,8 +37,9 @@
       }
     }
     .media-list {
-      overflow: scroll;
       padding-top: $toolbar-height;
       height: 100%;
+      font-size: 13px;
+      line-height: 1;
     }
   }

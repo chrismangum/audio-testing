@@ -16,6 +16,7 @@ app.controller 'main', ['$scope', ($scope) ->
     enableColumnResize: true
     enableColumnReordering: true
     multiSelect: false
+    rowHeight: 24
     showFilter: true
 
   socket = io.connect 'http://localhost'
