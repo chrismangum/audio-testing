@@ -46,6 +46,9 @@
     position: relative;
     top: 35px;
     margin: 0 40px;
+    &.disabled {
+      display: none;
+    }
     .time {
       position: absolute;
       top: -1px;
@@ -81,12 +84,11 @@
         top: -2px;
         right: -4px;
         display: block;
-        width: 14px;
+        width: 4px;
         height: 14px;
-        border-radius: 50%;
         background: $lighter-blue;
         content: '';
-        background: all 1s ease;
+        transition: background 1s ease;
         &:hover {
           background: $white;
           cursor: pointer;
