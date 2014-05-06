@@ -15,3 +15,16 @@
   $lighter-blue: tint($blue, 50%);
   $dark-blue: shade($blue, 25%);
   $darker-blue: shade($blue, 50%);
+
+  // Theme
+  $media-list-color: $dark-blue;
+
+  $grid-background-color: $light-blue;
+  
+  $label-background-color: $light-blue;
+  $label-column-border: shade($light-blue, 10%);
+
+  $row-odd-background-color: $lighter-blue;
+  $row-even-background-color: tint($lighter-blue, 5%);
+  $row-selected-background-color: $blue;
+  $row-column-border: transparent;

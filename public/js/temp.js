@@ -21,3 +21,7 @@ toggleNowPlaying.on('click', function() {
 	  })
   }
  });
+
+$('.button').on('click', function() {
+  $(this).toggleClass('active');
+});
