@@ -15,7 +15,7 @@ var paths = {
   clientJS: 'public/js/*.coffee',
   serverJS: 'server/*.coffee',
   jade: 'views/*.jade',
-  scss: 'public/css/*.scss',
+  scss: ['public/css/*.scss', '!public/css/_icon-font.scss'],
   svg: 'public/svg/*.svg'
 };
 
