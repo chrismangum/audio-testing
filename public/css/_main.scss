@@ -48,7 +48,7 @@
   }
   .now-playing-indicator {
     &:before {
-      @extend %icon;
+      @extend .icon;
       @extend .icon-volume;
       position: absolute;
       top: 4px;
