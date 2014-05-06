@@ -55,6 +55,7 @@ class Scanner
         items = _.extend items, @scan filePath + item + '/'
       else if @hasValidExt item
         items[filePath + item] =
+          title: item,
           fileName: item
           fileSize: stat.size
     items
@@ -125,8 +126,8 @@ class Json
   extendTrackInfo: (track, obj) ->
     _.extend @json.tracks[track], obj
     @json.tracks[track].scanned = true
-    @socket.emit 'metadata', @json.tracks[track]
-
+    obj.filePath = track
+    @socket.emit 'metadata', obj
 
 class Target
   constructor: ->
