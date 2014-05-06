@@ -78,18 +78,18 @@
     background-color: $label-background-color;
   }
 
+  .ngSortButtonUp,
   .ngSortButtonDown {
+    @extend .icon;
+    @extend .icon-arrow-down;
     position: absolute;
-    top: 3px;
-    right: 0;
-    left: 0;
-    margin-right: auto;
-    margin-left: auto;
-    width: 0;
-    height: 0;
-    border-width: 0 5px 5px 5px;
-    border-style: solid;
-    border-color: gray transparent;
+    top: 7px;
+    right: 6px;
+  }
+
+  .ngSortButtonUp {
+    top: 6px;
+    transform: rotateX(180deg);
   }
 
   .ngNoSort {
@@ -106,20 +106,6 @@
     border-radius: 50%;
     background-color: #9fbbb4;
     cursor: pointer;
-  }
-
-  .ngSortButtonUp {
-    position: absolute;
-    top: 3px;
-    right: 0;
-    left: 0;
-    margin-right: auto;
-    margin-left: auto;
-    width: 0;
-    height: 0;
-    border-width: 5px 5px 0 5px;
-    border-style: solid;
-    border-color: gray transparent;
   }
 
   .ngHeaderScroller {
