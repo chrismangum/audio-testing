@@ -74,7 +74,7 @@
     }
     .progress-bar-played {
       z-index: 1;
-      width: 30%;
+      width: 0%;
       background: $light-blue;
       .progress-tick {
         position: absolute;
@@ -86,7 +86,7 @@
         border-radius: 50%;
         background: $lighter-blue;
         content: '';
-        transition: all .2s ease;
+        background: all 1s ease;
         &:hover {
           background: $white;
           cursor: pointer;

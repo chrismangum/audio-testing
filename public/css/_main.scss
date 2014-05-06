@@ -46,14 +46,24 @@
     font-size: 13px;
     line-height: 1;
   }
-  .now-playing-indicator {
+  .now-playing-indicator,
+  .now-paused-indicator {
     &:before {
       @extend .icon;
-      @extend .icon-volume;
       position: absolute;
       top: 4px;
       right: 4px;
       display: block;
       font-size: 18px;
+    }
+  }
+  .now-playing-indicator {
+    &:before {
+      @extend .icon-volume;
+    }
+  }
+  .now-paused-indicator {
+    &:before {
+      @extend .icon-volume-off;
     }
   }

@@ -51,7 +51,7 @@ html
       button.button
         span.icon-next(ng-click="next()")
     .player-col-middle
-      .progress(ng-class="{disabled: !nowPlaying}")
+      .progress(ng-class="{hidden: !nowPlaying}")
         .time.time-passed {{ getCurrentTime() }}
         .time.time-remain {{ getDuration() }}
         .progress-bar-container
