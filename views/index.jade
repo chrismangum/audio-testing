@@ -5,7 +5,7 @@ html
       | Audio Testing
     link(rel="stylesheet", href="static/css/styles.css")
     link(rel="stylesheet", href="static/vendor/ng-grid/ng-grid.css")
-  body(ng-app="app")
+  body(ng-app="app", ng-controller="main")
     .sidebar
       .sidebar-container
         .sidebar-title Browse
@@ -37,7 +37,7 @@ html
               .track-name Billie Jean
               .track-info Michael Jackson - Thriller
           img.now-playing-artwork(src="static/img/thriller.jpg")
-    .main(ng-controller="main")
+    .main
       .toolbar
         .search
           span.icon-search
