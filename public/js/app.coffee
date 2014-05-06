@@ -1,18 +1,19 @@
 
 app = angular.module 'app', ['ngGrid']
 
-app.controller 'main', ['$scope', ($scope) ->
+app.controller 'main', ['$scope', '$interval', ($scope, $interval) ->
   $scope.dataValues = []
   $scope.data = {}
   $scope.nowPlaying = false
   $scope.player = null
+  $scope.progress = 0
 
   $scope.gridOptions =
     columnDefs: [
       {
         field: 'title'
         cellTemplate:
-          '<div class="ngCellText {{col.colIndex()}}" ng-class="{\'now-playing-indicator\': row.entity.playing}" ng-dblclick="play(row.entity)">
+          '<div class="ngCellText {{col.colIndex()}}" ng-class="{\'now-playing-indicator\': row.entity.playing, \'now-paused-indicator\': row.entity.paused}" ng-dblclick="play(row.entity)">
             <span ng-cell-text>{{ COL_FIELD }}</span>
           </div>'
       }
@@ -53,6 +54,42 @@ app.controller 'main', ['$scope', ($scope) ->
       $scope.play()
     else
       $scope.player.togglePlayback()
+      if $scope.nowPlaying.playing
+        $scope.nowPlaying.playing = false
+        $scope.nowPlaying.paused = true
+        $interval.cancel $scope.player.timer
+      else
+        $scope.nowPlaying.playing = true
+        $scope.nowPlaying.paused = false
+        $scope.player.timer = $interval calculateProgress, 100
+
+
+  padTime = (n) ->
+    if n < 10
+      n = '0' + n
+    return n
+
+  convertTimestamp = (s) ->
+    ms = s % 1000
+    s = (s - ms) / 1000
+    secs = s % 60
+    s = (s - secs) / 60
+    mins = s % 60
+    hrs = (s - mins) / 60
+    if hrs
+      return hrs + ':' + padTime(mins) + ':' + padTime(secs)
+    else
+      return mins + ':' + padTime(secs)
+
+  $scope.getCurrentTime = ->
+    if $scope.player
+      return convertTimestamp $scope.player.currentTime
+    ''
+
+  $scope.getDuration = ->
+    if $scope.player
+      return convertTimestamp $scope.player.duration
+    ''
 
   $scope.getPrevious = ->
     return $scope.dataValues[$scope.dataValues.indexOf($scope.nowPlaying) - 1]
@@ -73,6 +110,9 @@ app.controller 'main', ['$scope', ($scope) ->
     $scope.player.stop()
     $scope.nowPlaying.playing = false
 
+  calculateProgress = ->
+    $scope.progress = ($scope.player.currentTime / $scope.player.duration) * 100
+
   $scope.play = (track) ->
     if $scope.player
       $scope.stop()
@@ -82,6 +122,7 @@ app.controller 'main', ['$scope', ($scope) ->
     track.playing = true
     $scope.nowPlaying = track
     $scope.player.play()
+    $scope.player.timer = $interval calculateProgress, 100
 
   socket = io.connect 'http://localhost'
 

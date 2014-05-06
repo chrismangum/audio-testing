@@ -51,12 +51,12 @@ html
       button.button
         span.icon-next(ng-click="next()")
     .player-col-middle
-      .progress
-        .time.time-passed 1:10
-        .time.time-remain 4:32
+      .progress(ng-class="{disabled: !nowPlaying}")
+        .time.time-passed {{ getCurrentTime() }}
+        .time.time-remain {{ getDuration() }}
         .progress-bar-container
           .progress-bar
-          .progress-bar.progress-bar-played
+          .progress-bar.progress-bar-played(style="width: {{progress}}%")
             .progress-tick
     .player-col-side
       button.button
