@@ -49,8 +49,20 @@ app.controller 'main', ['$scope', ($scope) ->
     else
       $scope.player.togglePlayback()
 
-  $scope.rewind = ->
-    $scope.player.seek 0
+  $scope.getPrevious = ->
+    return $scope.dataValues[$scope.dataValues.indexOf($scope.nowPlaying) - 1]
+
+  $scope.getNext = ->
+    return $scope.dataValues[$scope.dataValues.indexOf($scope.nowPlaying) + 1]
+
+  $scope.previous = ->
+    if $scope.player.currentTime > 1000
+      $scope.player.seek 0
+    else
+      $scope.play $scope.getPrevious()
+
+  $scope.next = ->
+    $scope.play $scope.getNext()
 
   $scope.stop = ->
     $scope.player.stop()

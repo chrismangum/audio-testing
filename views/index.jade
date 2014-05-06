@@ -45,11 +45,11 @@ html
   .player
     .player-col-side
       button.button
-        span.icon-prev(ng-click="rewind()")
+        span.icon-prev(ng-click="previous()")
       button.button
         span(ng-click="togglePlayback()", class="{{nowPlaying ? 'icon-play' : 'icon-play'}}")
       button.button
-        span.icon-next
+        span.icon-next(ng-click="next()")
     .player-col-middle
       .progress
         .time.time-passed 1:10
