@@ -58,6 +58,7 @@ class Scanner
           title: item,
           fileName: item
           fileSize: stat.size
+          filePath: (filePath + item).replace @filePath, ''
     items
 
 class Json

@@ -49,6 +49,9 @@ app.controller 'main', ['$scope', ($scope) ->
     else
       $scope.player.togglePlayback()
 
+  $scope.rewind = ->
+    $scope.player.seek 0
+
   $scope.stop = ->
     $scope.player.stop()
     $scope.nowPlaying.playing = false
@@ -58,7 +61,7 @@ app.controller 'main', ['$scope', ($scope) ->
       $scope.stop()
     unless track
       track = $scope.getSelectedTrack()
-    $scope.player = AV.Player.fromURL 'target/' + track.fileName
+    $scope.player = AV.Player.fromURL 'target/' + track.filePath
     track.playing = true
     $scope.nowPlaying = track
     $scope.player.play()

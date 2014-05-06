@@ -45,7 +45,7 @@ html
   .player
     .player-col-side
       button.button
-        span.icon-prev
+        span.icon-prev(ng-click="rewind()")
       button.button
         span(ng-click="togglePlayback()", class="{{nowPlaying ? 'icon-play' : 'icon-play'}}")
       button.button
