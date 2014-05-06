@@ -32,10 +32,6 @@
   .ngVerticalBar {
     position: absolute;
     right: 0;
-    width: 0;
-  }
-
-  .ngVerticalBarVisible {
     width: 1px;
     background-color: $row-column-border;
   }
@@ -62,7 +58,7 @@
     &.pinned {
       z-index: 1;
     }
-    .ngVerticalBarVisible {
+    .ngVerticalBar {
       background-color: $label-column-border;
     }
   }
@@ -85,6 +81,7 @@
     position: absolute;
     top: 7px;
     right: 6px;
+    color: $label-sort-arrow-color;
   }
 
   .ngSortButtonUp {
