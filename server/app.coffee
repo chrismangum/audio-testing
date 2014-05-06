@@ -56,7 +56,6 @@ class Scanner
       else if @hasValidExt item
         items[filePath + item] =
           title: item,
-          fileName: item
           fileSize: stat.size
           filePath: (filePath + item).replace @filePath, ''
     items
