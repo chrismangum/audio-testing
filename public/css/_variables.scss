@@ -22,9 +22,23 @@
   $grid-background-color: $light-blue;
   
   $label-background-color: $light-blue;
-  $label-column-border: shade($light-blue, 10%);
-
-  $row-odd-background-color: $lighter-blue;
-  $row-even-background-color: tint($lighter-blue, 5%);
+  $label-color: $white;
+  $label-column-border: shade($light-blue, 20%);
+  $label-font-size: 12px;
+  $label-font-weight: 600;
+  $label-line-height: 14px;
+  
+  $row-odd-background-color: tint($lighter-blue, 50%);
+  $row-even-background-color: tint($lighter-blue, 55%);
+  $row-color: $blue;
+  
   $row-selected-background-color: $blue;
+  $row-selected-color: $white;
+
+  $row-font-size: 12px;
+  $row-font-weight: 600;
+  $row-line-height: 14px;
+  
   $row-column-border: transparent;
+  
+  

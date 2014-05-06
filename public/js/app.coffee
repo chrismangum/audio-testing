@@ -16,8 +16,8 @@ app.controller 'main', ['$scope', ($scope) ->
     enableColumnReordering: true
     enableColumnResize: true
     multiSelect: false
-    headerRowHeight: 24
-    rowHeight: 24
+    headerRowHeight: 26
+    rowHeight: 26
     showFilter: true
 
   #set cellTemplate for all columns:

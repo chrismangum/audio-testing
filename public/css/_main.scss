@@ -3,6 +3,7 @@
   ==========================================================================*/
 
   .main {
+    position: relative;
     padding-bottom: $player-height;
     padding-left: $sidebar-width;
     min-width: $app-min-width;
@@ -10,6 +11,7 @@
     .toolbar {
       position: absolute;
       left: 0;
+      z-index: 1;
       padding-left: $sidebar-width;
       min-width: $app-min-width;
       width: 100%;
@@ -39,8 +41,8 @@
     .media-list {
       padding-top: $toolbar-height;
       height: 100%;
-      font-size: 13px;
       color: $media-list-color;
+      font-size: 13px;
       line-height: 1;
     }
   }

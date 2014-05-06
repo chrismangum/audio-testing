@@ -5,11 +5,11 @@
   .ngGrid {
     background-color: $grid-background-color;
     input {
+      vertical-align: top;
       &[type="checkbox"] {
         margin: 0;
         padding: 0;
       }
-      vertical-align: top;
     }
     &.unselectable {
       user-select: none;
@@ -50,8 +50,8 @@
   .ngHeaderContainer {
     position: relative;
     overflow: hidden;
-    font-weight: bold;
     background-color: inherit;
+    font-weight: bold;
   }
 
   .ngHeaderCell {
@@ -81,15 +81,15 @@
   .ngSortButtonDown {
     position: absolute;
     top: 3px;
-    left: 0;
     right: 0;
-    margin-left: auto;
+    left: 0;
     margin-right: auto;
-    border-color: gray transparent;
-    border-style: solid;
-    border-width: 0 5px 5px 5px;
-    height: 0;
+    margin-left: auto;
     width: 0;
+    height: 0;
+    border-width: 0 5px 5px 5px;
+    border-style: solid;
+    border-color: gray transparent;
   }
 
   .ngNoSort {
@@ -98,12 +98,12 @@
 
   .ngHeaderButton {
     position: absolute;
-    right: 2px;
     top: 8px;
-    border-radius: 50%;
+    right: 2px;
+    z-index: 1;
     width: 14px;
     height: 14px;
-    z-index: 1;
+    border-radius: 50%;
     background-color: #9fbbb4;
     cursor: pointer;
   }
@@ -111,15 +111,15 @@
   .ngSortButtonUp {
     position: absolute;
     top: 3px;
-    left: 0;
     right: 0;
-    margin-left: auto;
+    left: 0;
     margin-right: auto;
-    border-color: gray transparent;
-    border-style: solid;
-    border-width: 5px 5px 0 5px;
-    height: 0;
+    margin-left: auto;
     width: 0;
+    height: 0;
+    border-width: 5px 5px 0 5px;
+    border-style: solid;
+    border-color: gray transparent;
   }
 
   .ngHeaderScroller {
@@ -131,28 +131,32 @@
     position: absolute;
     top: -5px;
     left: 1px;
-    font-size: 6pt;
     font-weight: bold;
+    font-size: 6pt;
   }
 
   .ngHeaderGrip {
-    cursor: col-resize;
-    width: 11px;
-    right: -5px;
-    top: 0;
-    height: 100%;
     position: absolute;
-    background-color: transparent;
+    top: 0;
+    right: -5px;
     z-index: 1;
+    width: 11px;
+    height: 100%;
+    background-color: transparent;
+    cursor: col-resize;
   }
 
   .ngHeaderText {
-    padding: 5px;
-    box-sizing: border-box;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    text-transform: uppercase;
     overflow: hidden;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    color: $label-color;
+    text-transform: uppercase;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: $label-font-weight;
+    font-size: $label-font-size;
+    line-height: $label-line-height;
   }
 
   .ngHeaderButtonArrow {
@@ -161,52 +165,52 @@
     left: 3px;
     width: 0;
     height: 0;
-    border-style: solid;
     border-width: 6.5px 4.5px 0 4.5px;
+    border-style: solid;
     border-color: #4d4d4d transparent transparent transparent;
   }
 
   .ngPinnedIcon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 10px;
+    height: 10px;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABp0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuMTAw9HKhAAAAmElEQVQoU33PQapBURjA8UtkwJuaWYGSgfQWYBMvczPmTCzAAGVuaA228BZhRCkDGSmE31FucuRfvzq3vr5zT/JSjSU7DsypEPXDkDVn2hSIytJhw4kWGaLCxgHh2gt/RBuLzNhz5caWPjnSqqw4EraFfwznf8qklWjwy4IRTerkiQoPGtPl40OehcEJvcfXl8LglLfBJLkDcMgbgHlHhK8AAAAASUVORK5CYII=);
     background-repeat: no-repeat;
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    height: 10px;
-    width: 10px;
   }
 
   .ngUnPinnedIcon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 10px;
+    height: 10px;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABp0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuMTAw9HKhAAAAlElEQVQoU33PPQrCQBRF4fFnI2KfZVi5ARvdgo1l6mwmkCJVOgluwd5OwUoDtnoOxAei8cLXTN7cvEl/skCNDCMPfsUPO5zQwOHIDEvYtMURHe6wOVLgigvOePRyeDkyR4ln7wZ//7XfFBu8B23+aDJjrHGAwza7hjtHJvDmHg7b7Bru7AMjK7Rw2ObBVHDY5oGk9AKQNB2zy8MBTgAAAABJRU5ErkJggg==);
     background-repeat: no-repeat;
-    position: absolute;
-    height: 10px;
-    width: 10px;
-    right: 5px;
-    top: 5px;
   }
 
   .ngColMenu {
-    right: 2px;
-    padding: 5px;
+    position: absolute;
     top: 25px;
+    right: 2px;
+    z-index: 1;
+    padding: 5px;
+    border: 2px solid #d4d4d4;
     border-radius: 3px;
     background-color: #bdd0cb;
-    position: absolute;
-    border: 2px solid #d4d4d4;
-    z-index: 1;
   }
 
   .ngColListCheckbox {
     position: relative;
-    right: 3px;
     top: 4px;
+    right: 3px;
   }
 
   .ngColList {
-    list-style-type: none;
     margin-top: 2px;
     margin-left: 8px;
+    list-style-type: none;
   }
 
   .ngColListItem {
@@ -220,9 +224,9 @@
   }
 
   .ngGroupPanel {
-    background-color: #eaeaea;
     overflow: hidden;
     border-bottom: 1px solid #d4d4d4;
+    background-color: #eaeaea;
   }
 
   .ngGroupPanelDescription {
@@ -231,9 +235,9 @@
   }
 
   .ngGroupList {
-    list-style-type: none;
     margin: 0;
     padding: 0;
+    list-style-type: none;
   }
 
   .ngAggHeader {
@@ -243,67 +247,67 @@
 
   .ngGroupElement {
     float: left;
-    height: 100%;
     width: 100%;
+    height: 100%;
   }
 
   .ngGroupIcon {
+    position: absolute;
+    top: 2px;
+    right: -2px;
+    width: 15px;
+    height: 15px;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAANCAYAAACZ3F9/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjEwMPRyoQAAAEFJREFUKFNjoAhISkr+h2J5JDZODNXGwGBsbPwfhIGAA8bGh6HaGBiAGhxAGJmND4M1gQCSM0adCsVQbcPcqQwMALWDGyDvWPefAAAAAElFTkSuQmCC);
     background-repeat: no-repeat;
-    height: 15px;
-    width: 15px;
-    position: absolute;
-    right: -2px;
-    top: 2px;
   }
 
   .ngGroupedByIcon {
+    position: absolute;
+    top: 2px;
+    right: -2px;
+    width: 15px;
+    height: 15px;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAANCAYAAACZ3F9/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjEwMPRyoQAAAElJREFUKFNjoAhISkr+R8LyaHwMDNXGwGBsbPwfhoGAA5mPDUO1oWpE52PDYE0gALTFAYbR+dgwWBMIoPlh1I9ADNU2NPzIwAAAFQYI9E4OLvEAAAAASUVORK5CYII=);
     background-repeat: no-repeat;
-    height: 15px;
-    width: 15px;
-    position: absolute;
-    right: -2px;
-    top: 2px;
   }
 
   .ngGroupName {
-    background-color: #fdfdfd;
-    border: 1px solid #d4d4d4;
-    padding: 3px 10px;
     float: left;
-    margin-left: 0;
     margin-top: 2px;
+    margin-left: 0;
+    padding: 3px 10px;
+    border: 1px solid #d4d4d4;
     border-radius: 3px;
+    background-color: #fdfdfd;
     font-weight: bold;
   }
 
   .ngGroupArrow {
+    float: right;
+    margin-top: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
     width: 0;
     height: 0;
     border-top: 6px solid transparent;
     border-bottom: 6px solid transparent;
     border-left: 6px solid black;
-    margin-top: 10px;
-    margin-left: 5px;
-    margin-right: 5px;
-    float: right;
   }
 
   .ngGroupingNumber {
     position: absolute;
-    right: -10px;
     top: -2px;
+    right: -10px;
   }
 
   .ngAggArrowCollapsed {
     position: absolute;
-    left: 8px;
     bottom: 10px;
+    left: 8px;
     width: 0;
     height: 0;
-    border-style: solid;
     border-width: 5px 0 5px 8.7px;
+    border-style: solid;
     border-color: transparent transparent transparent #000000;
   }
 
@@ -315,51 +319,52 @@
   }
 
   .ngRemoveGroup {
-    width: 5px;
-    opacity: 0.4;
     margin-top: -1px;
     margin-left: 5px;
+    width: 5px;
+    opacity: 0.4;
     &:hover {
       color: black;
       text-decoration: none;
-      cursor: pointer;
       opacity: 0.7;
+      cursor: pointer;
     }
   }
 
   .ngAggArrowExpanded {
     position: absolute;
-    left: 8px;
     bottom: 10px;
+    left: 8px;
     width: 0;
     height: 0;
-    border-style: solid;
     border-width: 0 0 9px 9px;
+    border-style: solid;
     border-color: transparent transparent #000000 transparent;
   }
 
   .ngAggregate {
     position: absolute;
-    background-color: #c9dde1;
-    border-bottom: 1px solid beige;
-    overflow: hidden;
     top: 0;
-    bottom: 0;
     right: -1px;
+    bottom: 0;
     left: 0;
+    overflow: hidden;
+    border-bottom: 1px solid beige;
+    background-color: #c9dde1;
   }
 
   .ngAggregateText {
     position: absolute;
-    left: 27px;
     top: 5px;
-    line-height: 20px;
+    left: 27px;
     white-space: nowrap;
+    line-height: 20px;
   }
 
   .ngRow {
     position: absolute;
     min-width: 100%;
+    color: $row-color;
     &.odd {
       background-color: $row-odd-background-color;
     }
@@ -368,14 +373,15 @@
     }
     &.selected {
       background-color: $row-selected-background-color;
+      color: $row-selected-color;
     }
   }
 
   .ngCell {
-    overflow: hidden;
     position: absolute;
     top: 0;
     bottom: 0;
+    overflow: hidden;
     background-color: inherit;
     &.pinned {
       z-index: 1;
@@ -383,11 +389,14 @@
   }
 
   .ngCellText {
-    padding: 5px;
-    box-sizing: border-box;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     overflow: hidden;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: $row-font-weight;
+    font-size: $row-font-size;
+    line-height: $row-line-height;
   }
 
   .ngSelectionCell {
@@ -416,17 +425,17 @@
   }
 
   .ngFooterPanel {
-    background-color: #eaeaea;
+    position: relative;
     padding: 0;
     border-top: 1px solid #d4d4d4;
-    position: relative;
+    background-color: #eaeaea;
   }
 
   .nglabel {
     display: block;
     float: left;
-    font-weight: bold;
     padding-right: 5px;
+    font-weight: bold;
   }
 
   .ngTotalSelectContainer {
@@ -448,25 +457,25 @@
   }
 
   .ngPagerFirstBar {
-    width: 10px;
-    border-left: 2px solid #4d4d4d;
     margin-top: -6px;
-    height: 12px;
     margin-left: -3px;
+    width: 10px;
+    height: 12px;
+    border-left: 2px solid #4d4d4d;
   }
 
   .ngPagerButton {
-    height: 25px;
     min-width: 26px;
+    height: 25px;
   }
 
   .ngPagerFirstTriangle {
+    margin-left: 2px;
     width: 0;
     height: 0;
-    border-style: solid;
     border-width: 5px 8.7px 5px 0;
+    border-style: solid;
     border-color: transparent #4d4d4d transparent transparent;
-    margin-left: 2px;
   }
 
   .ngPagerNextTriangle {
@@ -478,20 +487,20 @@
   }
 
   .ngPagerLastTriangle {
+    margin-left: -1px;
     width: 0;
     height: 0;
-    border-style: solid;
     border-width: 5px 0 5px 8.7px;
+    border-style: solid;
     border-color: transparent transparent transparent #4d4d4d;
-    margin-left: -1px;
   }
 
   .ngPagerLastBar {
-    width: 10px;
-    border-left: 2px solid #4d4d4d;
     margin-top: -6px;
-    height: 12px;
     margin-left: 1px;
+    width: 10px;
+    height: 12px;
+    border-left: 2px solid #4d4d4d;
   }
 
   .ngFooterTotalItems {
