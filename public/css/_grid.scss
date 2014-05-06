@@ -26,6 +26,7 @@
 
   .ngCanvas {
     position: relative;
+    min-width: 100%;
   }
 
   .ngVerticalBar {
@@ -36,7 +37,7 @@
 
   .ngVerticalBarVisible {
     width: 1px;
-    background-color: $grid-column-border;
+    background-color: $row-column-border;
   }
 
   #testDataLength {
@@ -61,6 +62,9 @@
     &.pinned {
       z-index: 1;
     }
+    .ngVerticalBarVisible {
+      background-color: $label-column-border;
+    }
   }
 
   .ngHeaderSortColumn {
@@ -71,8 +75,7 @@
   .ngTopPanel {
     position: relative;
     z-index: 1;
-    background-color: $grid-labels-background-color;
-    border-bottom: 1px solid $grid-labels-border-color;
+    background-color: $label-background-color;
   }
 
   .ngSortButtonDown {
@@ -134,12 +137,13 @@
 
   .ngHeaderGrip {
     cursor: col-resize;
-    width: 10px;
+    width: 11px;
     right: -5px;
     top: 0;
     height: 100%;
     position: absolute;
     background-color: transparent;
+    z-index: 1;
   }
 
   .ngHeaderText {
@@ -355,7 +359,7 @@
 
   .ngRow {
     position: absolute;
-    border-bottom: 1px solid $row-border-color;
+    min-width: 100%;
     &.odd {
       background-color: $row-odd-background-color;
     }

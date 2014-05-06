@@ -17,14 +17,14 @@
   $darker-blue: shade($blue, 50%);
 
   // Theme
+  $media-list-color: $dark-blue;
+
   $grid-background-color: $light-blue;
   
-  $grid-labels-background-color: $light-blue;
-  $grid-labels-border-color: $blue;
+  $label-background-color: $light-blue;
+  $label-column-border: shade($light-blue, 10%);
 
-  $grid-column-border: $blue;
-
-  $row-border-color: $blue;
   $row-odd-background-color: $lighter-blue;
-  $row-even-background-color: tint($lighter-blue, 10%);
+  $row-even-background-color: tint($lighter-blue, 5%);
   $row-selected-background-color: $blue;
+  $row-column-border: transparent;

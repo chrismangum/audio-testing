@@ -16,6 +16,7 @@ app.controller 'main', ['$scope', ($scope) ->
     enableColumnResize: true
     enableColumnReordering: true
     multiSelect: false
+    headerRowHeight: 24
     rowHeight: 24
     showFilter: true
 
