@@ -77,19 +77,17 @@ app.controller 'main', ['$scope', '$interval', ($scope, $interval) ->
     mins = s % 60
     hrs = (s - mins) / 60
     if hrs
-      return hrs + ':' + padTime(mins) + ':' + padTime(secs)
+      return hrs + ':' + padTime mins + ':' + padTime secs
     else
-      return mins + ':' + padTime(secs)
+      return mins + ':' + padTime secs
 
   $scope.getCurrentTime = ->
     if $scope.player
-      return convertTimestamp $scope.player.currentTime
-    ''
+      convertTimestamp $scope.player.currentTime
 
   $scope.getDuration = ->
     if $scope.player
-      return convertTimestamp $scope.player.duration
-    ''
+      convertTimestamp $scope.player.duration
 
   $scope.getPrevious = ->
     return $scope.dataValues[$scope.dataValues.indexOf($scope.nowPlaying) - 1]
@@ -107,8 +105,8 @@ app.controller 'main', ['$scope', '$interval', ($scope, $interval) ->
     $scope.play $scope.getNext()
 
   $scope.stop = ->
-    $scope.player.stop()
     $scope.nowPlaying.playing = false
+    $scope.player.stop()
 
   calculateProgress = ->
     $scope.progress = ($scope.player.currentTime / $scope.player.duration) * 100
@@ -123,6 +121,8 @@ app.controller 'main', ['$scope', '$interval', ($scope, $interval) ->
     $scope.nowPlaying = track
     $scope.player.play()
     $scope.player.timer = $interval calculateProgress, 100
+    $scope.player.on 'end', ->
+      $scope.next()
 
   socket = io.connect 'http://localhost'
 
