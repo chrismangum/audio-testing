@@ -1,5 +1,29 @@
 app = angular.module 'app', ['ngGrid']
 
+app.directive 'slider', ->
+  restrict: 'E'
+  link: ($scope, el, attrs) ->
+    sliderOptions =
+      start: 0,
+      connect: "lower"
+      range:
+        'min': 0,
+        'max': 398203
+
+    el.noUiSlider sliderOptions
+
+    el.on 'set', ->
+      $scope.player.seek parseInt $(this).val(), 10
+
+    $scope.$watch 'player.duration', (n, o) ->
+      if n isnt o
+        sliderOptions.range.max = n
+        el.noUiSlider sliderOptions, true
+
+    $scope.$watch 'player.currentTime', (n, o) ->
+      if n isnt o
+        el.val n
+
 app.controller 'main', ['$scope', ($scope) ->
   $scope.dataValues = []
   $scope.data = {}

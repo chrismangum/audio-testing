@@ -3,6 +3,7 @@ html
   head
     title
       | Audio Testing
+    link(rel="stylesheet", href="static/vendor/nouislider/jquery.nouislider.css")
     link(rel="stylesheet", href="static/css/styles.css")
     body(ng-app="app", ng-controller="main")
     .sidebar
@@ -55,9 +56,10 @@ html
         .time.time-passed {{ player.currentTime | convertTimestamp }}
         .time.time-remain {{ player.duration | convertTimestamp }}
         .progress-bar-container
-          .progress-bar
-          .progress-bar.progress-bar-played(style="width: {{progress}}%")
-            .progress-tick
+          slider
+          //-.progress-bar
+          //-.progress-bar.progress-bar-played(style="width: {{progress}}%")
+            //-.progress-tick
     .player-col-side
       button.button
         span.icon-repeat
@@ -72,6 +74,9 @@ html
     script(src="static/js/alac.js")
     script(src="/socket.io/socket.io.js")
     script(src="static/vendor/jquery/dist/jquery.min.js")
+    script(src="static/vendor/classval/jquery.classval.js")
+    script(src="static/vendor/nouislider/Link.js")
+    script(src="static/vendor/nouislider/jquery.nouislider.js")
     script(src="static/vendor/angular/angular.js")
     script(src="static/js/ng-grid.js")
     script(src="static/vendor/lodash/dist/lodash.js")

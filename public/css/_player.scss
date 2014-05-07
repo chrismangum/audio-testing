@@ -67,6 +67,41 @@
       margin: 0 35px;
       height: 10px;
     }
+    .noUi-base {
+      background: $light-blue;
+    }
+    .noUi-target {
+      border: 0;
+      border-radius: none;
+    }
+    .noUi-background {
+      background: $darker-blue;
+      box-shadow: none;
+    }
+    .noUi-origin {
+      border-radius: 0;
+    }
+    .noUi-horizontal .noUi-handle {
+      width: 5px;
+      height: 20px;
+      width: 4px;
+      height: 14px;
+      top: -2px;
+      left: 0;
+      background: $lighter-blue;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      transition: background 1s ease;
+      &:hover {
+        background: $white;
+        cursor: pointer;
+      }
+      &:before, &:after {
+        display: none;
+      }
+    }
+
     .progress-bar {
       position: absolute;
       top: 0;
