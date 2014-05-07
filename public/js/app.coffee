@@ -60,6 +60,8 @@ app.controller 'main', ['$scope', ($scope) ->
   getSelectedTrack = ->
     if $scope.gridOptions.selectedItems.length
       $scope.gridOptions.selectedItems[0]
+    else if $scope.shuffling
+      $scope.shuffledData[0]
     else
       $scope.dataValues[0]
 
