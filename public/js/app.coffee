@@ -96,7 +96,7 @@ app.controller 'main', ['$scope', ($scope) ->
     $scope.player.on 'end', ->
       $scope.next()
 
-  socket = io.connect 'http://localhost'
+  socket = io.connect location.origin
 
   socket.on 'metadata', (data) ->
     _.extend $scope.data.tracks[data.filePath], _.omit data, 'filePath'
