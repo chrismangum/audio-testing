@@ -27,16 +27,16 @@
       font-size: 30px;
       line-height: 0;
       &:hover {
-        color: $white;
+        color: $lighter-blue;
       }
-      &.button-play {
-        margin: 0 4px;
-        border-radius: 50%;
-        background: $light-blue;
-        color: $dark-blue;
+      &.active {
+        color: $white;
+        text-shadow: 0 0 2px rgba($white, .5), 0 0 6px rgba($white, .3), 0 0 10px rgba($white, .1);
+      }
+      &.button-circle {
+        border-color: $light-blue;
         &:hover {
-          background: $lighter-blue;
-          color: $darker-blue;
+          border-color: $lighter-blue;
         }
       }
     }
