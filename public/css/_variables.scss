@@ -11,10 +11,10 @@
   // Colors
   $white: #ecf0f1;
   $blue: #34495e;
-  $light-blue: tint($blue, 25%);
-  $lighter-blue: tint($blue, 50%);
-  $dark-blue: shade($blue, 25%);
-  $darker-blue: shade($blue, 50%);
+  $light-blue: tint($blue, 20%);
+  $lighter-blue: tint($blue, 40%);
+  $dark-blue: shade($blue, 20%);
+  $darker-blue: shade($blue, 40%);
 
   // Theme
   $media-list-color: $dark-blue;
@@ -29,8 +29,8 @@
   $label-line-height: 14px;
   $label-sort-arrow-color: $blue;
   
-  $row-odd-background-color: tint($lighter-blue, 50%);
-  $row-even-background-color: tint($lighter-blue, 55%);
+  $row-odd-background-color: tint($lighter-blue, 40%);
+  $row-even-background-color: tint($lighter-blue, 45%);
   $row-color: $blue;
   
   $row-selected-background-color: $blue;

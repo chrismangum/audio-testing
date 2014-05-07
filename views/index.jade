@@ -25,16 +25,14 @@ html
             a.icon-playlist Smooth Jams
           li
             a.icon-playlist Hibbity Hoppity
-      .now-playing-container
+      .now-playing-container(ng-class="{hidden: !nowPlaying}")
         .sidebar-title Now Playing
           button.button.toggle-now-playing
             span.icon-arrow-down
         .now-playing
-          .now-playing-info-container
-            .now-playing-info-bg(style="background-image: url('static/img/thriller.jpg')")
-            .now-playing-info
-              .track-name {{ nowPlaying.title }}
-              .track-info {{ nowPlaying.artist }} {{ nowPlaying ? '-' : '' }} {{ nowPlaying.album }}
+          .now-playing-info
+            .track-name {{ nowPlaying.title }}
+            .track-info {{ nowPlaying.artist }} {{ nowPlaying ? '-' : '' }} {{ nowPlaying.album }}
           img.now-playing-artwork(src="static/img/thriller.jpg")
     .main
       .toolbar
@@ -46,7 +44,7 @@ html
     .player-col-side
       button.button
         span.icon-prev(ng-click="previous()")
-      button.button
+      button.button.button-circle
         span(ng-click="togglePlayback()", class="{{nowPlaying ? 'icon-play' : 'icon-play'}}")
       button.button
         span.icon-next(ng-click="next()")

@@ -43,9 +43,15 @@
     &.active {
       
     }
+    &.button-circle {
+      margin-right: 4px;
+      margin-left: 4px;
+      border: 1px solid $light-blue;
+      border-radius: 50%;
+    }
     &.flip-icon {
       > .icon-arrow-down {
-        top: 2px;
+        top: 5px;
         transform: rotateX(180deg);
       }
     }

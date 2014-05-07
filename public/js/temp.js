@@ -10,8 +10,8 @@ $(window).on("resize", function() {
 
 toggleNowPlaying.on('click', function() {
   $(this).toggleClass('flip-icon');
-  nowPlaying.toggleClass('hidden');
-  if (nowPlaying.hasClass('hidden')) {
+  nowPlaying.toggleClass('now-playing-hide');
+  if (nowPlaying.hasClass('now-playing-hide')) {
   	nowPlaying.css({
 	  	marginBottom: -(nowPlaying.height()) + "px"
 	  })

@@ -23,7 +23,7 @@
     .sidebar-title {
       position: relative;
       padding: 8px 12px;
-      color: $blue;
+      color: $light-blue;
       text-transform: uppercase;
       font-weight: 600;
       font-size: 12px;
@@ -35,7 +35,7 @@
         width: 30px;
         height: 30px;
         color: inherit;
-        font-size: 12px;
+        font-size: 21px;
         &:hover {
           color: $white;
         }
@@ -82,38 +82,21 @@
         background-repeat: no-repeat;
         transition: all .3s ease-in-out;
       }
-      .now-playing-info-container {
+      .now-playing-info {
         position: absolute;
         bottom: 0;
         z-index: 2;
-        overflow: hidden;
+        z-index: 2;
+        padding: 12px;
         width: 100%;
-        .now-playing-info-bg {
-          position: absolute;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          margin: -1px; // http://stackoverflow.com/a/13182878
-          padding: 1px; // Fixes overflow: hidden issue
-          background-position: bottom;
-          background-size: cover;
-          background-repeat: no-repeat;
-          filter: blur(5px);
-        }
-        .now-playing-info {
-          position: relative;
-          z-index: 2;
-          padding: 12px;
-          background: rgba($darker-blue, .8);
-        }
+        background: rgba($darker-blue, .9);
         .track-name {
           color: $white;
           font-weight: 600;
           font-size: 13px;
         }
         .track-info {
-          color: $lighter-blue;
+          color: $white;
           font-weight: 300;
           font-size: 12px;
         }
