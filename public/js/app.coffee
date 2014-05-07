@@ -34,7 +34,7 @@ app.controller 'main', ['$scope', '$interval', ($scope, $interval) ->
     selectedItems: []
     showFilter: true
 
-  #set cellTemplate for all columns:
+  #set cellTemplate default for all columns:
   _.each $scope.gridOptions.columnDefs, (col) ->
     _.defaults col,
       cellTemplate:
@@ -76,6 +76,7 @@ app.controller 'main', ['$scope', '$interval', ($scope, $interval) ->
 
   $scope.stop = ->
     $scope.nowPlaying.playing = false
+    $scope.nowPlaying.paused = false
     $scope.player.stop()
 
   calculateProgress = ->
