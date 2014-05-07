@@ -42,11 +42,23 @@ app.controller 'main', ['$scope', ($scope) ->
           <span ng-cell-text>{{ COL_FIELD }}</span>
         </div>'
 
-  $scope.getSelectedTrack = ->
+  getAdjacentTrack = (direction) ->
+    $scope.dataValues[$scope.dataValues.indexOf($scope.nowPlaying) + direction]
+
+  getSelectedTrack = ->
     if $scope.gridOptions.selectedItems.length
       return $scope.gridOptions.selectedItems[0]
     else
       return $scope.dataValues[0]
+
+  stop = ->
+    $scope.nowPlaying.playing = false
+    $scope.nowPlaying.paused = false
+    $scope.player.stop()
+
+  $scope.safeApply = ->
+    unless $scope.$$phase
+      $scope.$apply()
 
   $scope.togglePlayback = ->
     unless $scope.nowPlaying
@@ -60,35 +72,27 @@ app.controller 'main', ['$scope', ($scope) ->
         $scope.nowPlaying.playing = true
         $scope.nowPlaying.paused = false
 
-  $scope.getAdjacent = (direction) ->
-    $scope.dataValues[$scope.dataValues.indexOf($scope.nowPlaying) + direction]
-
   $scope.previous = ->
     if $scope.player.currentTime > 1000
       $scope.player.seek 0
     else
-      $scope.play $scope.getAdjacent -1
+      $scope.play getAdjacentTrack -1
 
   $scope.next = ->
-    $scope.play $scope.getAdjacent 1
-
-  $scope.stop = ->
-    $scope.nowPlaying.playing = false
-    $scope.nowPlaying.paused = false
-    $scope.player.stop()
+    $scope.play getAdjacentTrack 1
 
   $scope.play = (track) ->
     if $scope.player
-      $scope.stop()
+      stop()
     unless track
-      track = $scope.getSelectedTrack()
+      track = getSelectedTrack()
     $scope.player = AV.Player.fromURL 'target/' + track.filePath
     track.playing = true
     $scope.nowPlaying = track
     $scope.player.play()
     $scope.player.on 'progress', (timestamp) ->
       $scope.progress = (timestamp / $scope.player.duration) * 100
-      $scope.$apply()
+      $scope.safeApply()
     $scope.player.on 'end', ->
       $scope.next()
 
