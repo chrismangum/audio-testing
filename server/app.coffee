@@ -113,7 +113,7 @@ class Json
         @save()
 
   getTrackMetaData: (track, callback) ->
-    if @socket.diconnected
+    if @socket.disconnected
       callback true
     else if @json.tracks[track].scanned
       callback()
