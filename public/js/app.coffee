@@ -3,6 +3,7 @@ app = angular.module 'app', ['ngGrid']
 app.directive 'slider', ->
   restrict: 'E'
   link: ($scope, el, attrs) ->
+    sliding = false
     sliderOptions =
       start: 0,
       connect: "lower"
@@ -12,7 +13,11 @@ app.directive 'slider', ->
 
     el.noUiSlider sliderOptions
 
+    el.on 'slide', ->
+      sliding = true
+
     el.on 'set', ->
+      sliding = false
       $scope.player.seek parseInt $(this).val(), 10
 
     $scope.$watch 'player.duration', (n, o) ->
@@ -21,7 +26,7 @@ app.directive 'slider', ->
         el.noUiSlider sliderOptions, true
 
     $scope.$watch 'player.currentTime', (n, o) ->
-      if n isnt o
+      if n isnt o and not sliding
         el.val n
 
 app.controller 'main', ['$scope', ($scope) ->
