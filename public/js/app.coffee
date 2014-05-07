@@ -1,4 +1,3 @@
-
 app = angular.module 'app', ['ngGrid']
 
 app.controller 'main', ['$scope', '$interval', ($scope, $interval) ->
@@ -63,46 +62,17 @@ app.controller 'main', ['$scope', '$interval', ($scope, $interval) ->
         $scope.nowPlaying.paused = false
         $scope.player.timer = $interval calculateProgress, 100
 
-
-  padTime = (n) ->
-    if n < 10
-      n = '0' + n
-    return n
-
-  convertTimestamp = (s) ->
-    ms = s % 1000
-    s = (s - ms) / 1000
-    secs = s % 60
-    s = (s - secs) / 60
-    mins = s % 60
-    hrs = (s - mins) / 60
-    if hrs
-      return hrs + ':' + padTime mins + ':' + padTime secs
-    else
-      return mins + ':' + padTime secs
-
-  $scope.getCurrentTime = ->
-    if $scope.player
-      convertTimestamp $scope.player.currentTime
-
-  $scope.getDuration = ->
-    if $scope.player
-      convertTimestamp $scope.player.duration
-
-  $scope.getPrevious = ->
-    return $scope.dataValues[$scope.dataValues.indexOf($scope.nowPlaying) - 1]
-
-  $scope.getNext = ->
-    return $scope.dataValues[$scope.dataValues.indexOf($scope.nowPlaying) + 1]
+  $scope.getAdjacent = (direction) ->
+    return $scope.dataValues[$scope.dataValues.indexOf($scope.nowPlaying) + direction]
 
   $scope.previous = ->
     if $scope.player.currentTime > 1000
       $scope.player.seek 0
     else
-      $scope.play $scope.getPrevious()
+      $scope.play $scope.getAdjacent -1
 
   $scope.next = ->
-    $scope.play $scope.getNext()
+    $scope.play $scope.getAdjacent 1
 
   $scope.stop = ->
     $scope.nowPlaying.playing = false
@@ -135,3 +105,22 @@ app.controller 'main', ['$scope', '$interval', ($scope, $interval) ->
     $scope.dataValues = _.values data.tracks
     $scope.$apply()
 ]
+
+app.filter 'convertTimestamp', ->
+  padTime = (n) ->
+    if n < 10
+      n = '0' + n
+    return n
+
+  (s = 0) ->
+    ms = s % 1000
+    s = (s - ms) / 1000
+    secs = s % 60
+    s = (s - secs) / 60
+    mins = s % 60
+    hrs = (s - mins) / 60
+    if hrs
+      return hrs + ':' + padTime mins + ':' + padTime secs
+    else
+      return mins + ':' + padTime secs
+

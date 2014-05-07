@@ -52,8 +52,8 @@ html
         span.icon-next(ng-click="next()")
     .player-col-middle
       .progress(ng-class="{hidden: !nowPlaying}")
-        .time.time-passed {{ getCurrentTime() }}
-        .time.time-remain {{ getDuration() }}
+        .time.time-passed {{ player.currentTime | convertTimestamp }}
+        .time.time-remain {{ player.duration | convertTimestamp }}
         .progress-bar-container
           .progress-bar
           .progress-bar.progress-bar-played(style="width: {{progress}}%")
