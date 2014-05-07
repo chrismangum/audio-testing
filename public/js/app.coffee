@@ -48,11 +48,14 @@ app.controller 'main', ['$scope', ($scope) ->
           <span ng-cell-text>{{ COL_FIELD }}</span>
         </div>'
 
+  getAdjacentTrackFromArray = (array, direction) ->
+      array[array.indexOf($scope.nowPlaying) + direction] or false
+
   getAdjacentTrack = (direction) ->
     if $scope.shuffling
-      $scope.shuffledData[$scope.shuffledData.indexOf($scope.nowPlaying) + direction]
+      getAdjacentTrackFromArray $scope.shuffledData, direction
     else
-      $scope.dataValues[$scope.dataValues.indexOf($scope.nowPlaying) + direction]
+      getAdjacentTrackFromArray $scope.dataValues, direction
 
   getSelectedTrack = ->
     if $scope.gridOptions.selectedItems.length
@@ -91,6 +94,8 @@ app.controller 'main', ['$scope', ($scope) ->
     $scope.play getAdjacentTrack 1
 
   $scope.play = (track) ->
+    if track is false
+      return
     if $scope.player
       stop()
     unless track
