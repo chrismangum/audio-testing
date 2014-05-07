@@ -7,6 +7,7 @@ async = require 'async'
 exec = require('child_process').exec
 server = require('http').createServer app
 io = require('socket.io').listen server
+readline = require 'readline'
 
 target = null
 json = null
@@ -84,7 +85,8 @@ class Json
       else if @target.exists
         @scan()
       else
-        @socket.emit 'promptTarget'
+        @target.prompt =>
+          @scan()
 
   save: ->
     fs.writeFileSync '../cache.json', JSON.stringify @json
@@ -141,6 +143,18 @@ class Target
       @use()
       process.chdir __dirname
 
+  prompt: (callback) ->
+    unless @iface
+      @iface = readline.createInterface
+        input: process.stdin
+        output: process.stdout
+    @iface.question 'Please enter media directory:', (target) =>
+      if fs.existsSync target
+        @create target
+        callback()
+      else
+        @prompt callback
+
   use: ->
     app.use '/target', express.static @target
 
@@ -148,10 +162,11 @@ class Target
     if target
       @target = target
       @exists = true
-      fs.symlinkSync '../target', @target
+      fs.symlinkSync @target, '../target'
       @use()
 
 
+io.set 'log level', 1
 io.sockets.on 'connection', (socket) ->
   unless target?
     target = new Target()
