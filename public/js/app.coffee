@@ -1,6 +1,6 @@
 app = angular.module 'app', ['ngGrid']
 
-app.controller 'main', ['$scope', '$interval', ($scope, $interval) ->
+app.controller 'main', ['$scope', ($scope) ->
   $scope.dataValues = []
   $scope.data = {}
   $scope.nowPlaying = false
@@ -56,14 +56,12 @@ app.controller 'main', ['$scope', '$interval', ($scope, $interval) ->
       if $scope.nowPlaying.playing
         $scope.nowPlaying.playing = false
         $scope.nowPlaying.paused = true
-        $interval.cancel $scope.player.timer
       else
         $scope.nowPlaying.playing = true
         $scope.nowPlaying.paused = false
-        $scope.player.timer = $interval calculateProgress, 100
 
   $scope.getAdjacent = (direction) ->
-    return $scope.dataValues[$scope.dataValues.indexOf($scope.nowPlaying) + direction]
+    $scope.dataValues[$scope.dataValues.indexOf($scope.nowPlaying) + direction]
 
   $scope.previous = ->
     if $scope.player.currentTime > 1000
@@ -79,9 +77,6 @@ app.controller 'main', ['$scope', '$interval', ($scope, $interval) ->
     $scope.nowPlaying.paused = false
     $scope.player.stop()
 
-  calculateProgress = ->
-    $scope.progress = ($scope.player.currentTime / $scope.player.duration) * 100
-
   $scope.play = (track) ->
     if $scope.player
       $scope.stop()
@@ -91,7 +86,9 @@ app.controller 'main', ['$scope', '$interval', ($scope, $interval) ->
     track.playing = true
     $scope.nowPlaying = track
     $scope.player.play()
-    $scope.player.timer = $interval calculateProgress, 100
+    $scope.player.on 'progress', (timestamp) ->
+      $scope.progress = (timestamp / $scope.player.duration) * 100
+      $scope.$apply()
     $scope.player.on 'end', ->
       $scope.next()
 
