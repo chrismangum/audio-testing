@@ -49,7 +49,7 @@ app.controller 'main', ['$scope', ($scope) ->
         </div>'
 
   getAdjacentTrackFromArray = (array, direction) ->
-      array[array.indexOf($scope.nowPlaying) + direction] or false
+    array[array.indexOf($scope.nowPlaying) + direction] or false
 
   getAdjacentTrack = (direction) ->
     if $scope.shuffling
@@ -59,9 +59,9 @@ app.controller 'main', ['$scope', ($scope) ->
 
   getSelectedTrack = ->
     if $scope.gridOptions.selectedItems.length
-      return $scope.gridOptions.selectedItems[0]
+      $scope.gridOptions.selectedItems[0]
     else
-      return $scope.dataValues[0]
+      $scope.dataValues[0]
 
   stop = ->
     $scope.nowPlaying.playing = false
