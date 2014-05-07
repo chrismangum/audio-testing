@@ -20,7 +20,6 @@
     "angular": "~1.2.16",
     "ng-grid": "~2.0.11",
     "lodash": "~2.4.1",
-    "nouislider": "~6.1.1",
-    "angular-ui-bootstrap": "~0.11.0"
+    "nouislider": "~6.1.1"
   }
 }
