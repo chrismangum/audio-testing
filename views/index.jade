@@ -46,7 +46,7 @@ html
       button.button
         span.icon-prev(ng-click="previous()")
       button.button.button-circle
-        span(ng-click="togglePlayback()", class="{{nowPlaying ? 'icon-play' : 'icon-play'}}")
+        span(ng-click="togglePlayback()", class="{{nowPlaying.playing ? 'icon-pause' : 'icon-play'}}")
       button.button
         span.icon-next(ng-click="next()")
     .player-col-middle
@@ -58,7 +58,7 @@ html
     .player-col-side
       button.button
         span.icon-repeat
-      button.button
+      button.button(ng-class="{active: shuffling}", ng-click="shuffle()")
         span.icon-shuffle
       button.button
         span.icon-volume

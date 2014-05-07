@@ -1,40 +1,17 @@
 app = angular.module 'app', ['ngGrid']
 
-app.directive 'slider', ->
-  restrict: 'E'
-  link: ($scope, el, attrs) ->
-    sliding = false
-    sliderOptions =
-      start: 0,
-      connect: "lower"
-      range:
-        'min': 0,
-        'max': 398203
-
-    el.noUiSlider sliderOptions
-
-    el.on 'slide', ->
-      sliding = true
-
-    el.on 'set', ->
-      sliding = false
-      $scope.player.seek parseInt $(this).val(), 10
-
-    $scope.$watch 'player.duration', (n, o) ->
-      if n isnt o
-        sliderOptions.range.max = n
-        el.noUiSlider sliderOptions, true
-
-    $scope.$watch 'player.currentTime', (n, o) ->
-      if n isnt o and not sliding
-        el.val n
-
 app.controller 'main', ['$scope', ($scope) ->
   $scope.dataValues = []
   $scope.data = {}
   $scope.nowPlaying = false
   $scope.player = null
   $scope.progress = 0
+  $scope.shuffling = false
+
+  $scope.shuffle = ->
+    $scope.shuffling = !$scope.shuffling
+    if $scope.shuffling
+      $scope.shuffledData = _.shuffle $scope.dataValues
 
   $scope.gridOptions =
     columnDefs: [
@@ -72,7 +49,10 @@ app.controller 'main', ['$scope', ($scope) ->
         </div>'
 
   getAdjacentTrack = (direction) ->
-    $scope.dataValues[$scope.dataValues.indexOf($scope.nowPlaying) + direction]
+    if $scope.shuffling
+      $scope.shuffledData[$scope.shuffledData.indexOf($scope.nowPlaying) + direction]
+    else
+      $scope.dataValues[$scope.dataValues.indexOf($scope.nowPlaying) + direction]
 
   getSelectedTrack = ->
     if $scope.gridOptions.selectedItems.length
@@ -136,6 +116,35 @@ app.controller 'main', ['$scope', ($scope) ->
     $scope.dataValues = _.values data.tracks
     $scope.$apply()
 ]
+
+app.directive 'slider', ->
+  restrict: 'E'
+  link: ($scope, el, attrs) ->
+    sliding = false
+    sliderOptions =
+      start: 0,
+      connect: "lower"
+      range:
+        'min': 0,
+        'max': 398203
+
+    el.noUiSlider sliderOptions
+
+    el.on 'slide', ->
+      sliding = true
+
+    el.on 'set', ->
+      sliding = false
+      $scope.player.seek parseInt $(this).val(), 10
+
+    $scope.$watch 'player.duration', (n, o) ->
+      if n isnt o
+        sliderOptions.range.max = n
+        el.noUiSlider sliderOptions, true
+
+    $scope.$watch 'player.currentTime', (n, o) ->
+      if n isnt o and not sliding
+        el.val n
 
 app.filter 'convertTimestamp', ->
   padTime = (n) ->
