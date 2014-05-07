@@ -1,4 +1,4 @@
-app = angular.module 'app', ['ngGrid', 'ui.bootstrap']
+app = angular.module 'app', ['ngGrid']
 
 app.directive 'slider', ->
   restrict: 'E'
@@ -24,7 +24,7 @@ app.directive 'slider', ->
       if n isnt o
         el.val n
 
-app.controller 'main', ['$scope', '$modal', ($scope, $modal) ->
+app.controller 'main', ['$scope', ($scope) ->
   $scope.dataValues = []
   $scope.data = {}
   $scope.nowPlaying = false
