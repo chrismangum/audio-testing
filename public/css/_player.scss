@@ -10,8 +10,8 @@
     min-width: $app-min-width;
     width: 100%;
     height: $player-height;
-    background: $dark-blue;
-    color: $light-blue;
+    background: $player-background;
+    color: $player-color;
     text-align: center;
     .player-col-side {
       padding: 20px 0;
@@ -23,20 +23,20 @@
     .button {
       width: 40px;
       height: 40px;
-      color: $light-blue;
+      color: $player-button-color;
       font-size: 30px;
       line-height: 0;
       &:hover {
-        color: $lighter-blue;
+        color: $player-button-color-hover;
       }
       &.active {
-        color: $white;
-        text-shadow: 0 0 2px rgba($white, .5), 0 0 6px rgba($white, .3), 0 0 10px rgba($white, .1);
+        color: $player-button-color-active;
+        text-shadow: $player-button-text-shadow-active;
       }
       &.button-circle {
-        border-color: $light-blue;
+        border-color: $player-button-circle-border-color;
         &:hover {
-          border-color: $lighter-blue;
+          border-color: $player-button-circle-border-color-active;
         }
       }
     }
@@ -70,7 +70,7 @@
     position: relative;
     width: 100%;
     height: 100%;
-    background: $light-blue;
+    background: $progress-bar-passed-background;
     &:hover {
       cursor: pointer;
     }
@@ -83,7 +83,7 @@
     left: 0;
   }
   .noUi-background {
-    background: $darker-blue;
+    background: $progress-bar-remain-background;
   }
   .noUi-handle {
     position: relative;
@@ -94,11 +94,11 @@
     height: 14px;
     border: 0;
     border-radius: 0;
-    background: $lighter-blue;
+    background: $progress-bar-handle-background;
     box-shadow: none;
     transition: background 1s ease;
     &:hover {
-      background: $white;
+      background: $progress-bar-handle-background-hover;
       cursor: pointer;
     }
     &:before, &:after {

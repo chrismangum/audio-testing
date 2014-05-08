@@ -68,10 +68,10 @@
     position: absolute;
     overflow: hidden;
     &:hover {
-      background: linear-gradient(tint($label-background-color, 20%), tint($label-background-color, 10%));
+      background: $label-background-color-hover;
     }
     &:active {
-      background: linear-gradient(tint($label-background-color, 10%), tint($label-background-color, 20%));
+      background: $label-background-color-active;
     }
   }
 

@@ -1,45 +1,8 @@
 /*==========================================================================
-  Variables
+  Layout Variables
   ==========================================================================*/
   
-  // Layout
   $app-min-width: 700px;
   $toolbar-height: 38px;
   $sidebar-width: 200px;
   $player-height: 80px;
-
-  // Colors
-  $white: #ecf0f1;
-  $blue: #34495e;
-  $light-blue: tint($blue, 20%);
-  $lighter-blue: tint($blue, 40%);
-  $dark-blue: shade($blue, 20%);
-  $darker-blue: shade($blue, 40%);
-
-  // Theme
-  $media-list-color: $dark-blue;
-
-  $grid-background-color: $light-blue;
-  
-  $label-background-color: $light-blue;
-  $label-color: $white;
-  $label-column-border: shade($light-blue, 20%);
-  $label-font-size: 12px;
-  $label-font-weight: 600;
-  $label-line-height: 14px;
-  $label-sort-arrow-color: $blue;
-  
-  $row-odd-background-color: tint($lighter-blue, 40%);
-  $row-even-background-color: tint($lighter-blue, 45%);
-  $row-color: $blue;
-  
-  $row-selected-background-color: $blue;
-  $row-selected-color: $white;
-
-  $row-font-size: 12px;
-  $row-font-weight: 600;
-  $row-line-height: 14px;
-  
-  $row-column-border: transparent;
-  
-  
