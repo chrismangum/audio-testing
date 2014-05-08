@@ -33,8 +33,8 @@
   $media-list-color: $primary-dark;
   $grid-background-color: $primary-light;
   $label-background-color: $primary-light;
-  $label-background-color-hover: linear-gradient(tint($primary, 40%), tint($primary, 30%));
-  $label-background-color-active: linear-gradient(tint($primary, 30%), tint($primary, 40%));
+  $label-background-color-hover: linear-gradient(tint($primary-light, 5%), $primary-light);
+  $label-background-color-active: linear-gradient($primary-light, tint($primary-light, 5%));
   $label-color: $secondary;
   $label-column-border: shade($primary-light, 20%);
   $label-font-size: 12px;
@@ -50,6 +50,8 @@
   $row-font-weight: 600;
   $row-line-height: 14px;
   $row-column-border: transparent;
+  $row-group-background: linear-gradient(tint($primary-light, 40%), tint($primary-light, 35%));
+  $row-group-background-hover: linear-gradient(tint($primary-light, 45%), tint($primary-light, 35%));
   
   // Player
   $player-background: $primary-dark;

@@ -32,9 +32,9 @@
   .ngVerticalBar {
     position: absolute;
     right: 0;
+    z-index: 1;
     width: 1px;
     background-color: $row-column-border;
-    z-index: 1;
   }
 
   #testDataLength {
@@ -82,18 +82,33 @@
   }
 
   .ngSortButtonUp,
-  .ngSortButtonDown {
+  .ngSortButtonDown,
+  .ngAggArrowCollapsed,
+  .ngAggArrowExpanded {
     @extend .icon;
     @extend .icon-arrow-down;
     position: absolute;
     top: 7px;
-    right: 6px;
     color: $label-sort-arrow-color;
+  }
+
+  .ngSortButtonUp,
+  .ngSortButtonDown {
+    right: 6px;
+  }
+
+  .ngAggArrowCollapsed,
+  .ngAggArrowExpanded {
+    left: 6px;
   }
 
   .ngSortButtonUp {
     top: 6px;
     transform: rotateX(180deg);
+  }
+
+  .ngAggArrowCollapsed {
+    transform: rotate(-90deg);
   }
 
   .ngNoSort {
@@ -138,7 +153,6 @@
 
   .ngHeaderText {
     overflow: hidden;
-    box-sizing: border-box;
     padding: 6px 8px;
     color: $label-color;
     text-transform: uppercase;
@@ -290,17 +304,6 @@
     right: -10px;
   }
 
-  .ngAggArrowCollapsed {
-    position: absolute;
-    bottom: 10px;
-    left: 8px;
-    width: 0;
-    height: 0;
-    border-width: 5px 0 5px 8.7px;
-    border-style: solid;
-    border-color: transparent transparent transparent #000000;
-  }
-
   .ngGroupItem {
     float: left;
     &:first-child {
@@ -321,34 +324,28 @@
     }
   }
 
-  .ngAggArrowExpanded {
-    position: absolute;
-    bottom: 10px;
-    left: 8px;
-    width: 0;
-    height: 0;
-    border-width: 0 0 9px 9px;
-    border-style: solid;
-    border-color: transparent transparent #000000 transparent;
-  }
-
   .ngAggregate {
     position: absolute;
     top: 0;
-    right: -1px;
+    right: 0;
     bottom: 0;
     left: 0;
     overflow: hidden;
-    border-bottom: 1px solid beige;
-    background-color: #c9dde1;
+    background: $row-group-background;
+    &:hover {
+      background: $row-group-background-hover;
+      cursor: pointer;
+    }
   }
 
   .ngAggregateText {
-    position: absolute;
-    top: 5px;
-    left: 27px;
+    display: block;
+    margin-left: 25px;
+    padding: 6px 8px;
     white-space: nowrap;
-    line-height: 20px;
+    font-weight: $row-font-weight;
+    font-size: $row-font-size;
+    line-height: $row-line-height;
   }
 
   .ngRow {
@@ -380,7 +377,6 @@
 
   .ngCellText {
     overflow: hidden;
-    box-sizing: border-box;
     padding: 6px 8px;
     text-overflow: ellipsis;
     white-space: nowrap;
