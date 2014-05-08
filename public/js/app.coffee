@@ -150,10 +150,10 @@ app.directive 'slider', ->
   link: ($scope, el, attrs) ->
     sliding = false
     sliderOptions =
-      start: 0,
+      start: 0
       connect: "lower"
       range:
-        'min': 0,
+        'min': 0
         'max': 398203
 
     el.noUiSlider sliderOptions
@@ -166,7 +166,7 @@ app.directive 'slider', ->
       $scope.player.seek parseInt $(this).val(), 10
 
     $scope.$watch 'player.duration', (n, o) ->
-      if n isnt o
+      if n and n isnt o
         sliderOptions.range.max = n
         el.noUiSlider sliderOptions, true
 
