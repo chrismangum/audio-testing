@@ -69,14 +69,14 @@ app.controller 'main', ['$scope', ($scope) ->
           <span ng-cell-text>{{ COL_FIELD }}</span>
         </div>'
 
-  getAdjacentTrackFromArray = (array, direction) ->
+  getAdjacentTrackInArray = (array, direction) ->
     array[array.indexOf($scope.nowPlaying) + direction] or false
 
   getAdjacentTrack = (direction) ->
     if $scope.shuffling
-      getAdjacentTrackFromArray $scope.shuffledData, direction
+      getAdjacentTrackInArray $scope.shuffledData, direction
     else
-      getAdjacentTrackFromArray $scope.dataValues, direction
+      getAdjacentTrackInArray $scope.dataValues, direction
 
   getSelectedTrack = ->
     if $scope.gridOptions.selectedItems.length
@@ -137,12 +137,12 @@ app.controller 'main', ['$scope', ($scope) ->
 
   socket.on 'metadata', (data) ->
     _.extend $scope.data.tracks[data.filePath], _.omit data, 'filePath'
-    $scope.$apply()
+    $scope.safeApply()
 
   socket.on 'json', (data) ->
     $scope.data = data
     $scope.dataValues = _.values data.tracks
-    $scope.$apply()
+    $scope.safeApply()
 ]
 
 app.directive 'slider', ->
