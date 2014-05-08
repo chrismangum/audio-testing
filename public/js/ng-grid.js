@@ -1722,6 +1722,7 @@ var ngGrid = function ($scope, options, sortService, domUtilityService, $filter,
                 }
             });
             sortService.Sort(self.config.sortInfo, tempData);
+            options.sortedData = tempData;
             angular.forEach(tempData, function(item, i) {
                 self.rowCache[i].entity = item;
                 self.rowCache[i].selected = item.preSortSelected;

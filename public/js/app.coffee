@@ -34,6 +34,9 @@ app.controller 'main', ['$scope', ($scope) ->
     if n isnt o
       $scope.gridOptions.filterOptions.filterText = n
 
+  $scope.$on 'ngGridEventSorted', ->
+    $scope.sortedData = $scope.gridOptions.sortedData
+
   $scope.gridOptions =
     columnDefs: [
       {
@@ -75,6 +78,8 @@ app.controller 'main', ['$scope', ($scope) ->
   getAdjacentTrack = (direction) ->
     if $scope.shuffling
       getAdjacentTrackInArray $scope.shuffledData, direction
+    else if $scope.sortedData
+      getAdjacentTrackInArray $scope.sortedData, direction
     else
       getAdjacentTrackInArray $scope.dataValues, direction
 
