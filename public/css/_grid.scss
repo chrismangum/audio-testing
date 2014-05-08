@@ -3,7 +3,6 @@
   ==========================================================================*/
 
   .ngGrid {
-    background-color: $grid-background-color;
     input {
       vertical-align: top;
       &[type="checkbox"] {
@@ -73,6 +72,9 @@
     &:active {
       background: $label-background-color-active;
     }
+    &.ngSorted {
+      background: $label-background-color-sorted;
+    }
   }
 
   .ngTopPanel {
@@ -89,17 +91,18 @@
     @extend .icon-arrow-down;
     position: absolute;
     top: 7px;
-    color: $label-sort-arrow-color;
   }
 
   .ngSortButtonUp,
   .ngSortButtonDown {
     right: 6px;
+    color: $label-sort-arrow-color;
   }
 
   .ngAggArrowCollapsed,
   .ngAggArrowExpanded {
     left: 6px;
+    color: $row-group-arrow-color;
   }
 
   .ngSortButtonUp {

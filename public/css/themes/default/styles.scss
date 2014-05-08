@@ -22,7 +22,7 @@
   ==========================================================================*/
   
   // Main
-  $main-background: $primary-light;
+  $main-background: tint($primary-light, 20%);
   $toolbar-background: $primary;
   $search-icon-color: $primary-light;
   $search-placeholder-color: $primary-light;
@@ -31,16 +31,16 @@
 
   // Grid
   $media-list-color: $primary-dark;
-  $grid-background-color: $primary-light;
   $label-background-color: $primary-light;
   $label-background-color-hover: linear-gradient(tint($primary-light, 5%), $primary-light);
   $label-background-color-active: linear-gradient($primary-light, tint($primary-light, 5%));
+  $label-background-color-sorted: linear-gradient(shade($primary-light, 15%), shade($primary-light, 5%));
   $label-color: $secondary;
   $label-column-border: shade($primary-light, 20%);
   $label-font-size: 12px;
   $label-font-weight: 600;
   $label-line-height: 14px;
-  $label-sort-arrow-color: $primary;
+  $label-sort-arrow-color: $secondary;
   $row-odd-background-color: tint($primary-lighter, 40%);
   $row-odd-background-color-hover: tint($primary-lighter, 55%);
   $row-even-background-color: tint($primary-lighter, 45%);
@@ -54,6 +54,7 @@
   $row-column-border: transparent;
   $row-group-background: linear-gradient(tint($primary-light, 40%), tint($primary-light, 35%));
   $row-group-background-hover: linear-gradient(tint($primary-light, 45%), tint($primary-light, 35%));
+  $row-group-arrow-color: $primary;
   
   // Player
   $player-background: $primary-dark;
