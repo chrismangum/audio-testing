@@ -1,4 +1,5 @@
-var toggleNowPlaying = $('.toggle-now-playing'),
+var toggleNowPlaying = $('.now-playing-container .sidebar-title'),
+    nowPlayingButton = $('.now-playing-button');
     nowPlaying = $('.now-playing');
 
 $(window).on('resize', function() {
@@ -9,7 +10,7 @@ $(window).on('resize', function() {
 
 
 toggleNowPlaying.on('click', function() {
-  $(this).toggleClass('flip-icon');
+  nowPlayingButton.toggleClass('flip-icon');
   nowPlaying.toggleClass('now-playing-hide');
   if (nowPlaying.hasClass('now-playing-hide')) {
     nowPlaying.css({
