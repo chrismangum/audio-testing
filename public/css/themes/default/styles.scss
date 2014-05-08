@@ -42,7 +42,9 @@
   $label-line-height: 14px;
   $label-sort-arrow-color: $primary;
   $row-odd-background-color: tint($primary-lighter, 40%);
+  $row-odd-background-color-hover: tint($primary-lighter, 55%);
   $row-even-background-color: tint($primary-lighter, 45%);
+  $row-even-background-color-hover: tint($primary-lighter, 55%);
   $row-color: $primary;
   $row-selected-background-color: $primary;
   $row-selected-color: $secondary;
@@ -68,8 +70,8 @@
   $progress-bar-handle-background-hover: $secondary;
 
   // Sidebar
+  $sidebar-background: $primary-darker;
   $sidebar-color: $primary-lighter;
-  $sidebar-container-background: $primary-darker;
   $sidebar-title-color: $primary-light;
   $sidebar-title-button-color: $secondary;
   $sidebar-link-color: $primary-lighter;
@@ -77,6 +79,8 @@
   $sidebar-link-color-hover: $secondary;
   $now-playing-sidebar-title-background: $primary;
   $now-playing-sidebar-title-color: $primary-light;
+  $now-playing-sidebar-title-background-hover: tint($primary, 2%);
+  $now-playing-sidebar-title-color-hover: $secondary;
   $now-playing-background-color: $primary-darker;
   $now-playing-info-background: rgba($primary-darker, .9);
   $now-playing-info-track-name: $secondary;

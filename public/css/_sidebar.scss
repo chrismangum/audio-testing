@@ -11,13 +11,13 @@
     padding-bottom: $player-height;
     width: $sidebar-width;
     height: 100%;
+    background: $sidebar-background;
     color: $sidebar-color;
     .sidebar-container {
       overflow-x: hidden;
       overflow-y: scroll;
       padding-top: 8px;
       height: 100%;
-      background: $sidebar-container-background;
       flex: 1;
     }
     .sidebar-title {
@@ -79,6 +79,15 @@
       .sidebar-title {
         background: $now-playing-sidebar-title-background;
         color: $now-playing-sidebar-title-color;
+        transition: all .2s ease;
+        &:hover {
+          background: $now-playing-sidebar-title-background-hover;
+          color: $now-playing-sidebar-title-color-hover;
+          cursor: pointer;
+        }
+        .button {
+          transition: none;
+        }
       }
       .now-playing {
         position: relative;
@@ -86,7 +95,7 @@
         background-position: center;
         background-size: contain;
         background-repeat: no-repeat;
-        transition: all .3s ease-in-out;
+        transition: all .3s cubic-bezier(0.250, -0.150, 0.250, 1.150);
       }
       .now-playing-info {
         position: absolute;

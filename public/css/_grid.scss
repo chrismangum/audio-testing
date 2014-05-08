@@ -354,13 +354,22 @@
     color: $row-color;
     &.odd {
       background-color: $row-odd-background-color;
+      &:hover {
+        background-color: $row-odd-background-color-hover;
+      }
     }
     &.even {
       background-color: $row-even-background-color;
+      &:hover {
+        background-color: $row-even-background-color-hover;
+      }
     }
     &.selected {
       background-color: $row-selected-background-color;
       color: $row-selected-color;
+      &:hover {
+        background-color: $row-selected-background-color;
+      }
     }
   }
 
