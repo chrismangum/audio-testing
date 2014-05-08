@@ -163,7 +163,7 @@ app.directive 'slider', ->
 
     el.on 'set', ->
       sliding = false
-      $scope.player.seek parseInt $(this).val(), 10
+      $scope.player.seek parseInt $(@).val(), 10
 
     $scope.$watch 'player.duration', (n, o) ->
       if n and n isnt o
