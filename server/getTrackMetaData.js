@@ -2,6 +2,7 @@
 
 var fs = require('fs'),
   async = require('async'),
+  path = require('path'),
   _ = require('lodash');
 
 require('../public/js/aurora.js');
@@ -23,11 +24,26 @@ function processData(data, callback) {
 }
 var processDataOnce = _.once(processData);
 
-function getTrackMetaData(track, callback) {
+function readEntireFile(track, callback) {
+  fs.readFile(track, function (err, data) {
+    if (err) throw err;
+    processData(data, callback);
+  });
+}
+
+function readStream(track, callback) {
   var stream = fs.createReadStream(track, {start: 0, end: 9999});
   stream.on('data', function (data) {
     processDataOnce(data, callback);
   });
+}
+
+function getTrackMetaData(track, callback) {
+  if (path.extname(track) === '.m4a') {
+    readEntireFile(track, callback);
+  } else {
+    readStream(track, callback);
+  }
 }
 
 async.map(process.argv.slice(2), getTrackMetaData,
