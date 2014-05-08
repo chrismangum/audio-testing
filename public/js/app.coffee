@@ -1,4 +1,22 @@
-app = angular.module 'app', ['ngGrid']
+app = angular.module 'app', ['ngRoute', 'ngGrid']
+
+app.config ['$routeProvider', ($routeProvider) ->
+  routeObj =
+    template: '<div class="media-list" ng-grid="gridOptions"></div>'
+    controller: 'tmp'
+  $routeProvider
+    .when '/:group', routeObj
+    .otherwise routeObj
+]
+
+app.controller 'tmp', ['$scope', '$routeParams',
+  ($scope, $routeParams) ->
+    console.log $routeParams
+    if $routeParams.group
+      $scope.gridOptions.groups = [$routeParams.group]
+    else
+      $scope.gridOptions.groups = []
+]
 
 app.controller 'main', ['$scope', ($scope) ->
   $scope.dataValues = []

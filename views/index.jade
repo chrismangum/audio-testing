@@ -10,13 +10,13 @@ html
         .sidebar-title Browse
         ul
           li
-            a.icon-songs Songs
+            a.icon-songs(ng-href="#", ng-class="{active: !gridOptions.groups[0]}") Songs
           li
-            a.icon-artists Artists
+            a.icon-artists(ng-href="#/artist", ng-class="{active: gridOptions.groups[0] === 'artist'}") Artists
           li
-            a.icon-albums Albums
+            a.icon-albums(ng-href="#/album", ng-class="{active: gridOptions.groups[0] === 'album'}") Albums
           li
-            a.icon-genres Genres
+            a.icon-genres(ng-href="#/genre", ng-class="{active: gridOptions.groups[0] === 'genre'}") Genres
         .sidebar-title Playlists
           button.button
             span.icon-add
@@ -39,7 +39,7 @@ html
         .search
           span.icon-search
           input(type="text", placeholder="Search")
-      .media-list(ng-grid="gridOptions")
+      ng-view
   .player
     .player-col-side
       button.button
@@ -72,6 +72,7 @@ html
     script(src="static/vendor/nouislider/Link.js")
     script(src="static/vendor/nouislider/jquery.nouislider.js")
     script(src="static/vendor/angular/angular.js")
+    script(src="static/vendor/angular-route/angular-route.js")
     script(src="static/js/ng-grid.js")
     script(src="static/vendor/lodash/dist/lodash.js")
     script(src="static/js/app.min.js")
