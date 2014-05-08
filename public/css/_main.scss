@@ -7,7 +7,7 @@
     padding-bottom: $player-height;
     padding-left: $sidebar-width;
     min-width: $app-min-width;
-    background: $light-blue;
+    background: $main-background;
   }
   .toolbar {
     position: absolute;
@@ -17,7 +17,7 @@
     min-width: $app-min-width;
     width: 100%;
     height: $toolbar-height;
-    background: $blue;
+    background: $toolbar-background;
     .search {
       position: relative;
       float: right;
@@ -26,16 +26,16 @@
         position: absolute;
         top: 10px;
         left: 10px;
-        color: $light-blue;
+        color: $search-icon-color;
         line-height: 1;
       }
       input {
-        @include placeholder($light-blue);
+        @include placeholder($search-placeholder-color);
         padding: 0 15px 0 30px;
         width: 100%;
         height: $toolbar-height;
-        background: $darker-blue;
-        color: $white;
+        background: $search-background;
+        color: $search-color;
       }
     }
   }

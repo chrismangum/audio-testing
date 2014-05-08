@@ -15,7 +15,7 @@ var paths = {
   clientJS: 'public/js/*.coffee',
   serverJS: 'server/*.coffee',
   jade: 'views/*.jade',
-  scss: ['public/css/*.scss', '!public/css/_icon-font.scss'],
+  scss: ['public/css/**/*.scss', '!public/css/_icon-font.scss'],
   svg: 'public/svg/*.svg'
 };
 
@@ -49,7 +49,7 @@ gulp.task('iconfont', function(){
       fontName: 'icon-font',
       path: 'public/fonts/_icon-font.scss',
       targetPath: '../../public/css/_icon-font.scss',
-      fontPath: '../fonts/'
+      fontPath: '../../../fonts/'
     }))
     .pipe(iconfont({
       fontName: 'icon-font',

@@ -11,19 +11,19 @@
     padding-bottom: $player-height;
     width: $sidebar-width;
     height: 100%;
-    color: $lighter-blue;
+    color: $sidebar-color;
     .sidebar-container {
       overflow-x: hidden;
       overflow-y: scroll;
       padding-top: 8px;
       height: 100%;
-      background: $darker-blue;
+      background: $sidebar-container-background;
       flex: 1;
     }
     .sidebar-title {
       position: relative;
       padding: 8px 12px;
-      color: $light-blue;
+      color: $sidebar-title-color;
       text-transform: uppercase;
       font-weight: 600;
       font-size: 12px;
@@ -37,7 +37,7 @@
         color: inherit;
         font-size: 21px;
         &:hover {
-          color: $white;
+          color: $sidebar-title-button-color;
         }
       }
     }
@@ -49,13 +49,13 @@
         position: relative;
         display: block;
         padding: 4px 10px;
-        color: $lighter-blue;
+        color: $sidebar-link-color;
         font-weight: 600;
         font-size: 13px;
         line-height: 1.8;
         &:hover {
-          background: $dark-blue;
-          color: $white;
+          background: $sidebar-link-background-hover;
+          color: $sidebar-link-color-hover;
         }
         &:before {
           @extend %icon;
@@ -71,12 +71,12 @@
       display: flex;
       flex-direction: column;
       .sidebar-title {
-        background: $blue;
-        color: $light-blue;
+        background: $now-playing-sidebar-title-background;
+        color: $now-playing-sidebar-title-color;
       }
       .now-playing {
         position: relative;
-        background-color: $darker-blue;
+        background-color: $now-playing-background-color;
         background-position: center;
         background-size: contain;
         background-repeat: no-repeat;
@@ -89,14 +89,14 @@
         z-index: 2;
         padding: 12px;
         width: 100%;
-        background: rgba($darker-blue, .9);
+        background: $now-playing-info-background;
         .track-name {
-          color: $white;
+          color: $now-playing-info-track-name;
           font-weight: 600;
           font-size: 13px;
         }
         .track-info {
-          color: $white;
+          color: $now-playing-info-track-info;
           font-weight: 300;
           font-size: 12px;
         }
