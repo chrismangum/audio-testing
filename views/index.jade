@@ -32,7 +32,7 @@ html
         .now-playing
           .now-playing-info
             .track-name {{ nowPlaying.title }}
-            .track-info {{ nowPlaying.artist }} {{ nowPlaying ? '-' : '' }} {{ nowPlaying.album }}
+            .track-info {{ nowPlaying.artist }} - {{ nowPlaying.album }}
           img.now-playing-artwork(src="static/img/thriller.jpg")
     .main
       .toolbar
