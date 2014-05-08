@@ -39,6 +39,12 @@
         &:hover {
           color: $sidebar-title-button-color;
         }
+        > span {
+          top: 2px;
+          &:before {
+            display: block;
+          }
+        }
       }
     }
     ul {
