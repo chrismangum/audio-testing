@@ -11,7 +11,6 @@ app.config ['$routeProvider', ($routeProvider) ->
 
 app.controller 'tmp', ['$scope', '$routeParams',
   ($scope, $routeParams) ->
-    $scope.viewPort = false
     if $routeParams.group
       $scope.gridOptions.groups = [$routeParams.group]
     else
@@ -88,14 +87,13 @@ app.controller 'main', ['$scope', ($scope) ->
     array[index] or false
 
   scrollToIndex = (index) ->
-    unless $scope.viewPort
-      $scope.viewPort = $ '.ngViewport'
-    top = $scope.viewPort.scrollTop()
-    height = $scope.viewPort.height()
+    viewPort = $ '.ngViewport'
+    top = viewPort.scrollTop()
+    height = viewPort.height()
     bottom = top + height
     trackPosition = index * rowHeight
     unless top < trackPosition + rowHeight < bottom
-      $scope.viewPort.scrollTop trackPosition
+      viewPort.scrollTop trackPosition
 
   getAdjacentTrack = (direction) ->
     if $scope.shuffling
