@@ -160,6 +160,10 @@ app.controller 'main', ['$scope', ($scope) ->
     $scope.player.on 'progress', (timestamp) ->
       $scope.progress = (timestamp / $scope.player.duration) * 100
       $scope.safeApply()
+    $scope.player.on 'metadata', (data) ->
+      if data.coverArt
+        $scope.nowPlaying.coverArtURL = data.coverArt.toBlobURL()
+        $scope.safeApply()
     $scope.player.on 'end', ->
       $scope.next()
 
@@ -174,6 +178,16 @@ app.controller 'main', ['$scope', ($scope) ->
     $scope.dataValues = _.values data.tracks
     $scope.safeApply()
 ]
+
+app.directive 'nowPlayingArtwork', ->
+  restrict: 'E'
+  template: '<div class="now-playing-artwork"><img ng-show="nowPlaying.coverArtURL"></div>'
+  replace: true
+  link: ($scope, el, attrs) ->
+    img = el.children()
+    $scope.$watch 'nowPlaying.coverArtURL', (n, o) ->
+      if n isnt o and n
+        img[0].src = n
 
 app.directive 'slider', ->
   restrict: 'E'
