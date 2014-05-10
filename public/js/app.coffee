@@ -18,6 +18,7 @@ app.controller 'tmp', ['$scope', '$routeParams',
 ]
 
 app.controller 'main', ['$scope', ($scope) ->
+  rowHeight = 26
   $scope.dataValues = []
   $scope.data = {}
   $scope.nowPlaying = false
@@ -29,6 +30,8 @@ app.controller 'main', ['$scope', ($scope) ->
     $scope.shuffling = !$scope.shuffling
     if $scope.shuffling
       $scope.shuffledData = _.shuffle $scope.dataValues
+    else
+      $scope.shuffledData = false
 
   $scope.$watch 'searchText', (n, o) ->
     if n isnt o
@@ -55,8 +58,8 @@ app.controller 'main', ['$scope', ($scope) ->
     enableColumnReordering: true
     enableColumnResize: true
     multiSelect: false
-    headerRowHeight: 26
-    rowHeight: 26
+    headerRowHeight: rowHeight
+    rowHeight: rowHeight
     rowTemplate:
       '<div ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}">
         <div class="ngVerticalBar ngVerticalBarVisible" ng-style="{height: rowHeight}">&nbsp;</div>
@@ -73,7 +76,24 @@ app.controller 'main', ['$scope', ($scope) ->
         </div>'
 
   getAdjacentTrackInArray = (array, direction) ->
-    array[array.indexOf($scope.nowPlaying) + direction] or false
+    index = array.indexOf($scope.nowPlaying) + direction
+    if $scope.shuffling
+      if $scope.sortedData
+        scrollToIndex $scope.sortedData.indexOf array[index]
+      else
+        scrollToIndex $scope.dataValues.indexOf array[index]
+    else
+      scrollToIndex index
+    array[index] or false
+
+  scrollToIndex = (index) ->
+    viewPort = $ '.ngViewport'
+    top = viewPort.scrollTop()
+    height = viewPort.height()
+    bottom = top + height
+    trackPosition = index * rowHeight
+    unless top < trackPosition + rowHeight < bottom
+      viewPort.scrollTop trackPosition
 
   getAdjacentTrack = (direction) ->
     if $scope.shuffling
@@ -87,8 +107,13 @@ app.controller 'main', ['$scope', ($scope) ->
     if $scope.gridOptions.selectedItems.length
       $scope.gridOptions.selectedItems[0]
     else if $scope.shuffling
+      if $scope.sortedData
+        scrollToIndex $scope.sortedData.indexOf $scope.shuffledData[0]
+      else
+        scrollToIndex $scope.dataValues.indexOf $scope.shuffledData[0]
       $scope.shuffledData[0]
     else
+      scrollToIndex 0
       $scope.dataValues[0]
 
   stop = ->
