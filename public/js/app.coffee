@@ -43,6 +43,12 @@ app.controller 'main', ['$scope', ($scope) ->
   $scope.gridOptions =
     columnDefs: [
       {
+        displayName: '#'
+        field: 'trackNumber'
+        minWidth: 10
+        width: 30
+      }
+      {
         field: 'title'
         cellTemplate:
           '<div class="ngCellText {{col.colIndex()}}" ng-class="{\'now-playing-indicator\': row.entity.playing, \'now-paused-indicator\': row.entity.paused}" ng-dblclick="play(row.entity)">

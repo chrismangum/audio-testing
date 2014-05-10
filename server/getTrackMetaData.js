@@ -14,11 +14,16 @@ function processData(data, callback) {
     var player = AV.Player.fromBuffer(new Uint8Array(data));
     player.preload();
     player.on('metadata', function (data) {
+      data.trackNumber = data.trackNumber || data.tracknumber;
+      if (data.trackNumber) {
+        data.trackNumber = parseInt(data.trackNumber, 10);
+      }
       callback(null, _.pick(data, [
         'title',
         'artist',
         'album',
-        'genre'
+        'genre',
+        'trackNumber'
       ]));
     });
 }
