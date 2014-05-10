@@ -105,8 +105,9 @@
 
   .now-playing-artwork {
     display: block;
-    height: 200px;
-    background: #000;
+    height: $sidebar-width;
+    background: $now-playing-artwork-missing-background;
+    background-size: cover;
 
     img {
       max-width: 100%;
