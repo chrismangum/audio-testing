@@ -66,6 +66,7 @@ app.controller 'main', ['$scope', ($scope) ->
         <div ng-cell></div>
       </div>'
     selectedItems: []
+    showColumnMenu: true
 
   #set cellTemplate default for all columns:
   _.each $scope.gridOptions.columnDefs, (col) ->
