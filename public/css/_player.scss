@@ -13,68 +13,89 @@
     background: $player-background;
     color: $player-color;
     text-align: center;
+
     .player-col-side {
-      padding: 20px 0;
+      display: flex;
       width: $sidebar-width;
+      align-items: center;
+      justify-content: center;
     }
+
     .player-col-middle {
+      display: flex;
       flex: 1;
+      justify-content: center;
+      align-items: center;
     }
+
     .button {
       width: 40px;
       height: 40px;
       color: $player-button-color;
       font-size: 30px;
       line-height: 0;
+
       &:hover {
         color: $player-button-color-hover;
       }
+
       &.active {
         color: $player-button-color-active;
         text-shadow: $player-button-text-shadow-active;
       }
+
       &.button-circle {
         border-color: $player-button-circle-border-color;
+
         &:hover {
           border-color: $player-button-circle-border-color-active;
         }
       }
     }
   }
+
   .progress {
     position: relative;
-    top: 35px;
     margin: 0 40px;
+    width: 100%;
+
     &.disabled {
       display: none;
     }
+
     .time {
       position: absolute;
       top: -1px;
       z-index: 1;
       font-size: 12px;
       line-height: 1;
+
       &.time-passed {
         left: 0;
       }
+
       &.time-remain {
         right: 0;
       }
     }
   }
+
   .progress-bar-container {
     margin: 0 35px;
     height: 10px;
   }
+
   .noUi-base {
     position: relative;
     width: 100%;
     height: 100%;
     background: $progress-bar-passed-background;
+
     &:hover {
       cursor: pointer;
     }
   }
+
   .noUi-origin {
     position: absolute;
     top: 0;
@@ -82,9 +103,11 @@
     bottom: 0;
     left: 0;
   }
+
   .noUi-background {
     background: $progress-bar-remain-background;
   }
+
   .noUi-handle {
     position: relative;
     top: -2px;
@@ -97,11 +120,14 @@
     background: $progress-bar-handle-background;
     box-shadow: none;
     transition: background 1s ease;
+
     &:hover {
       background: $progress-bar-handle-background-hover;
       cursor: pointer;
     }
-    &:before, &:after {
+
+    &:before,
+    &:after {
       display: none;
     }
   }

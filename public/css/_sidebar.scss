@@ -13,113 +13,103 @@
     height: 100%;
     background: $sidebar-background;
     color: $sidebar-color;
-    .sidebar-container {
+
+    .nav {
       overflow-x: hidden;
       overflow-y: scroll;
-      padding-top: 8px;
       height: 100%;
       flex: 1;
-    }
-    .sidebar-title {
-      position: relative;
-      padding: 8px 12px;
-      color: $sidebar-title-color;
-      text-transform: uppercase;
-      font-weight: 600;
-      font-size: 12px;
-      line-height: 14px;
-      .button {
-        position: absolute;
-        top: 0;
-        right: 4px;
-        width: 30px;
-        height: 30px;
-        color: inherit;
-        font-size: 21px;
-        &:hover {
-          color: $sidebar-title-button-color;
-        }
-        > span {
-          top: 2px;
-          &:before {
-            display: block;
-          }
-        }
-      }
-    }
-    ul {
-      margin: 0 0 8px 0;
-      padding: 0;
-      list-style: none;
+
       a {
-        position: relative;
-        display: block;
-        padding: 4px 10px;
         color: $sidebar-link-color;
-        font-weight: 600;
-        font-size: 13px;
-        line-height: 1.8;
+
         &:hover {
           background: $sidebar-link-background-hover;
           color: $sidebar-link-color-hover;
         }
-        &:before {
-          @extend %icon;
-          position: relative;
-          top: -1px;
-          margin-right: 4px;
-          font-size: 22px;
-        }
       }
     }
-    .now-playing-container {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      .sidebar-title {
-        background: $now-playing-sidebar-title-background;
-        color: $now-playing-sidebar-title-color;
-        transition: all .2s ease;
-        &:hover {
-          background: $now-playing-sidebar-title-background-hover;
-          color: $now-playing-sidebar-title-color-hover;
-          cursor: pointer;
-        }
-        .button {
-          transition: none;
-        }
+  }
+
+  .sidebar-title {
+    @extend %label;
+    padding: 10px 12px;
+    color: $sidebar-title-color;
+
+    .button {
+      position: absolute;
+      top: 0;
+      right: 4px;
+      width: 30px;
+      height: 30px;
+      color: inherit;
+      font-size: 21px;
+
+      &:hover {
+        color: $sidebar-title-button-color;
       }
-      .now-playing {
-        position: relative;
-        background-color: $now-playing-background-color;
-        background-position: center;
-        background-size: contain;
-        background-repeat: no-repeat;
-        transition: all .3s cubic-bezier(0.250, -0.150, 0.250, 1.150);
+    }
+  }
+
+  .now-playing-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    .sidebar-title {
+      background: $now-playing-sidebar-title-background;
+      color: $now-playing-sidebar-title-color;
+      transition: all .2s ease;
+
+      &:hover {
+        background: $now-playing-sidebar-title-background-hover;
+        color: $now-playing-sidebar-title-color-hover;
+        cursor: pointer;
       }
-      .now-playing-info {
-        position: absolute;
-        bottom: 0;
-        z-index: 2;
-        z-index: 2;
-        padding: 12px;
-        width: 100%;
-        background: $now-playing-info-background;
-        .track-name {
-          color: $now-playing-info-track-name;
-          font-weight: 600;
-          font-size: 13px;
-        }
-        .track-info {
-          color: $now-playing-info-track-info;
-          font-weight: 300;
-          font-size: 12px;
-        }
+
+      .button {
+        transition: none;
       }
-      .now-playing-artwork {
-        display: block;
-        width: 100%;
-        height: auto;
-      }
+    }
+  }
+
+  .now-playing {
+    position: relative;
+    background-color: $now-playing-background-color;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: all .3s cubic-bezier(0.250, -0.150, 0.250, 1.150);
+  }
+
+  .now-playing-info {
+    position: absolute;
+    bottom: 0;
+    z-index: 2;
+    padding: 12px;
+    width: 100%;
+    background: $now-playing-info-background;
+
+    .track-name {
+      color: $now-playing-info-track-name;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .track-info {
+      color: $now-playing-info-track-info;
+      font-weight: 300;
+      font-size: 12px;
+    }
+  }
+
+  .now-playing-artwork {
+    display: block;
+    height: 200px;
+    background: #000;
+
+    img {
+      max-width: 100%;
+      height: auto;
     }
   }

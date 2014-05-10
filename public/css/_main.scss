@@ -9,6 +9,7 @@
     min-width: $app-min-width;
     background: $main-background;
   }
+  
   .toolbar {
     position: absolute;
     left: 0;
@@ -18,38 +19,62 @@
     width: 100%;
     height: $toolbar-height;
     background: $toolbar-background;
+
+    a {
+      padding-top: 0;
+      padding-bottom: 0;
+      height: $toolbar-height;
+      line-height: $toolbar-height;
+      color: $toolbar-nav-color;
+      
+      &:hover {
+        background: $toolbar-nav-hover;
+      }
+      
+      &.active {
+        background: $toolbar-nav-active;
+
+        &:hover {
+          cursor: default;
+        }
+      }
+    }
+
     .search {
       position: relative;
       float: right;
       width: $sidebar-width;
+
       .icon-search {
         position: absolute;
-        top: 10px;
+        top: 7px;
         left: 10px;
-        color: $search-icon-color;
+        color: $search-color;
+        font-size: 20px;
         line-height: 1;
       }
+     
       input {
-        @include placeholder($search-placeholder-color);
-        padding: 0 15px 0 30px;
+        @include placeholder($search-color);
+        padding: 10px 15px 10px 35px;
         width: 100%;
         height: $toolbar-height;
         background: $search-background;
-        color: $search-color;
+        color: $search-input-color;
       }
     }
   }
+
   .media-list {
     padding-top: $toolbar-height;
     height: 100%;
     color: $media-list-color;
-    font-size: 13px;
     line-height: 1;
   }
+
   .now-playing-indicator,
   .now-paused-indicator {
     &:before {
-      @extend .icon;
       position: absolute;
       top: 4px;
       right: 4px;
@@ -57,11 +82,13 @@
       font-size: 18px;
     }
   }
+
   .now-playing-indicator {
     &:before {
       @extend .icon-volume;
     }
   }
+
   .now-paused-indicator {
     &:before {
       @extend .icon-volume-off;

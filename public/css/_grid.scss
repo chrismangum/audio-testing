@@ -5,11 +5,13 @@
   .ngGrid {
     input {
       vertical-align: top;
+    
       &[type="checkbox"] {
         margin: 0;
         padding: 0;
       }
     }
+    
     &.unselectable {
       user-select: none;
     }
@@ -18,6 +20,7 @@
   .ngViewport {
     overflow: auto;
     min-height: 20px;
+
     &:focus {
       outline: none;
     }
@@ -55,9 +58,11 @@
     top: 0;
     bottom: 0;
     background-color: inherit;
+
     &.pinned {
       z-index: 1;
     }
+
     .ngVerticalBar {
       background-color: $label-column-border;
     }
@@ -66,12 +71,15 @@
   .ngHeaderSortColumn {
     position: absolute;
     overflow: hidden;
+
     &:hover {
       background: $label-background-color-hover;
     }
+
     &:active {
       background: $label-background-color-active;
     }
+
     &.ngSorted {
       background: $label-background-color-sorted;
     }
@@ -87,8 +95,8 @@
   .ngSortButtonDown,
   .ngAggArrowCollapsed,
   .ngAggArrowExpanded {
-    @extend .icon;
-    @extend .icon-arrow-down;
+    @extend %icon;
+    @extend .icon-arrow;
     position: absolute;
     top: 7px;
   }
@@ -155,15 +163,12 @@
   }
 
   .ngHeaderText {
+    @extend %label;
     overflow: hidden;
     padding: 6px 8px;
     color: $label-color;
-    text-transform: uppercase;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-weight: $label-font-weight;
-    font-size: $label-font-size;
-    line-height: $label-line-height;
   }
 
   .ngHeaderButtonArrow {
@@ -309,6 +314,7 @@
 
   .ngGroupItem {
     float: left;
+
     &:first-child {
       margin-left: 2px;
     }
@@ -319,6 +325,7 @@
     margin-left: 5px;
     width: 5px;
     opacity: 0.4;
+
     &:hover {
       color: black;
       text-decoration: none;
@@ -335,6 +342,7 @@
     left: 0;
     overflow: hidden;
     background: $row-group-background;
+
     &:hover {
       background: $row-group-background-hover;
       cursor: pointer;
@@ -355,21 +363,27 @@
     position: absolute;
     min-width: 100%;
     color: $row-color;
+
     &.odd {
       background-color: $row-odd-background-color;
+
       &:hover {
         background-color: $row-odd-background-color-hover;
       }
     }
+
     &.even {
       background-color: $row-even-background-color;
+
       &:hover {
         background-color: $row-even-background-color-hover;
       }
     }
+
     &.selected {
       background-color: $row-selected-background-color;
       color: $row-selected-color;
+
       &:hover {
         background-color: $row-selected-background-color;
       }
@@ -382,6 +396,7 @@
     bottom: 0;
     overflow: hidden;
     background-color: inherit;
+
     &.pinned {
       z-index: 1;
     }

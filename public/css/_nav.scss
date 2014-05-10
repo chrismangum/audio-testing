@@ -1,0 +1,40 @@
+/*==========================================================================
+  Navigation
+  ==========================================================================*/
+
+  .nav {
+    &.nav-horizontal {
+      display: inline-block;
+
+      li {
+        display: inline-block;
+      }
+    }
+
+    &.nav-vertical {
+      ul {
+        margin: 0 0 8px 0;
+      }
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 0;
+    }
+
+    a {
+      position: relative;
+      display: block;
+      padding: 6px 10px;
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 14px;
+
+      > span {
+        margin-right: 4px;
+        font-size: 20px;
+      }
+    }
+  }

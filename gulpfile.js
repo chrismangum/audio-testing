@@ -60,7 +60,9 @@ gulp.task('iconfont', function(){
 
 gulp.task('jade', function () {
   gulp.src(paths.jade)
-    .pipe(jade())
+    .pipe(jade({
+      pretty: true
+    }))
     .pipe(gulp.dest('public/'));
 });
 

@@ -4,77 +4,81 @@ html
     title
       | Audio Testing
     link(rel="stylesheet", href="static/css/themes/default/styles.css")
-    body(ng-app="app", ng-controller="main")
+  body(ng-app="app", ng-controller="main")
     .sidebar
-      .sidebar-container
-        .sidebar-title Browse
-        ul
-          li
-            a.icon-songs(ng-href="#", ng-class="{active: !gridOptions.groups[0]}") Songs
-          li
-            a.icon-artists(ng-href="#/artist", ng-class="{active: gridOptions.groups[0] === 'artist'}") Artists
-          li
-            a.icon-albums(ng-href="#/album", ng-class="{active: gridOptions.groups[0] === 'album'}") Albums
-          li
-            a.icon-genres(ng-href="#/genre", ng-class="{active: gridOptions.groups[0] === 'genre'}") Genres
-        .sidebar-title Playlists
+      nav.nav.nav-vertical
+        .label.sidebar-title Playlists
           button.button
             span.icon-add
         ul.playlists
           li
-            a.icon-playlist Smooth Jams
+            a
+              span.icon-playlist
+              | Smooth Jams
           li
-            a.icon-playlist Hibbity Hoppity
+            a
+              span.icon-playlist
+              | Hibbity Hoppity
       .now-playing-container(ng-class="{hidden: !nowPlaying}")
-        .sidebar-title Now Playing
+        .label.sidebar-title Now Playing
           button.button.now-playing-button
-            span.icon-arrow-down
+            span.icon-arrow
         .now-playing
           .now-playing-info
             .track-name {{ nowPlaying.title }}
             .track-info {{ nowPlaying.artist }} - {{ nowPlaying.album }}
-          img.now-playing-artwork(src="static/img/thriller.jpg")
+          .now-playing-artwork
+            img(src="static/img/thriller.jpg")
     .main
       .toolbar
+        nav.nav.nav-horizontal
+          ul
+            li
+              a(ng-href="#", ng-class="{active: !gridOptions.groups[0]}") Songs
+            li
+              a(ng-href="#/artist", ng-class="{active: gridOptions.groups[0] === 'artist'}") Artists
+            li
+              a(ng-href="#/album", ng-class="{active: gridOptions.groups[0] === 'album'}") Albums
+            li
+              a(ng-href="#/genre", ng-class="{active: gridOptions.groups[0] === 'genre'}") Genres
         .search
           span.icon-search
           input(type="text", placeholder="Search", ng-model="searchText")
       ng-view
-  .player
-    .player-col-side
-      button.button
-        span.icon-prev(ng-click="previous()")
-      button.button.button-circle
-        span(ng-click="togglePlayback()", class="{{nowPlaying.playing ? 'icon-pause' : 'icon-play'}}")
-      button.button
-        span.icon-next(ng-click="next()")
-    .player-col-middle
-      .progress(ng-class="{hidden: !nowPlaying}")
-        .time.time-passed {{ player.currentTime | convertTimestamp }}
-        .time.time-remain {{ player.duration | convertTimestamp }}
-        .progress-bar-container
-          slider
-    .player-col-side
-      button.button
-        span.icon-repeat
-      button.button(ng-class="{active: shuffling}", ng-click="shuffle()")
-        span.icon-shuffle
-      button.button
-        span.icon-volume
-    script(src="static/js/aurora.js")
-    script(src="static/js/flac.js")
-    script(src="static/js/mp3.js")
-    script(src="static/js/aac.js")
-    script(src="static/js/alac.js")
-    script(src="/socket.io/socket.io.js")
-    script(src="static/vendor/jquery/dist/jquery.min.js")
-    script(src="static/vendor/classval/jquery.classval.js")
-    script(src="static/vendor/nouislider/Link.js")
-    script(src="static/vendor/nouislider/jquery.nouislider.js")
-    script(src="static/vendor/angular/angular.js")
-    script(src="static/vendor/angular-route/angular-route.js")
-    script(src="static/js/ng-grid.js")
-    script(src="static/vendor/lodash/dist/lodash.js")
-    script(src="static/js/app.min.js")
-    script(src="static/js/temp.js")
-
+    .player
+      .player-col-side
+        button.button
+          span.icon-prev(ng-click="previous()")
+        button.button.button-circle
+          span(ng-click="togglePlayback()", class="{{nowPlaying.playing ? 'icon-pause' : 'icon-play'}}")
+        button.button
+          span.icon-next(ng-click="next()")
+      .player-col-middle
+        .progress(ng-class="{hidden: !nowPlaying}")
+          .time.time-passed {{ player.currentTime | convertTimestamp }}
+          .time.time-remain {{ player.duration | convertTimestamp }}
+          .progress-bar-container
+            slider
+      .player-col-side
+        button.button
+          span.icon-repeat
+        button.button(ng-class="{active: shuffling}", ng-click="shuffle()")
+          span.icon-shuffle
+        button.button
+          span.icon-volume
+      script(src="static/js/aurora.js")
+      script(src="static/js/flac.js")
+      script(src="static/js/mp3.js")
+      script(src="static/js/aac.js")
+      script(src="static/js/alac.js")
+      script(src="/socket.io/socket.io.js")
+      script(src="static/vendor/jquery/dist/jquery.min.js")
+      script(src="static/vendor/classval/jquery.classval.js")
+      script(src="static/vendor/nouislider/Link.js")
+      script(src="static/vendor/nouislider/jquery.nouislider.js")
+      script(src="static/vendor/angular/angular.js")
+      script(src="static/vendor/angular-route/angular-route.js")
+      script(src="static/js/ng-grid.js")
+      script(src="static/vendor/lodash/dist/lodash.js")
+      script(src="static/js/app.min.js")
+      script(src="static/js/temp.js")

@@ -5,6 +5,7 @@
   * {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
+    
     &:focus {
       outline: none;
     }
@@ -15,44 +16,60 @@
     overflow: hidden;
     margin: 0;
     min-width: $app-min-width;
+    font-size: 13px;
     font-family: "Source Sans Pro", sans-serif;
   }
-
+  
   a {
     text-decoration: none;
     transition: all .2s ease;
+    
     &:hover {
       text-decoration: none;
       cursor: pointer;
     }
   }
-
+  
   input {
     padding: 10px;
     border: none;
+    font-size: 13px;
   }
-
+  
   .button {
     padding: 0;
     border: 0;
     background: none;
+    vertical-align: middle;
     transition: all .2s ease;
+  
     &:hover {
       cursor: pointer;
     }
+  
     &.button-circle {
       margin-right: 4px;
       margin-left: 4px;
       border: 1px solid transparent;
       border-radius: 50%;
     }
+  
     &.flip-icon {
-      > .icon-arrow-down {
+      > span {
         transform: rotateX(180deg);
       }
     }
   }
-
+  
   .hidden {
     display: none !important;
+  }
+  
+  %label,
+  .label {
+    position: relative;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 14px;
   }

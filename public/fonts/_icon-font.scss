@@ -7,18 +7,10 @@
     url('<%= fontPath %><%= fontName %>.svg#<%= fontName %>') format('svg');
 }
 
-[class^="icon-"],
-[class*=" icon-"] {
-  position: relative;
-  display: inline-block;
-}
-
-.icon,
-[class^="icon-"]:before,
-[class*=" icon-"]:before {
+%icon {
   position: relative;
   display:inline-block;
-  font-family:"<%= fontName %>";
+  font-family:"icon-font";
   font-style:normal;
   font-weight:normal;
   line-height:1;
@@ -47,7 +39,8 @@
   }
 }
 
-<% _.each(glyphs, function(glyph) { %>.icon-<%= glyph.fileName %> {
+<% _.each(glyphs, function(glyph) { %>.icon-<%= glyph.fileName %>, %icon-<%= glyph.fileName %> {
+  @extend %icon;
   @include icon(<%= glyph.fileName %>);
 }
 <% }); %>

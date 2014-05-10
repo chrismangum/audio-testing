@@ -24,10 +24,12 @@
   // Main
   $main-background: tint($primary-light, 20%);
   $toolbar-background: $primary;
-  $search-icon-color: $primary-light;
-  $search-placeholder-color: $primary-light;
+  $toolbar-nav-hover: $primary-dark;
+  $toolbar-nav-active: $primary-light;
+  $toolbar-nav-color: $secondary;
+  $search-color: $primary-light;
   $search-background: $primary-darker;
-  $search-color: $secondary;
+  $search-input-color: $secondary;
 
   // Grid
   $media-list-color: $primary-dark;
@@ -37,9 +39,6 @@
   $label-background-color-sorted: linear-gradient(shade($primary-light, 15%), shade($primary-light, 5%));
   $label-color: $secondary;
   $label-column-border: shade($primary-light, 20%);
-  $label-font-size: 12px;
-  $label-font-weight: 600;
-  $label-line-height: 14px;
   $label-sort-arrow-color: $secondary;
   $row-odd-background-color: tint($primary-lighter, 40%);
   $row-odd-background-color-hover: tint($primary-lighter, 55%);
