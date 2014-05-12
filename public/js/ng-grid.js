@@ -3565,7 +3565,7 @@ angular.module('ngGrid').run(['$templateCache', function($templateCache) {
     "\n" +
     "            <li class=\"ngColListItem\" ng-repeat=\"col in columns | ngColumns\">\r" +
     "\n" +
-    "                <label><input ng-disabled=\"col.pinned\" type=\"checkbox\" class=\"ngColListCheckbox\" ng-model=\"col.visible\"/>{{col.displayName}}</label>\r" +
+    "                <label><input ng-disabled=\"col.pinned\" type=\"checkbox\" class=\"ngColListCheckbox\" ng-click=\"toggleColVisibility(col)\" ng-model=\"col.visible\"/>{{col.displayName}}</label>\r" +
     "\n" +
     "\t\t\t\t<a title=\"Group By\" ng-class=\"col.groupedByClass()\" ng-show=\"col.groupable && col.visible\" ng-click=\"groupBy(col)\"></a>\r" +
     "\n" +

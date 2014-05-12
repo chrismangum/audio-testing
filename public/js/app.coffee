@@ -87,6 +87,12 @@ app.controller 'main', ['$scope', ($scope) ->
 
   unless localStorage.columnPrefs
     $scope.updateLocalStorage
+      visibility:
+        trackNumber: true
+        title: true
+        artist: true
+        album: true
+        genre: true
       widths:
         trackNumber: 30
       order: [
@@ -99,8 +105,9 @@ app.controller 'main', ['$scope', ($scope) ->
 
   $scope.columnPrefs = JSON.parse localStorage.columnPrefs
 
-  #set saved column order
+  #set saved column order / visibility
   _.each $scope.columnPrefs.order, (val) ->
+    availableColumns[val].visible = $scope.columnPrefs.visibility[val]
     $scope.gridOptions.columnDefs.push availableColumns[val]
 
   #set saved column widths
@@ -113,6 +120,10 @@ app.controller 'main', ['$scope', ($scope) ->
 
   $scope.$on 'newColumnOrder', (e, columns) ->
     $scope.columnPrefs.order = _.pluck columns, 'field'
+    $scope.updateLocalStorage()
+
+  $scope.toggleColVisibility = (col) ->
+    $scope.columnPrefs.visibility[col.field] = !col.visible
     $scope.updateLocalStorage()
 
   getAdjacentTrackInArray = (array, direction) ->
