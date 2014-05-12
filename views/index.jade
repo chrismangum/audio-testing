@@ -42,7 +42,7 @@ html
               a(ng-href="#/genre", ng-class="{active: gridOptions.groups[0] === 'genre'}") Genres
         .search
           span.icon-search
-          input(type="text", placeholder="Search", ng-model="searchText")
+          input(type="text", placeholder="Search", ng-model="searchText", ng-focus="searchFocus = true", ng-blur="searchFocus = false")
       ng-view
     .player
       .player-col-side
