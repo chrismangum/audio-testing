@@ -174,9 +174,9 @@ app.controller 'main', ['$scope', ($scope) ->
     $scope.nowPlaying.paused = false
     $scope.player.stop()
 
-  $scope.safeApply = ->
+  $scope.safeApply = (fn) ->
     unless $scope.$$phase
-      $scope.$apply()
+      $scope.$apply fn
 
   $scope.togglePlayback = ->
     unless $scope.nowPlaying
@@ -195,6 +195,9 @@ app.controller 'main', ['$scope', ($scope) ->
       $scope.player.seek 0
     else
       $scope.play getAdjacentTrack -1
+
+  $scope.seekToPercent = (percent) ->
+    $scope.player?.seek percent / 100 * $scope.player.duration
 
   $scope.next = ->
     $scope.play getAdjacentTrack 1
@@ -230,6 +233,23 @@ app.controller 'main', ['$scope', ($scope) ->
     $scope.data = data
     $scope.dataValues = _.values data.tracks
     $scope.safeApply()
+
+  $(document).on 'keydown', (e) ->
+    switch e.keyCode
+      when 32
+        $scope.togglePlayback()
+        $scope.safeApply()
+        false
+      when 48 then $scope.seekToPercent 0
+      when 49 then $scope.seekToPercent 10
+      when 50 then $scope.seekToPercent 20
+      when 51 then $scope.seekToPercent 30
+      when 52 then $scope.seekToPercent 40
+      when 53 then $scope.seekToPercent 50
+      when 54 then $scope.seekToPercent 60
+      when 55 then $scope.seekToPercent 70
+      when 56 then $scope.seekToPercent 80
+      when 57 then $scope.seekToPercent 90
 ]
 
 app.directive 'nowPlayingArtwork', ->
