@@ -40,25 +40,33 @@ app.controller 'main', ['$scope', ($scope) ->
   $scope.$on 'ngGridEventSorted', ->
     $scope.sortedData = $scope.gridOptions.sortedData
 
+  availableColumns =
+    trackNumber: {
+      displayName: '#'
+      field: 'trackNumber'
+      minWidth: 10
+    }
+    title: {
+      field: 'title'
+      cellTemplate:
+        '<div class="ngCellText {{col.colIndex()}}" ng-class="{\'now-playing-indicator\': row.entity.playing, \'now-paused-indicator\': row.entity.paused}" ng-dblclick="play(row.entity)">
+          <span ng-cell-text>{{ COL_FIELD }}</span>
+        </div>'
+    }
+    artist: { field: 'artist' }
+    album: { field: 'album' }
+    genre: { field: 'genre' }
+
+  #set cellTemplate default for all columns:
+  _.each availableColumns, (col) ->
+    _.defaults col,
+      cellTemplate:
+        '<div class="ngCellText" ng-class="col.colIndex()" ng-dblclick="play(row.entity)">
+          <span ng-cell-text>{{ COL_FIELD }}</span>
+        </div>'
+
   $scope.gridOptions =
-    columnDefs: [
-      {
-        displayName: '#'
-        field: 'trackNumber'
-        minWidth: 10
-        width: 30
-      }
-      {
-        field: 'title'
-        cellTemplate:
-          '<div class="ngCellText {{col.colIndex()}}" ng-class="{\'now-playing-indicator\': row.entity.playing, \'now-paused-indicator\': row.entity.paused}" ng-dblclick="play(row.entity)">
-            <span ng-cell-text>{{ COL_FIELD }}</span>
-          </div>'
-      }
-      { field: 'artist' }
-      { field: 'album' }
-      { field: 'genre' }
-    ]
+    columnDefs: []
     data: 'dataValues'
     filterOptions: {}
     enableColumnReordering: true
@@ -74,13 +82,38 @@ app.controller 'main', ['$scope', ($scope) ->
     selectedItems: []
     showColumnMenu: true
 
-  #set cellTemplate default for all columns:
-  _.each $scope.gridOptions.columnDefs, (col) ->
-    _.defaults col,
-      cellTemplate:
-        '<div class="ngCellText" ng-class="col.colIndex()" ng-dblclick="play(row.entity)">
-          <span ng-cell-text>{{ COL_FIELD }}</span>
-        </div>'
+  $scope.updateLocalStorage = (prefs) ->
+    localStorage.columnPrefs = JSON.stringify prefs or $scope.columnPrefs
+
+  unless localStorage.columnPrefs
+    $scope.updateLocalStorage
+      widths:
+        trackNumber: 30
+      order: [
+        "trackNumber",
+        "title",
+        "artist",
+        "album",
+        "genre"
+      ]
+
+  $scope.columnPrefs = JSON.parse localStorage.columnPrefs
+
+  #set saved column order
+  _.each $scope.columnPrefs.order, (val) ->
+    $scope.gridOptions.columnDefs.push availableColumns[val]
+
+  #set saved column widths
+  _.each $scope.columnPrefs.widths, (val, key) ->
+    availableColumns[key].width = val
+
+  $scope.$on 'newColumnWidth', (e, col) ->
+    $scope.columnPrefs.widths[col.field] = col.width
+    $scope.updateLocalStorage()
+
+  $scope.$on 'newColumnOrder', (e, columns) ->
+    $scope.columnPrefs.order = _.pluck columns, 'field'
+    $scope.updateLocalStorage()
 
   getAdjacentTrackInArray = (array, direction) ->
     index = array.indexOf($scope.nowPlaying) + direction

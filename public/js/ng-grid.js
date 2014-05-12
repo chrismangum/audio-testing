@@ -812,6 +812,7 @@ var ngColumn = function (config, $scope, grid, domUtilityService, $templateCache
     self.gripOnMouseUp = function (event) {
         $(document).off('mousemove', self.onMouseMove);
         $(document).off('mouseup', self.gripOnMouseUp);
+        $scope.$emit('newColumnWidth', self);
         event.target.parentElement.style.cursor = 'default';
         domUtilityService.digest($scope);
         $scope.isColumnResizing = false;
@@ -1108,6 +1109,7 @@ var ngEventProvider = function (grid, $scope, domUtilityService, $timeout) {
             $scope.columns.splice(self.colToMove.col.index, 1);
             $scope.columns.splice(headerScope.col.index, 0, self.colToMove.col);
             grid.fixColumnIndexes();
+            $scope.$emit('newColumnOrder', $scope.columns);
             self.colToMove = undefined;
             domUtilityService.digest($scope);
         }
