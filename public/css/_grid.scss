@@ -128,13 +128,12 @@
 
   .ngHeaderButton {
     position: absolute;
-    top: 8px;
-    right: 2px;
+    top: 0;
+    right: 0;
     z-index: 1;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background-color: #9fbbb4;
+    width: $label-height;
+    height: $label-height;
+    background-color: $secondary;
     cursor: pointer;
   }
 
@@ -172,14 +171,12 @@
   }
 
   .ngHeaderButtonArrow {
+    @extend %icon;
+    @extend .icon-gear;
     position: absolute;
     top: 4px;
-    left: 3px;
-    width: 0;
-    height: 0;
-    border-width: 6.5px 4.5px 0 4.5px;
-    border-style: solid;
-    border-color: #4d4d4d transparent transparent transparent;
+    left: 4px;
+    font-size: 19px;
   }
 
   .ngPinnedIcon {
@@ -204,35 +201,47 @@
 
   .ngColMenu {
     position: absolute;
-    top: 25px;
-    right: 2px;
+    padding: 10px;
+    right: 0;
     z-index: 1;
-    padding: 5px;
-    border: 2px solid #d4d4d4;
-    border-radius: 3px;
-    background-color: #bdd0cb;
+    background-color: $secondary;
   }
 
   .ngColListCheckbox {
-    position: relative;
-    top: 4px;
-    right: 3px;
+    position: absolute;
+    left: 10px;
   }
 
   .ngColList {
-    margin-top: 2px;
-    margin-left: 8px;
+    margin: 0;
+    padding: 0;
     list-style-type: none;
+    border: 1px solid shade($secondary, 10%);
+    border-bottom: 0;
   }
 
   .ngColListItem {
-    white-space: nowrap;
+    position: relative;
+
+    label {
+      display: block;
+      min-width: 200px;
+      padding: 10px 10px 10px 30px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      white-space: nowrap;
+      border-bottom: 1px solid shade($secondary, 10%);
+
+      &:hover {
+        background: tint($secondary, 50%);
+        cursor: pointer;
+      }
+    }
   }
 
   .ngMenuText {
-    position: relative;
-    top: 2px;
-    left: 2px;
+    display: none;
   }
 
   .ngGroupPanel {
@@ -264,13 +273,7 @@
   }
 
   .ngGroupIcon {
-    position: absolute;
-    top: 2px;
-    right: -2px;
-    width: 15px;
-    height: 15px;
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAANCAYAAACZ3F9/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjEwMPRyoQAAAEFJREFUKFNjoAhISkr+h2J5JDZODNXGwGBsbPwfhIGAA8bGh6HaGBiAGhxAGJmND4M1gQCSM0adCsVQbcPcqQwMALWDGyDvWPefAAAAAElFTkSuQmCC);
-    background-repeat: no-repeat;
+    display: none;
   }
 
   .ngGroupedByIcon {

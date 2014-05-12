@@ -33,6 +33,7 @@
 
   // Grid
   $media-list-color: $primary-dark;
+  $label-height: 26px;
   $label-background-color: $primary-light;
   $label-background-color-hover: linear-gradient(tint($primary-light, 5%), $primary-light);
   $label-background-color-active: linear-gradient($primary-light, tint($primary-light, 5%));
