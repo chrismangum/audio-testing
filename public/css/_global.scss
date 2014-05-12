@@ -53,11 +53,11 @@
       border: 1px solid transparent;
       border-radius: 50%;
     }
-  
-    &.flip-icon {
-      > span {
-        transform: rotateX(180deg);
-      }
+  }
+
+  .flip-icon {
+    > span {
+      transform: rotateX(180deg);
     }
   }
   

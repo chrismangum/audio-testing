@@ -53,6 +53,9 @@ html
         button.button
           span.icon-next(ng-click="next()")
       .player-col-middle
+        .now-playing-info(ng-class="{hidden: !nowPlaying}")
+            .track-name {{ nowPlaying.title }}
+            .track-info {{ nowPlaying.artist }} - {{ nowPlaying.album }}
         .progress(ng-class="{hidden: !nowPlaying}")
           .time.time-passed {{ player.currentTime | convertTimestamp }}
           .time.time-remain {{ player.duration | convertTimestamp }}
