@@ -254,6 +254,9 @@ app.controller 'main', ['$scope', ($scope) ->
           $scope.togglePlayback()
           $scope.safeApply()
           false
+        when 13 then $scope.play()
+        when 37 then $scope.previous()
+        when 39 then $scope.next()
         when 48 then $scope.seekToPercent 0
         when 49 then $scope.seekToPercent 10
         when 50 then $scope.seekToPercent 20
