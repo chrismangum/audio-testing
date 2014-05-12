@@ -199,6 +199,14 @@ app.controller 'main', ['$scope', ($scope) ->
   $scope.seekToPercent = (percent) ->
     $scope.player?.seek percent / 100 * $scope.player.duration
 
+  $scope.increaseVolume = (amount = 10) ->
+    if $scope.player.volume + amount <= 100
+      $scope.player.volume += amount
+
+  $scope.decreaseVolume = (amount = 10) ->
+    if $scope.player.volume - amount >= 0
+      $scope.player.volume -= amount
+
   $scope.next = ->
     $scope.play getAdjacentTrack 1
 
@@ -250,6 +258,8 @@ app.controller 'main', ['$scope', ($scope) ->
       when 55 then $scope.seekToPercent 70
       when 56 then $scope.seekToPercent 80
       when 57 then $scope.seekToPercent 90
+      when 187 then $scope.increaseVolume()
+      when 189 then $scope.decreaseVolume()
 ]
 
 app.directive 'nowPlayingArtwork', ->
