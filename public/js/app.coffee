@@ -112,16 +112,18 @@ app.controller 'main', ['$scope', ($scope) ->
 
   getSelectedTrack = ->
     if $scope.gridOptions.selectedItems.length
-      $scope.gridOptions.selectedItems[0]
+      track = $scope.gridOptions.selectedItems[0]
+      scrollToIndex $scope.dataValues.indexOf track
     else if $scope.shuffling
+      track = $scope.shuffledData[0]
       if $scope.sortedData
-        scrollToIndex $scope.sortedData.indexOf $scope.shuffledData[0]
+        scrollToIndex $scope.sortedData.indexOf track
       else
-        scrollToIndex $scope.dataValues.indexOf $scope.shuffledData[0]
-      $scope.shuffledData[0]
+        scrollToIndex $scope.dataValues.indexOf track
     else
+      track = $scope.dataValues[0]
       scrollToIndex 0
-      $scope.dataValues[0]
+    track
 
   stop = ->
     $scope.nowPlaying.playing = false
