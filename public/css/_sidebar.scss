@@ -1,6 +1,6 @@
-/*==========================================================================
-  Sidebar
-  ==========================================================================*/
+//==========================================================================
+// Sidebar
+//==========================================================================
 
   .sidebar {
     position: absolute;
@@ -86,20 +86,15 @@
       bottom: 0;
       z-index: 2;
       padding: 10px;
-      width: 100%;
       background: $now-playing-info-background;
 
       .track-name {
         margin-bottom: 2px;
         color: $now-playing-info-track-name;
-        font-weight: 600;
-        font-size: 12px;
       }
 
       .track-info {
         color: $now-playing-info-track-info;
-        font-weight: 300;
-        font-size: 11px;
       }
     }
   }
