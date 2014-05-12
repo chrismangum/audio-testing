@@ -106,23 +106,28 @@ app.controller 'main', ['$scope', ($scope) ->
   $scope.columnPrefs = JSON.parse localStorage.columnPrefs
 
   #set saved column order / visibility
-  _.each $scope.columnPrefs.order, (val) ->
+  _.each $scope.columnPrefs.order, (val, i) ->
     availableColumns[val].visible = $scope.columnPrefs.visibility[val]
-    $scope.gridOptions.columnDefs.push availableColumns[val]
+    $scope.gridOptions.columnDefs[i] = availableColumns[val]
 
   #set saved column widths
   _.each $scope.columnPrefs.widths, (val, key) ->
     availableColumns[key].width = val
 
   $scope.$on 'newColumnWidth', (e, col) ->
+    availableColumns[col.field].width = col.width
     $scope.columnPrefs.widths[col.field] = col.width
     $scope.updateLocalStorage()
 
   $scope.$on 'newColumnOrder', (e, columns) ->
-    $scope.columnPrefs.order = _.pluck columns, 'field'
+    order = _.compact _.pluck columns, 'field'
+    _.each order, (val, i) ->
+      $scope.gridOptions.columnDefs[i] = availableColumns[val]
+    $scope.columnPrefs.order = order
     $scope.updateLocalStorage()
 
   $scope.toggleColVisibility = (col) ->
+    availableColumns[val].visible = !col.visible
     $scope.columnPrefs.visibility[col.field] = !col.visible
     $scope.updateLocalStorage()
 
