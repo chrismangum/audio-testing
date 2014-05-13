@@ -54,12 +54,14 @@ class Player extends AV.Player
     @entity.playing = !@entity.playing
     super()
 
+
 app.controller 'main', ['$scope', ($scope) ->
   rowHeight = 26
   $scope.dataValues = []
   $scope.data = {}
   $scope.player = null
   $scope.progress = 0
+  $scope.repeat = false
   $scope.shuffling = false
 
   $scope.shuffle = ->
@@ -195,6 +197,12 @@ app.controller 'main', ['$scope', ($scope) ->
     else
       getAdjacentTrackInArray $scope.dataValues, direction
 
+  $scope.toggleRepeat = ->
+    switch $scope.repeat
+      when false then $scope.repeat = 'all'
+      when 'all' then $scope.repeat = 'one'
+      when 'one' then $scope.repeat = false
+
   getSelectedTrack = ->
     if $scope.gridOptions.selectedItems.length
       track = $scope.gridOptions.selectedItems[0]
@@ -317,7 +325,7 @@ app.directive 'volumeSlider', ->
       $scope.safeApply()
 
     slider = el
-      .find('.volume-slider')
+      .find '.volume-slider'
       .noUiSlider
         start: 100 - $scope.volume
         orientation: 'vertical'

@@ -62,8 +62,8 @@ html
           .progress-bar-container
             slider
       .player-col-side
-        button.button
-          span.icon-repeat
+        button.button(ng-class="{'active': repeat}", ng-click="toggleRepeat()")
+          span(class="{{ repeat == 'one' ? 'icon-repeat-one' : 'icon-repeat' }}")
         button.button(ng-class="{active: shuffling}", ng-click="shuffle()")
           span.icon-shuffle
         volume-slider
