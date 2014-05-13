@@ -162,16 +162,20 @@ app.controller 'main', ['$scope', ($scope) ->
   getSelectedTrack = ->
     if $scope.gridOptions.selectedItems.length
       track = $scope.gridOptions.selectedItems[0]
-      scrollToIndex $scope.dataValues.indexOf track
     else if $scope.shuffling
       track = $scope.shuffledData[0]
-      if $scope.sortedData
-        scrollToIndex $scope.sortedData.indexOf track
-      else
-        scrollToIndex $scope.dataValues.indexOf track
+    else if $scope.sortedData
+      track = $scope.sortedData[0]
+      index = 0
     else
       track = $scope.dataValues[0]
-      scrollToIndex 0
+      index = 0
+    if index?
+      scrollToIndex index
+    else if $scope.sortedData
+      scrollToIndex $scope.sortedData.indexOf track
+    else
+      scrollToIndex $scope.dataValues.indexOf track
     track
 
   stop = ->
