@@ -20,6 +20,9 @@ app.controller 'tmp', ['$scope', '$routeParams',
 class Player extends AV.Player
   constructor: (@entity, $scope) ->
     super AV.Asset.fromURL 'target/' + @entity.filePath
+    if @entity.playing
+      @play()
+    $scope.safeApply()
     @.on 'progress', (timestamp) ->
       @progress = (timestamp / @duration) * 100
       $scope.safeApply()
@@ -42,17 +45,11 @@ class Player extends AV.Player
     @seek percent / 100 * @duration
 
   stop: ->
-    @entity.playing = false
-    @entity.paused = false
+    delete @entity.playing
     super()
 
   togglePlayback: ->
-    if @entity.playing
-      @entity.playing = false
-      @entity.paused = true
-    else
-      @entity.playing = true
-      @entity.paused = false
+    @entity.playing = !@entity.playing
     super()
 
 app.controller 'main', ['$scope', ($scope) ->
@@ -86,7 +83,7 @@ app.controller 'main', ['$scope', ($scope) ->
     title: {
       field: 'title'
       cellTemplate:
-        '<div class="ngCellText {{col.colIndex()}}" ng-class="{\'now-playing-indicator\': row.entity.playing, \'now-paused-indicator\': row.entity.paused}" ng-dblclick="play(row.entity)">
+        '<div class="ngCellText {{col.colIndex()}}" ng-class="{\'now-playing-indicator\': row.entity.playing, \'now-paused-indicator\': row.entity.playing === false}" ng-dblclick="play(row.entity)">
           <span ng-cell-text>{{ COL_FIELD }}</span>
         </div>'
     }
@@ -215,7 +212,6 @@ app.controller 'main', ['$scope', ($scope) ->
       scrollToIndex $scope.dataValues.indexOf track
     track
 
-
   $scope.safeApply = (fn) ->
     unless $scope.$$phase
       $scope.$apply fn
@@ -242,14 +238,8 @@ app.controller 'main', ['$scope', ($scope) ->
       return
     $scope.player?.stop()
     track ?= getSelectedTrack()
+    track.playing = play
     $scope.player = new Player track, $scope
-    if play
-      track.playing = true
-      $scope.player.play()
-    else
-      track.paused = true
-      track.playing = false
-    $scope.safeApply()
 
   socket = io.connect location.origin
 
