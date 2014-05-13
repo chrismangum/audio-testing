@@ -86,7 +86,7 @@
 
   .now-playing-indicator {
     &:before {
-      @extend .icon-volume;
+      @extend .icon-volume-high;
     }
   }
 
