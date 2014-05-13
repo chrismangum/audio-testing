@@ -77,7 +77,7 @@
   $player-button-circle-border-color-active: $primary-lighter;
   $progress-bar-passed-background: $primary-light;
   $progress-bar-remain-background: $primary-darker;
-  $progress-bar-handle-background: $primary-lighter;
+  $progress-bar-handle-background: tint($primary-lighter, 50%);
   $progress-bar-handle-background-hover: $secondary;
 
   // Sidebar

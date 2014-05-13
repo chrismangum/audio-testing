@@ -60,9 +60,20 @@
     }
   }
 
+  .player-info-wrapper {
+    position: relative;
+    width: 100%;
+    padding: 0 35px;
+    transition: all .4s cubic-bezier(0, 0.75, 0.4, 1.25);
+    bottom: -$player-height;
+
+    &.isPlaying {
+      bottom: 0;
+    }
+  }
+
   .progress {
     position: relative;
-    margin: 0 40px;
     width: 100%;
 
     &.disabled {
@@ -71,7 +82,7 @@
 
     .time {
       position: absolute;
-      top: -1px;
+      top: -6px;
       z-index: 1;
       font-size: 12px;
       line-height: 1;
@@ -87,7 +98,8 @@
   }
 
   .progress-bar-container {
-    margin: 0 35px;
+    position: relative;
+    margin: 4px 35px 0 35px;
   }
   
   .noUi-target {
@@ -95,11 +107,11 @@
   }
 
   .noUi-horizontal {
-    height: 10px;
+    height: 2px;
   }
 
   .noUi-vertical {
-    width: 10px;
+    width: 2px;
   }
 
   .noUi-base {
@@ -125,10 +137,12 @@
   .noUi-handle {
     position: relative;
     z-index: 1;
+    width: 14px;
+    height: 14px;
     border: 0;
-    border-radius: 0;
+    border-radius: 50%;
     background: $progress-bar-handle-background;
-    box-shadow: none;
+    box-shadow: 0 1px 3px rgba($primary-darker, .3);
     transition: background 1s ease;
 
     &:hover {
@@ -142,34 +156,30 @@
     }
 
     .noUi-horizontal & {
-      width: 10px;
-      height: 14px;
-      top: -2px;
-      left: -5px;
+      top: -6px;
+      left: -7px;
     }
 
     .noUi-vertical & {
-      width: 14px;
-      height: 10px;
-      top: -5px;
-      left: -2px;
+      top: -7px;
+      left: -6px;
     }
   }
 
   .volume-dropdown {
 
     .dropdown {
-      background: $primary-dark;
-      padding: 15px 15px 10px 15px;
-      bottom: 40px; // height of button
-    }
-    
-    .noUi-base {
-      background: $progress-bar-remain-background;
-    }
+      background: $primary-lighter;
+      padding: 15px 12px;
+      bottom: 45px;
+      height: 0;
+      left: 7px;
+      transition: all .3s ease;
+      border-radius: 20px;
 
-    .noUi-origin {
-      background: $progress-bar-passed-background;
+      &.show {
+        height: auto;
+      }
     }
   }
 

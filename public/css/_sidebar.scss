@@ -55,6 +55,12 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    bottom: -250px;
+    transition: all .4s cubic-bezier(0, 0.75, 0.4, 1.25);
+
+    &.isPlaying {
+      bottom: 0;
+    }
 
     .sidebar-title {
       background: $now-playing-sidebar-title-background;

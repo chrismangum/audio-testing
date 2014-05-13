@@ -19,7 +19,7 @@ html
             a
               span.icon-playlist
               | Hibbity Hoppity
-      .now-playing-container(ng-class="{hidden: !nowPlaying}")
+      .now-playing-container(ng-class="{isPlaying: nowPlaying}")
         .label.sidebar-title Now Playing
           button.button.now-playing-button
             span.icon-arrow
@@ -53,14 +53,15 @@ html
         button.button
           span.icon-next(ng-click="next()")
       .player-col-middle
-        .now-playing-info(ng-class="{hidden: !nowPlaying}")
-            .track-name {{ nowPlaying.title }}
-            .track-info {{ nowPlaying.artist }} - {{ nowPlaying.album }}
-        .progress(ng-class="{hidden: !nowPlaying}")
-          .time.time-passed {{ player.currentTime | convertTimestamp }}
-          .time.time-remain {{ player.duration | convertTimestamp }}
-          .progress-bar-container
-            slider
+        .player-info-wrapper(ng-class="{isPlaying: nowPlaying}")
+          .now-playing-info
+              .track-name {{ nowPlaying.title }}
+              .track-info {{ nowPlaying.artist }} - {{ nowPlaying.album }}
+          .progress
+            .time.time-passed {{ player.currentTime | convertTimestamp }}
+            .time.time-remain {{ player.duration | convertTimestamp }}
+            .progress-bar-container
+              slider
       .player-col-side
         button.button
           span.icon-repeat
