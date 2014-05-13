@@ -23,15 +23,16 @@ class Player extends AV.Player
     if @entity.playing
       @play()
     $scope.safeApply()
+    #player events:
     @.on 'progress', (timestamp) ->
-      @progress = (timestamp / @duration) * 100
+      @progress = timestamp / @duration * 100
       $scope.safeApply()
     @.on 'metadata', (data) ->
       if data.coverArt
         @entity.coverArtURL = data.coverArt.toBlobURL()
         $scope.safeApply()
     @.on 'end', ->
-      @next()
+      $scope.next()
 
   increaseVolume: (amount = 10) ->
     if @volume + amount <= 100
