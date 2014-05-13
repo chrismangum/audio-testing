@@ -17,6 +17,21 @@ app.controller 'tmp', ['$scope', '$routeParams',
       $scope.gridOptions.groups = []
 ]
 
+class Player extends AV.Player
+  constructor: (url) ->
+    super AV.Asset.fromURL url
+
+  increaseVolume: (amount = 10) ->
+    if @volume + amount <= 100
+      @volume += amount
+
+  decreaseVolume: (amount = 10) ->
+    if @volume - amount >= 0
+      @volume -= amount
+
+  seekToPercent: (percent) ->
+    @seek percent / 100 * @duration
+
 app.controller 'main', ['$scope', ($scope) ->
   rowHeight = 26
   $scope.dataValues = []
@@ -162,16 +177,20 @@ app.controller 'main', ['$scope', ($scope) ->
   getSelectedTrack = ->
     if $scope.gridOptions.selectedItems.length
       track = $scope.gridOptions.selectedItems[0]
-      scrollToIndex $scope.dataValues.indexOf track
     else if $scope.shuffling
       track = $scope.shuffledData[0]
-      if $scope.sortedData
-        scrollToIndex $scope.sortedData.indexOf track
-      else
-        scrollToIndex $scope.dataValues.indexOf track
+    else if $scope.sortedData
+      track = $scope.sortedData[0]
+      index = 0
     else
       track = $scope.dataValues[0]
-      scrollToIndex 0
+      index = 0
+    if index?
+      scrollToIndex index
+    else if $scope.sortedData
+      scrollToIndex $scope.sortedData.indexOf track
+    else
+      scrollToIndex $scope.dataValues.indexOf track
     track
 
   stop = ->
@@ -196,36 +215,33 @@ app.controller 'main', ['$scope', ($scope) ->
         $scope.nowPlaying.paused = false
 
   $scope.previous = ->
-    if $scope.player.currentTime > 1000
-      $scope.player.seek 0
-    else
-      $scope.play getAdjacentTrack -1
-
-  $scope.seekToPercent = (percent) ->
-    $scope.player?.seek percent / 100 * $scope.player.duration
-
-  $scope.increaseVolume = (amount = 10) ->
-    if $scope.player.volume + amount <= 100
-      $scope.player.volume += amount
-
-  $scope.decreaseVolume = (amount = 10) ->
-    if $scope.player.volume - amount >= 0
-      $scope.player.volume -= amount
+    if $scope.player
+      if $scope.player.currentTime > 1000
+        $scope.player.seek 0
+      else 
+        $scope.play getAdjacentTrack(-1), $scope.nowPlaying.playing
 
   $scope.next = ->
-    $scope.play getAdjacentTrack 1
+    if $scope.player
+      $scope.play getAdjacentTrack(1), $scope.nowPlaying.playing
 
-  $scope.play = (track) ->
+  $scope.play = (track, play = true) ->
     if track is false
       return
     if $scope.player
       stop()
     unless track
       track = getSelectedTrack()
-    $scope.player = AV.Player.fromURL 'target/' + track.filePath
-    track.playing = true
+    $scope.player = new Player 'target/' + track.filePath
     $scope.nowPlaying = track
-    $scope.player.play()
+    if play
+      track.playing = true
+      $scope.player.play()
+    else
+      track.paused = true
+      track.playing = false
+    $scope.safeApply()
+    #events
     $scope.player.on 'progress', (timestamp) ->
       $scope.progress = (timestamp / $scope.player.duration) * 100
       $scope.safeApply()
@@ -257,18 +273,18 @@ app.controller 'main', ['$scope', ($scope) ->
         when 13 then $scope.play()
         when 37 then $scope.previous()
         when 39 then $scope.next()
-        when 48 then $scope.seekToPercent 0
-        when 49 then $scope.seekToPercent 10
-        when 50 then $scope.seekToPercent 20
-        when 51 then $scope.seekToPercent 30
-        when 52 then $scope.seekToPercent 40
-        when 53 then $scope.seekToPercent 50
-        when 54 then $scope.seekToPercent 60
-        when 55 then $scope.seekToPercent 70
-        when 56 then $scope.seekToPercent 80
-        when 57 then $scope.seekToPercent 90
-        when 187 then $scope.increaseVolume()
-        when 189 then $scope.decreaseVolume()
+        when 48 then $scope.player?.seekToPercent 0
+        when 49 then $scope.player?.seekToPercent 10
+        when 50 then $scope.player?.seekToPercent 20
+        when 51 then $scope.player?.seekToPercent 30
+        when 52 then $scope.player?.seekToPercent 40
+        when 53 then $scope.player?.seekToPercent 50
+        when 54 then $scope.player?.seekToPercent 60
+        when 55 then $scope.player?.seekToPercent 70
+        when 56 then $scope.player?.seekToPercent 80
+        when 57 then $scope.player?.seekToPercent 90
+        when 187 then $scope.player?.increaseVolume()
+        when 189 then $scope.player?.decreaseVolume()
 ]
 
 app.directive 'nowPlayingArtwork', ->
