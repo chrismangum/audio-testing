@@ -20,6 +20,8 @@ app.controller 'tmp', ['$scope', '$routeParams',
 class Player extends AV.Player
   constructor: (@entity, $scope) ->
     super AV.Asset.fromURL 'target/' + @entity.filePath
+    if localStorage.volume
+      @volume = parseInt localStorage.volume, 10
     if @entity.playing
       @play()
     #player events:
@@ -295,9 +297,9 @@ app.directive 'nowPlayingArtwork', ->
 app.directive 'volumeSlider', ->
   restrict: 'E'
   template:
-    '<div class="dropdown-wrapper volume-dropdown" ng-click="toggleSlider()">
+    '<div class="dropdown-wrapper volume-dropdown" ng-click="showSlider = !showSlider">
       <button class="button dropdown-toggle">
-        <span ng-class="{\'icon-volume-high\': player.volume > 66, \'icon-volume-medium\': player.volume > 33 && player.volume <= 66, \'icon-volume-low\': player.volume > 0 && player.volume <= 33, \'icon-volume-off\': !player || !player.volume}"></span>
+        <span ng-class="{\'icon-volume-high\': volume > 66, \'icon-volume-medium\': volume > 33 && volume <= 66, \'icon-volume-low\': volume > 0 && volume <= 33, \'icon-volume-off\': !volume}"></span>
       </button>
       <div class="dropdown" ng-class="{show: showSlider}">
         <div class="volume-slider"></div>
@@ -306,20 +308,25 @@ app.directive 'volumeSlider', ->
   replace: true
   link: ($scope, el, attrs) ->
     $scope.showSlider = false
-    $scope.toggleSlider = ->
-      if $scope.player
-        $scope.showSlider = !$scope.showSlider
-    slider = el.find('.volume-slider').noUiSlider
-      start: 0
-      orientation: 'vertical'
-      connect: 'lower'
-      range:
-        'min': 0
-        'max': 100
-    slider.on 'slide', ->
-      $scope.player?.volume = 100 - $(@).val()
-    slider.on 'set', ->
-      $scope.player?.volume = 100 - $(@).val()
+    $scope.volume = localStorage.volume or 100
+
+    setVolume = ->
+      $scope.volume = 100 - $(@).val()
+      $scope.player?.volume = $scope.volume
+      localStorage.volume = $scope.volume
+      $scope.safeApply()
+
+    slider = el
+      .find('.volume-slider')
+      .noUiSlider
+        start: 100 - $scope.volume
+        orientation: 'vertical'
+        connect: 'lower'
+        range:
+          'min': 0
+          'max': 100
+      .on 'slide', setVolume
+      .on 'set', setVolume
 
 app.directive 'slider', ->
   restrict: 'E'
