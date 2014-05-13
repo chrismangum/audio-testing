@@ -230,6 +230,8 @@ app.controller 'main', ['$scope', ($scope) ->
     track.playing = true
     $scope.nowPlaying = track
     $scope.player.play()
+    $scope.safeApply()
+    #events
     $scope.player.on 'progress', (timestamp) ->
       $scope.progress = (timestamp / $scope.player.duration) * 100
       $scope.safeApply()
