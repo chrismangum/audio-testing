@@ -134,7 +134,8 @@
     z-index: 1;
     width: $label-height;
     height: $label-height;
-    background-color: $secondary;
+    background-color: $primary-dark;
+    color: $secondary;
     cursor: pointer;
   }
 

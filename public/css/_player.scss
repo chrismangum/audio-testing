@@ -88,7 +88,18 @@
 
   .progress-bar-container {
     margin: 0 35px;
+  }
+  
+  .noUi-target {
+    display: block;
+  }
+
+  .noUi-horizontal {
     height: 10px;
+  }
+
+  .noUi-vertical {
+    width: 10px;
   }
 
   .noUi-base {
@@ -108,19 +119,12 @@
     right: 0;
     bottom: 0;
     left: 0;
-  }
-
-  .noUi-background {
     background: $progress-bar-remain-background;
   }
 
   .noUi-handle {
     position: relative;
-    top: -2px;
-    left: -4px;
     z-index: 1;
-    width: 4px;
-    height: 14px;
     border: 0;
     border-radius: 0;
     background: $progress-bar-handle-background;
@@ -136,4 +140,39 @@
     &:after {
       display: none;
     }
+
+    .noUi-horizontal & {
+      width: 10px;
+      height: 14px;
+      top: -2px;
+      left: -5px;
+    }
+
+    .noUi-vertical & {
+      width: 14px;
+      height: 10px;
+      top: -5px;
+      left: -2px;
+    }
+  }
+
+  .volume-dropdown {
+
+    .dropdown {
+      background: $primary-dark;
+      padding: 15px 15px 10px 15px;
+      bottom: 40px; // height of button
+    }
+    
+    .noUi-base {
+      background: $progress-bar-remain-background;
+    }
+
+    .noUi-origin {
+      background: $progress-bar-passed-background;
+    }
+  }
+
+  .volume-slider {
+    height: 100px;
   }

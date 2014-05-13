@@ -34,6 +34,7 @@
     padding: 10px;
     border: none;
     font-size: 13px;
+    font-family: "Source Sans Pro", sans-serif;
   }
   
   .button {
@@ -88,4 +89,18 @@
     @extend %no-wrap;
     font-weight: 300;
     font-size: 11px;
+  }
+
+  .dropdown-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown {
+    display: none;
+    position: absolute;
+
+    &.show {
+      display: block;
+    }
   }

@@ -33,7 +33,7 @@
   
   // Main
   $main-background: tint($primary-light, 20%);
-  $toolbar-background: $primary;
+  $toolbar-background: $primary-darker;
   $toolbar-nav-hover: $primary-dark;
   $toolbar-nav-active: $primary-light;
   $toolbar-nav-color: $secondary;
@@ -51,9 +51,9 @@
   $label-color: $secondary;
   $label-column-border: shade($primary-light, 20%);
   $label-sort-arrow-color: $secondary;
-  $row-odd-background-color: tint($primary-lighter, 40%);
+  $row-odd-background-color: tint($primary-lighter, 50%);
   $row-odd-background-color-hover: tint($primary-lighter, 55%);
-  $row-even-background-color: tint($primary-lighter, 45%);
+  $row-even-background-color: tint($primary-lighter, 50%);
   $row-even-background-color-hover: tint($primary-lighter, 55%);
   $row-color: $primary;
   $row-selected-background-color: $primary;
