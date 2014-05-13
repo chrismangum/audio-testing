@@ -18,8 +18,17 @@ app.controller 'tmp', ['$scope', '$routeParams',
 ]
 
 class Player extends AV.Player
-  constructor: (url) ->
-    super AV.Asset.fromURL url
+  constructor: (@entity, $scope) ->
+    super AV.Asset.fromURL 'target/' + @entity.filePath
+    @.on 'progress', (timestamp) ->
+      @progress = (timestamp / @duration) * 100
+      $scope.safeApply()
+    @.on 'metadata', (data) ->
+      if data.coverArt
+        @entity.coverArtURL = data.coverArt.toBlobURL()
+        $scope.safeApply()
+    @.on 'end', ->
+      @next()
 
   increaseVolume: (amount = 10) ->
     if @volume + amount <= 100
@@ -32,11 +41,24 @@ class Player extends AV.Player
   seekToPercent: (percent) ->
     @seek percent / 100 * @duration
 
+  stop: ->
+    @entity.playing = false
+    @entity.paused = false
+    super()
+
+  togglePlayback: ->
+    if @entity.playing
+      @entity.playing = false
+      @entity.paused = true
+    else
+      @entity.playing = true
+      @entity.paused = false
+    super()
+
 app.controller 'main', ['$scope', ($scope) ->
   rowHeight = 26
   $scope.dataValues = []
   $scope.data = {}
-  $scope.nowPlaying = false
   $scope.player = null
   $scope.progress = 0
   $scope.shuffling = false
@@ -147,7 +169,7 @@ app.controller 'main', ['$scope', ($scope) ->
     $scope.updateLocalStorage()
 
   getAdjacentTrackInArray = (array, direction) ->
-    index = array.indexOf($scope.nowPlaying) + direction
+    index = array.indexOf($scope.player.entity) + direction
     if $scope.shuffling
       if $scope.sortedData
         scrollToIndex $scope.sortedData.indexOf array[index]
@@ -193,47 +215,34 @@ app.controller 'main', ['$scope', ($scope) ->
       scrollToIndex $scope.dataValues.indexOf track
     track
 
-  stop = ->
-    $scope.nowPlaying.playing = false
-    $scope.nowPlaying.paused = false
-    $scope.player.stop()
 
   $scope.safeApply = (fn) ->
     unless $scope.$$phase
       $scope.$apply fn
 
   $scope.togglePlayback = ->
-    unless $scope.nowPlaying
-      $scope.play()
-    else
+    if $scope.player
       $scope.player.togglePlayback()
-      if $scope.nowPlaying.playing
-        $scope.nowPlaying.playing = false
-        $scope.nowPlaying.paused = true
-      else
-        $scope.nowPlaying.playing = true
-        $scope.nowPlaying.paused = false
+    else
+      $scope.play()
 
   $scope.previous = ->
     if $scope.player
       if $scope.player.currentTime > 1000
         $scope.player.seek 0
       else
-        $scope.play getAdjacentTrack(-1), $scope.nowPlaying.playing
+        $scope.play getAdjacentTrack(-1), $scope.player.playing
 
   $scope.next = ->
     if $scope.player
-      $scope.play getAdjacentTrack(1), $scope.nowPlaying.playing
+      $scope.play getAdjacentTrack(1), $scope.player.playing
 
   $scope.play = (track, play = true) ->
     if track is false
       return
-    if $scope.player
-      stop()
-    unless track
-      track = getSelectedTrack()
-    $scope.player = new Player 'target/' + track.filePath
-    $scope.nowPlaying = track
+    $scope.player?.stop()
+    track ?= getSelectedTrack()
+    $scope.player = new Player track, $scope
     if play
       track.playing = true
       $scope.player.play()
@@ -241,16 +250,6 @@ app.controller 'main', ['$scope', ($scope) ->
       track.paused = true
       track.playing = false
     $scope.safeApply()
-    #events
-    $scope.player.on 'progress', (timestamp) ->
-      $scope.progress = (timestamp / $scope.player.duration) * 100
-      $scope.safeApply()
-    $scope.player.on 'metadata', (data) ->
-      if data.coverArt
-        $scope.nowPlaying.coverArtURL = data.coverArt.toBlobURL()
-        $scope.safeApply()
-    $scope.player.on 'end', ->
-      $scope.next()
 
   socket = io.connect location.origin
 
@@ -293,11 +292,11 @@ app.controller 'main', ['$scope', ($scope) ->
 
 app.directive 'nowPlayingArtwork', ->
   restrict: 'E'
-  template: '<div class="now-playing-artwork"><img ng-show="nowPlaying.coverArtURL"></div>'
+  template: '<div class="now-playing-artwork"><img ng-show="player.entity.coverArtURL"></div>'
   replace: true
   link: ($scope, el, attrs) ->
     img = el.children()
-    $scope.$watch 'nowPlaying.coverArtURL', (n, o) ->
+    $scope.$watch 'player.entity.coverArtURL', (n, o) ->
       if n isnt o and n
         img[0].src = n
 

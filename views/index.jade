@@ -19,14 +19,14 @@ html
             a
               span.icon-playlist
               | Hibbity Hoppity
-      .now-playing-container(ng-class="{hidden: !nowPlaying}")
+      .now-playing-container(ng-class="{hidden: !player}")
         .label.sidebar-title Now Playing
           button.button.now-playing-button
             span.icon-arrow
         .now-playing
           .now-playing-info
-            .track-name {{ nowPlaying.title }}
-            .track-info {{ nowPlaying.artist }} - {{ nowPlaying.album }}
+            .track-name {{ player.entity.title }}
+            .track-info {{ player.entity.artist }} - {{ player.entity.album }}
           now-playing-artwork
     .main
       .toolbar
@@ -49,14 +49,14 @@ html
         button.button
           span.icon-prev(ng-click="previous()")
         button.button.button-circle
-          span(ng-click="togglePlayback()", class="{{nowPlaying.playing ? 'icon-pause' : 'icon-play'}}")
+          span(ng-click="togglePlayback()", class="{{player.entity.playing ? 'icon-pause' : 'icon-play'}}")
         button.button
           span.icon-next(ng-click="next()")
       .player-col-middle
-        .now-playing-info(ng-class="{hidden: !nowPlaying}")
-            .track-name {{ nowPlaying.title }}
-            .track-info {{ nowPlaying.artist }} - {{ nowPlaying.album }}
-        .progress(ng-class="{hidden: !nowPlaying}")
+        .now-playing-info(ng-class="{hidden: !player}")
+            .track-name {{ player.entity.title }}
+            .track-info {{ player.entity.artist }} - {{ player.entity.album }}
+        .progress(ng-class="{hidden: !player}")
           .time.time-passed {{ player.currentTime | convertTimestamp }}
           .time.time-remain {{ player.duration | convertTimestamp }}
           .progress-bar-container
