@@ -170,35 +170,31 @@ app.controller 'main', ['$scope', ($scope) ->
 
   getAdjacentTrackInArray = (array, direction) ->
     currentIndex = array.indexOf $scope.player.entity
-    if currentIndex is array.length - 1
-      if $scope.repeat is 'all'
-        index = 0
-      else
-        return false
-    else if currentIndex is 0
-      if $scope.repeat is 'all'
-        index = array.length - 1
-      else
-        return false
-    else
-      index = currentIndex + direction
-    if $scope.shuffling
+    newIndex = currentIndex + direction
+    if $scope.repeat is 'all'
+      if currentIndex is array.length - 1
+        newIndex = 0
+      else if currentIndex is 0
+        newIndex = array.length - 1
+    scrollToTrack array[newIndex]
+    array[newIndex] or false
+
+  scrollToTrack = (track) ->
+    if track
       if $scope.sortedData
-        scrollToIndex $scope.sortedData.indexOf array[index]
+        scrollToIndex $scope.sortedData.indexOf track
       else
-        scrollToIndex $scope.dataValues.indexOf array[index]
-    else
-      scrollToIndex index
-    array[index] or false
+        scrollToIndex $scope.dataValues.indexOf track
 
   scrollToIndex = (index) ->
-    viewPort = $ '.ngViewport'
-    top = viewPort.scrollTop()
-    height = viewPort.height()
-    bottom = top + height
-    trackPosition = index * rowHeight
-    unless top < trackPosition + rowHeight < bottom
-      viewPort.scrollTop trackPosition
+    if index isnt -1
+      viewPort = $ '.ngViewport'
+      top = viewPort.scrollTop()
+      height = viewPort.height()
+      bottom = top + height
+      trackPosition = index * rowHeight
+      unless top < trackPosition + rowHeight < bottom
+        viewPort.scrollTop trackPosition
 
   getAdjacentTrack = (direction) ->
     if $scope.shuffling
@@ -221,16 +217,9 @@ app.controller 'main', ['$scope', ($scope) ->
       track = $scope.shuffledData[0]
     else if $scope.sortedData
       track = $scope.sortedData[0]
-      index = 0
     else
       track = $scope.dataValues[0]
-      index = 0
-    if index?
-      scrollToIndex index
-    else if $scope.sortedData
-      scrollToIndex $scope.sortedData.indexOf track
-    else
-      scrollToIndex $scope.dataValues.indexOf track
+    scrollToTrack track
     track
 
   $scope.safeApply = (fn) ->
