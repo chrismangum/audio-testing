@@ -47,20 +47,21 @@
 
       .icon-search {
         position: absolute;
-        top: 7px;
+        top: 10px;
         left: 10px;
         color: $search-color;
-        font-size: 20px;
+        font-size: 15px;
         line-height: 1;
       }
      
       input {
         @include placeholder($search-color);
-        padding: 10px 15px 10px 35px;
+        padding: 10px 15px 10px 30px;
         width: 100%;
         height: $toolbar-height;
         background: $search-background;
         color: $search-input-color;
+        font-weight: 600;
       }
     }
   }
