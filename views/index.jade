@@ -25,8 +25,8 @@ html
             span.icon-arrow
         .now-playing
           .now-playing-info
-            .track-name {{ nowPlaying.title }}
-            .track-info {{ nowPlaying.artist }} - {{ nowPlaying.album }}
+            .track-name {{ player.entity.title }}
+            .track-info {{ player.entity.artist }} - {{ player.entity.album }}
           now-playing-artwork
     .main
       .toolbar
@@ -49,7 +49,7 @@ html
         button.button
           span.icon-prev(ng-click="previous()")
         button.button.button-circle
-          span(ng-click="togglePlayback()", class="{{nowPlaying.playing ? 'icon-pause' : 'icon-play'}}")
+          span(ng-click="togglePlayback()", class="{{player.entity.playing ? 'icon-pause' : 'icon-play'}}")
         button.button
           span.icon-next(ng-click="next()")
       .player-col-middle
@@ -67,11 +67,7 @@ html
           span.icon-repeat
         button.button(ng-class="{active: shuffling}", ng-click="shuffle()")
           span.icon-shuffle
-        .dropdown-wrapper.volume-dropdown
-          button.button.dropdown-toggle
-            span.icon-volume-high
-          .dropdown
-            .volume-slider
+        volume-slider
       script(src="static/js/aurora.js")
       script(src="static/js/flac.js")
       script(src="static/js/mp3.js")
