@@ -22,7 +22,6 @@ class Player extends AV.Player
     super AV.Asset.fromURL 'target/' + @entity.filePath
     if @entity.playing
       @play()
-    $scope.safeApply()
     #player events:
     @.on 'progress', (timestamp) ->
       @progress = timestamp / @duration * 100
@@ -241,6 +240,7 @@ app.controller 'main', ['$scope', ($scope) ->
     track ?= getSelectedTrack()
     track.playing = play
     $scope.player = new Player track, $scope
+    $scope.safeApply()
 
   socket = io.connect location.origin
 
@@ -290,6 +290,34 @@ app.directive 'nowPlayingArtwork', ->
     $scope.$watch 'player.entity.coverArtURL', (n, o) ->
       if n isnt o and n
         img[0].src = n
+
+
+app.directive 'volumeSlider', ->
+  restrict: 'E'
+  template:
+    '<div class="dropdown-wrapper volume-dropdown">
+      <button class="button dropdown-toggle">
+        <span class="icon-volume-high"></span>
+      </button>
+      <div class="dropdown">
+        <div class="volume-slider"></div>
+      </div>
+    </div>'
+  replace: true
+  link: ($scope, el, attrs) ->
+    slider = el.find('.volume-slider').noUiSlider
+      start: 0
+      orientation: 'vertical'
+      connect: 'lower'
+      range:
+        'min': 0
+        'max': 100
+    el.on 'click', ->
+      el.children('.dropdown').toggleClass 'show'
+    slider.on 'slide', ->
+      $scope.player?.volume = 100 - $(@).val()
+    slider.on 'set', ->
+      $scope.player?.volume = 100 - $(@).val()
 
 app.directive 'slider', ->
   restrict: 'E'

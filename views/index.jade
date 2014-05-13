@@ -66,11 +66,7 @@ html
           span.icon-repeat
         button.button(ng-class="{active: shuffling}", ng-click="shuffle()")
           span.icon-shuffle
-        .dropdown-wrapper.volume-dropdown
-          button.button.dropdown-toggle
-            span.icon-volume-high
-          .dropdown
-            .volume-slider
+        volume-slider
       script(src="static/js/aurora.js")
       script(src="static/js/flac.js")
       script(src="static/js/mp3.js")

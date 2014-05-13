@@ -8,7 +8,6 @@ $(window).on('resize', function() {
   });
 }).resize();
 
-
 toggleNowPlaying.on('click', function() {
   nowPlayingButton.toggleClass('flip-icon');
   nowPlaying.toggleClass('now-playing-hide');
@@ -22,17 +21,3 @@ toggleNowPlaying.on('click', function() {
     });
   }
 });
-
-$('.dropdown-toggle').on('click', function() {
-  $('.dropdown').toggleClass('show');
-});
-
-$('.volume-slider').noUiSlider({
-  start: 0,
-  orientation: 'vertical',
-  connect: 'lower',
-  range: {
-    'min': 0,
-    'max': 100
-  }
-})
