@@ -33,7 +33,10 @@ class Player extends AV.Player
         @entity.coverArtURL = data.coverArt.toBlobURL()
         $scope.safeApply()
     @.on 'end', ->
-      $scope.next()
+      if $scope.repeat is 'one'
+        $scope.play @entity
+      else
+        $scope.next()
 
   increaseVolume: (amount = 10) ->
     if @volume + amount <= 100
@@ -45,10 +48,6 @@ class Player extends AV.Player
 
   seekToPercent: (percent) ->
     @seek percent / 100 * @duration
-
-  stop: ->
-    delete @entity.playing
-    super()
 
   togglePlayback: ->
     @entity.playing = !@entity.playing
@@ -170,7 +169,19 @@ app.controller 'main', ['$scope', ($scope) ->
     $scope.updateLocalStorage()
 
   getAdjacentTrackInArray = (array, direction) ->
-    index = array.indexOf($scope.player.entity) + direction
+    currentIndex = array.indexOf $scope.player.entity
+    if currentIndex is array.length - 1
+      if $scope.repeat is 'all'
+        index = 0
+      else
+        return false
+    else if currentIndex is 0
+      if $scope.repeat is 'all'
+        index = array.length - 1
+      else
+        return false
+    else
+      index = currentIndex + direction
     if $scope.shuffling
       if $scope.sortedData
         scrollToIndex $scope.sortedData.indexOf array[index]
@@ -246,7 +257,9 @@ app.controller 'main', ['$scope', ($scope) ->
   $scope.play = (track, play = true) ->
     if track is false
       return
-    $scope.player?.stop()
+    if $scope.player
+      delete $scope.player.entity.playing
+      $scope.player.stop()
     track ?= getSelectedTrack()
     track.playing = play
     $scope.player = new Player track, $scope
