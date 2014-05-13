@@ -295,16 +295,20 @@ app.directive 'nowPlayingArtwork', ->
 app.directive 'volumeSlider', ->
   restrict: 'E'
   template:
-    '<div class="dropdown-wrapper volume-dropdown">
+    '<div class="dropdown-wrapper volume-dropdown" ng-click="toggleSlider()">
       <button class="button dropdown-toggle">
-        <span class="icon-volume-high"></span>
+        <span ng-class="{\'icon-volume-high\': player.volume > 66, \'icon-volume-medium\': player.volume > 33 && player.volume <= 66, \'icon-volume-low\': player.volume > 0 && player.volume <= 33, \'icon-volume-off\': !player || !player.volume}"></span>
       </button>
-      <div class="dropdown">
+      <div class="dropdown" ng-class="{show: showSlider}">
         <div class="volume-slider"></div>
       </div>
     </div>'
   replace: true
   link: ($scope, el, attrs) ->
+    $scope.showSlider = false
+    $scope.toggleSlider = ->
+      if $scope.player
+        $scope.showSlider = !$scope.showSlider
     slider = el.find('.volume-slider').noUiSlider
       start: 0
       orientation: 'vertical'
@@ -312,8 +316,6 @@ app.directive 'volumeSlider', ->
       range:
         'min': 0
         'max': 100
-    el.on 'click', ->
-      el.children('.dropdown').toggleClass 'show'
     slider.on 'slide', ->
       $scope.player?.volume = 100 - $(@).val()
     slider.on 'set', ->
