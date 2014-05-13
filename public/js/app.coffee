@@ -218,7 +218,7 @@ app.controller 'main', ['$scope', ($scope) ->
     if $scope.player
       if $scope.player.currentTime > 1000
         $scope.player.seek 0
-      else 
+      else
         $scope.play getAdjacentTrack(-1), $scope.nowPlaying.playing
 
   $scope.next = ->
@@ -271,8 +271,12 @@ app.controller 'main', ['$scope', ($scope) ->
           $scope.safeApply()
           false
         when 13 then $scope.play()
-        when 37 then $scope.previous()
-        when 39 then $scope.next()
+        when 37
+          $scope.previous()
+          false
+        when 39
+          $scope.next()
+          false
         when 48 then $scope.player?.seekToPercent 0
         when 49 then $scope.player?.seekToPercent 10
         when 50 then $scope.player?.seekToPercent 20
