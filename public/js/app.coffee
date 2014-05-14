@@ -201,6 +201,7 @@ app.controller 'main', ['$scope', ($scope) ->
       $scope.gridOptions.selectRow n, true
 
   $scope.selectRow = (e, track) ->
+    e.preventDefault()
     if $scope.gridOptions.selectedItems.length
       if e.shiftKey
         return selectRange $scope.gridOptions.selectedItems[0], track
