@@ -1,12 +1,14 @@
 app = angular.module 'app', ['ngRoute', 'ngGrid']
 
-app.config ['$routeProvider', ($routeProvider) ->
-  routeObj =
-    template: '<div class="media-list" ng-grid="gridOptions"></div>'
-    controller: 'tmp'
-  $routeProvider
-    .when '/:group', routeObj
-    .otherwise routeObj
+app.config ['$routeProvider', '$locationProvider'
+  ($routeProvider, $locationProvider) ->
+    routeObj =
+      template: '<div class="media-list" ng-grid="gridOptions"></div>'
+      controller: 'tmp'
+    $routeProvider
+      .when '/:group', routeObj
+      .otherwise routeObj
+    $locationProvider.html5Mode true
 ]
 
 app.controller 'tmp', ['$scope', '$routeParams',

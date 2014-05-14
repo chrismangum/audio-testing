@@ -33,13 +33,13 @@ html
         nav.nav.nav-horizontal
           ul
             li
-              a(ng-href="#", ng-class="{active: !gridOptions.groups[0]}") Songs
+              a(ng-href="/", ng-class="{active: !gridOptions.groups[0]}") Songs
             li
-              a(ng-href="#/artist", ng-class="{active: gridOptions.groups[0] === 'artist'}") Artists
+              a(ng-href="/artist", ng-class="{active: gridOptions.groups[0] === 'artist'}") Artists
             li
-              a(ng-href="#/album", ng-class="{active: gridOptions.groups[0] === 'album'}") Albums
+              a(ng-href="/album", ng-class="{active: gridOptions.groups[0] === 'album'}") Albums
             li
-              a(ng-href="#/genre", ng-class="{active: gridOptions.groups[0] === 'genre'}") Genres
+              a(ng-href="/genre", ng-class="{active: gridOptions.groups[0] === 'genre'}") Genres
         .search
           span.icon-search
           input(type="text", placeholder="Search", ng-model="searchText", ng-focus="searchFocus = true", ng-blur="searchFocus = false")

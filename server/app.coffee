@@ -17,8 +17,9 @@ process.chdir __dirname
 
 app.use express.logger 'dev'
 app.set 'json spaces', 0
-app.use '/static', express.static path.join __dirname, '../public'
-app.get '/', (req, res) ->
+app.use '/static', express.static '../public'
+app.use '/target', express.static '../target'
+app.get '*', (req, res) ->
   res.sendfile path.join __dirname, '../public/index.html'
 
 class Scanner
@@ -92,7 +93,7 @@ class Json
     fs.writeFileSync '../cache.json', JSON.stringify @json
 
   scan: ->
-    scanner = new Scanner @target.target + '/'
+    scanner = new Scanner '../target/'
     tracks = scanner.scan()
     totalSize = scanner.getTotalSize tracks
     @json =
@@ -139,10 +140,6 @@ class Target
   check: ->
     if fs.existsSync '../target'
       @exists = true
-      process.chdir path.join __dirname, '../target'
-      @target = process.cwd()
-      @use()
-      process.chdir __dirname
 
   prompt: (callback) ->
     unless @iface
@@ -156,15 +153,10 @@ class Target
       else
         @prompt callback
 
-  use: ->
-    app.use '/target', express.static @target
-
   create: (target) ->
     if target
-      @target = target
       @exists = true
-      fs.symlinkSync @target, '../target'
-      @use()
+      fs.symlinkSync target, '../target'
 
 
 io.set 'log level', 1
@@ -175,10 +167,6 @@ io.sockets.on 'connection', (socket) ->
     json = new Json target, socket
   else
     json.check socket
-
-  socket.on 'target', (path) ->
-    target.create path
-    json.scan()
 
   socket.on 'disconnect', ->
     socket.disconnected = true
