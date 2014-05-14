@@ -20,8 +20,12 @@ function toBuffer(ab) {
 }
 
 function processCoverArt(track, data) {
-  var filePath = path.dirname(track) + '/' + data.artist + ' - ' + data.album + '.jpg'
+  var folderPath = path.dirname(track) + '/coverArt';
+  var filePath = folderPath + '/' + data.artist + ' - ' + data.album + '.jpg'
   if (!fs.existsSync(filePath)) {
+    if (!fs.existsSync(folderPath)) {
+      fs.mkdirSync(folderPath);
+    }
     fs.writeFileSync(filePath, toBuffer(data.coverArt.data.buffer));
   }
   return filePath.slice(2);
