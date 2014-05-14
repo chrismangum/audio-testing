@@ -112,9 +112,12 @@ app.controller 'main', ['$scope', ($scope) ->
     filterOptions: {}
     enableColumnReordering: true
     enableColumnResize: true
-    multiSelect: false
     headerRowHeight: rowHeight
     rowHeight: rowHeight
+    selectRow: (rowIndex, state) ->
+      console.log rowIndex, state
+    selectItem: (rowIndex, state) ->
+      console.log rowIndex, state
     rowTemplate:
       '<div ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}">
         <div class="ngVerticalBar ngVerticalBarVisible" ng-style="{height: rowHeight}">&nbsp;</div>
@@ -122,6 +125,40 @@ app.controller 'main', ['$scope', ($scope) ->
       </div>'
     selectedItems: []
     showColumnMenu: true
+
+  selectOne = (track, clear = true) ->
+    if clear
+      $scope.gridOptions.selectAll false
+    else if $scope.gridOptions.selectedItems.indexOf(track) isnt -1
+      $scope.gridOptions.selectItem $scope.dataValues.indexOf(track), false
+      return
+    $scope.gridOptions.selectItem $scope.dataValues.indexOf(track), true
+
+  selectRange = (startTrack, endTrack) ->
+    if $scope.sortedData
+      startIndex = $scope.sortedData.indexOf startTrack
+      endIndex = $scope.sortedData.indexOf endTrack
+    else
+      startIndex = $scope.dataValues.indexOf startTrack
+      endIndex = $scope.dataValues.indexOf endTrack
+    if startIndex < endIndex
+      range = _.range startIndex, endIndex + 1
+    else
+      range = _.range startIndex, endIndex - 1, -1
+    $scope.gridOptions.selectAll false
+    _.each range, (n) ->
+      $scope.gridOptions.selectRow n, true
+
+  $scope.selectRow = (e, track) ->
+    if $scope.gridOptions.selectedItems.length
+      if e.shiftKey
+        selectRange $scope.gridOptions.selectedItems[0], track
+      else if e.altKey
+        selectOne track, false
+      else
+        selectOne track
+    else
+      selectOne track
 
   $scope.updateLocalStorage = (prefs) ->
     localStorage.columnPrefs = JSON.stringify prefs or $scope.columnPrefs
