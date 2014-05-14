@@ -10,38 +10,58 @@ require('../public/js/flac.js');
 require('../public/js/mp3.js');
 require('../public/js/aac.js');
 
-function processData(data, callback) {
-    var player = AV.Player.fromBuffer(new Uint8Array(data));
-    player.preload();
-    player.on('metadata', function (data) {
-      data.trackNumber = data.trackNumber || data.tracknumber;
-      data.year = data.year || data.date || data.releaseDate;
-      if (data.trackNumber) {
-        data.trackNumber = parseInt(data.trackNumber, 10);
-      }
-      callback(null, _.pick(data, [
-        'title',
-        'artist',
-        'album',
-        'genre',
-        'trackNumber',
-        'year'
-      ]));
-    });
+function toBuffer(ab) {
+  var buffer = new Buffer(ab.byteLength);
+  var view = new Uint8Array(ab);
+  for (var i = 0; i < buffer.length; ++i) {
+      buffer[i] = view[i];
+  }
+  return buffer;
+}
+
+function processCoverArt(track, data) {
+  var filePath = path.dirname(track) + '/' + data.artist + ' - ' + data.album + '.jpg'
+  if (!fs.existsSync(filePath)) {
+    fs.writeFileSync(filePath, toBuffer(data.coverArt.data.buffer));
+  }
+}
+
+function processData(track, data, callback) {
+  var player = AV.Player.fromBuffer(new Uint8Array(data));
+  var coverArtPath;
+  player.preload();
+  player.on('metadata', function (data) {
+    data.trackNumber = data.trackNumber || data.tracknumber;
+    data.year = data.year || data.date || data.releaseDate;
+    if (data.trackNumber) {
+      data.trackNumber = parseInt(data.trackNumber, 10);
+    }
+    if (data.coverArt) {
+      processCoverArt(track, data);
+    }
+    callback(null, _.pick(data, [
+      'title',
+      'artist',
+      'album',
+      'genre',
+      'trackNumber',
+      'year'
+    ]));
+  });
 }
 var processDataOnce = _.once(processData);
 
 function readEntireFile(track, callback) {
   fs.readFile(track, function (err, data) {
     if (err) throw err;
-    processData(data, callback);
+    processData(track, data, callback);
   });
 }
 
 function readStream(track, callback) {
   var stream = fs.createReadStream(track, {start: 0, end: 9999});
   stream.on('data', function (data) {
-    processDataOnce(data, callback);
+    processDataOnce(track, data, callback);
   });
 }
 
