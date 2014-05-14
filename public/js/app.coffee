@@ -38,10 +38,6 @@ class Player extends AV.Player
     @.on 'progress', (timestamp) ->
       @progress = timestamp / @duration * 100
       $scope.safeApply()
-    @.on 'metadata', (data) ->
-      if data.coverArt
-        @entity.coverArtURL = data.coverArt.toBlobURL()
-        $scope.safeApply()
     @.on 'end', ->
       if $scope.repeat is 'one'
         $scope.play @entity
@@ -337,17 +333,6 @@ app.controller 'main', ['$scope', ($scope) ->
         when 187 then $scope.player?.increaseVolume()
         when 189 then $scope.player?.decreaseVolume()
 ]
-
-app.directive 'nowPlayingArtwork', ->
-  restrict: 'E'
-  template: '<div class="now-playing-artwork"><img ng-show="player.entity.coverArtURL"></div>'
-  replace: true
-  link: ($scope, el, attrs) ->
-    img = el.children()
-    $scope.$watch 'player.entity.coverArtURL', (n, o) ->
-      if n isnt o and n
-        img[0].src = n
-
 
 app.directive 'volumeSlider', ->
   restrict: 'E'

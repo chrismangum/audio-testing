@@ -24,6 +24,7 @@ function processCoverArt(track, data) {
   if (!fs.existsSync(filePath)) {
     fs.writeFileSync(filePath, toBuffer(data.coverArt.data.buffer));
   }
+  return filePath.slice(2);
 }
 
 function processData(track, data, callback) {
@@ -37,7 +38,7 @@ function processData(track, data, callback) {
       data.trackNumber = parseInt(data.trackNumber, 10);
     }
     if (data.coverArt) {
-      processCoverArt(track, data);
+      data.coverArtURL = processCoverArt(track, data);
     }
     callback(null, _.pick(data, [
       'title',
@@ -45,7 +46,8 @@ function processData(track, data, callback) {
       'album',
       'genre',
       'trackNumber',
-      'year'
+      'year',
+      'coverArtURL'
     ]));
   });
 }

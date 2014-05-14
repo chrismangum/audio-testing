@@ -27,7 +27,8 @@ html
           .now-playing-info
             .track-name {{ player.entity.title }}
             .track-info {{ player.entity.artist }} - {{ player.entity.album }}
-          now-playing-artwork
+          .now-playing-artwork
+            img(ng-if="player.entity.coverArtURL", ng-src="{{player.entity.coverArtURL}}")
     .main
       .toolbar
         nav.nav.nav-horizontal
