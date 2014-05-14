@@ -43,12 +43,12 @@ class Player extends AV.Player
         $scope.next()
 
   increaseVolume: (amount = 10) ->
-    if @volume + amount <= 100
-      @volume += amount
+    @volume += amount
+    @volume = 100 if @volume > 100
 
   decreaseVolume: (amount = 10) ->
-    if @volume - amount >= 0
-      @volume -= amount
+    @volume -= amount
+    @volume = 0 if @volume < 0
 
   seekToPercent: (percent) ->
     @seek percent / 100 * @duration
@@ -341,6 +341,11 @@ app.directive 'volumeSlider', ->
           'max': 100
       .on 'slide', setVolume
       .on 'set', setVolume
+
+    $scope.$watch 'player.volume', (n, o) ->
+      if n isnt o
+        $scope.volume = n
+        slider.val 100 - n
 
 app.directive 'slider', ->
   restrict: 'E'
