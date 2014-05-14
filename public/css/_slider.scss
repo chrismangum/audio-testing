@@ -1,0 +1,72 @@
+//==========================================================================
+// Slider
+//==========================================================================
+
+  .noUi-base,
+  .noUi-origin {
+
+    .noUi-horizontal & {
+      padding: 7px 0;
+    }
+
+    .noUi-vertical & {
+      padding: 0 7px;
+    }
+
+    &:before {
+      position: absolute;
+      display: block;
+      content: '';
+
+      .noUi-horizontal & {
+        top: 6px;
+        width: 100%;
+        height: 2px;
+      }
+
+      .noUi-vertical & {
+        left: 6px;
+        width: 2px;
+        height: 100%;
+      }
+    }
+  }
+
+  .noUi-base {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .noUi-origin {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  .noUi-handle {
+    position: relative;
+    top: -7px;
+    left: -7px;
+    z-index: 1;
+    width: 14px;
+    height: 14px;
+    border: 0;
+    border-radius: 50%;
+    transition: background 1s ease;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:before,
+    &:after {
+      display: none;
+    }
+  }
