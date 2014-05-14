@@ -171,7 +171,7 @@ app.controller 'main', ['$scope', ($scope) ->
     $scope.updateLocalStorage()
 
   $scope.toggleColVisibility = (col) ->
-    availableColumns[val].visible = !col.visible
+    availableColumns[col.field].visible = !col.visible
     $scope.columnPrefs.visibility[col.field] = !col.visible
     $scope.updateLocalStorage()
 
