@@ -29,7 +29,7 @@ app.controller 'tmp', ['$scope', '$routeParams'
 
 class Player extends AV.Player
   constructor: (@entity, $scope) ->
-    super AV.Asset.fromURL 'target/' + @entity.filePath
+    super AV.Asset.fromURL '/target/' + @entity.filePath
     if localStorage.volume
       @volume = parseInt localStorage.volume, 10
     if @entity.playing
