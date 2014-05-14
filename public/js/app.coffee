@@ -2,19 +2,21 @@ app = angular.module 'app', ['ngRoute', 'ngGrid']
 
 app.config ['$routeProvider', '$locationProvider'
   ($routeProvider, $locationProvider) ->
-    routeObj =
-      template: '<div class="media-list" ng-grid="gridOptions"></div>'
-      controller: 'tmp'
     $routeProvider
-      .when '/:group', routeObj
-      .otherwise routeObj
+      .when '/:group',
+        templateUrl: (params) ->
+          'static/' + params.group + '.html'
+        controller: 'tmp'
+      .otherwise
+        templateUrl: 'static/songs.html'
+        controller: 'tmp'
     $locationProvider.html5Mode true
 ]
 
-app.controller 'tmp', ['$scope', '$routeParams',
+app.controller 'tmp', ['$scope', '$routeParams'
   ($scope, $routeParams) ->
     if $routeParams.group
-      $scope.gridOptions.groups = [$routeParams.group]
+      $scope.gridOptions.groups = [$routeParams.group.replace /\w$/, '']
     else
       $scope.gridOptions.groups = []
 ]
