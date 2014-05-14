@@ -15,6 +15,7 @@ function processData(data, callback) {
     player.preload();
     player.on('metadata', function (data) {
       data.trackNumber = data.trackNumber || data.tracknumber;
+      data.year = data.year || data.date || data.releaseDate;
       if (data.trackNumber) {
         data.trackNumber = parseInt(data.trackNumber, 10);
       }
@@ -23,7 +24,8 @@ function processData(data, callback) {
         'artist',
         'album',
         'genre',
-        'trackNumber'
+        'trackNumber',
+        'year'
       ]));
     });
 }

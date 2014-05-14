@@ -97,6 +97,7 @@ app.controller 'main', ['$scope', ($scope) ->
     artist: { field: 'artist' }
     album: { field: 'album' }
     genre: { field: 'genre' }
+    year: { field: 'year' }
 
   #set cellTemplate default for all columns:
   _.each availableColumns, (col) ->
@@ -137,14 +138,16 @@ app.controller 'main', ['$scope', ($scope) ->
         artist: true
         album: true
         genre: true
+        year: true
       widths:
         trackNumber: 30
       order: [
-        "trackNumber",
-        "title",
-        "artist",
-        "album",
-        "genre"
+        'trackNumber',
+        'title',
+        'artist',
+        'album',
+        'genre',
+        'year'
       ]
 
   $scope.columnPrefs = JSON.parse localStorage.columnPrefs
@@ -389,7 +392,7 @@ app.directive 'slider', ->
     sliding = false
     sliderOptions =
       start: 0
-      connect: "lower"
+      connect: 'lower'
       range:
         'min': 0
         'max': 398203
