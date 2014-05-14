@@ -5,10 +5,16 @@ app.config ['$routeProvider', '$locationProvider'
     $routeProvider
       .when '/:group',
         templateUrl: (params) ->
-          'static/' + params.group + '.html'
+          '/static/' + params.group + '.html'
+        controller: 'tmp'
+      .when '/artists/:artist',
+        templateUrl: '/static/artistDetail.html'
+        controller: 'tmp'
+      .when '/artists/:artist/:album',
+        templateUrl: '/static/albumDetail.html'
         controller: 'tmp'
       .otherwise
-        templateUrl: 'static/songs.html'
+        templateUrl: '/static/songs.html'
         controller: 'tmp'
     $locationProvider.html5Mode true
 ]
@@ -43,12 +49,12 @@ class Player extends AV.Player
         $scope.next()
 
   increaseVolume: (amount = 10) ->
-    if @volume + amount <= 100
-      @volume += amount
+    @volume += amount
+    @volume = 100 if @volume > 100
 
   decreaseVolume: (amount = 10) ->
-    if @volume - amount >= 0
-      @volume -= amount
+    @volume -= amount
+    @volume = 0 if @volume < 0
 
   seekToPercent: (percent) ->
     @seek percent / 100 * @duration
@@ -97,6 +103,7 @@ app.controller 'main', ['$scope', ($scope) ->
     artist: { field: 'artist' }
     album: { field: 'album' }
     genre: { field: 'genre' }
+    year: { field: 'year' }
 
   #set cellTemplate default for all columns:
   _.each availableColumns, (col) ->
@@ -112,9 +119,12 @@ app.controller 'main', ['$scope', ($scope) ->
     filterOptions: {}
     enableColumnReordering: true
     enableColumnResize: true
-    multiSelect: false
     headerRowHeight: rowHeight
     rowHeight: rowHeight
+    selectRow: (rowIndex, state) ->
+      console.log rowIndex, state
+    selectItem: (rowIndex, state) ->
+      console.log rowIndex, state
     rowTemplate:
       '<div ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}">
         <div class="ngVerticalBar ngVerticalBarVisible" ng-style="{height: rowHeight}">&nbsp;</div>
@@ -134,14 +144,16 @@ app.controller 'main', ['$scope', ($scope) ->
         artist: true
         album: true
         genre: true
+        year: true
       widths:
         trackNumber: 30
       order: [
-        "trackNumber",
-        "title",
-        "artist",
-        "album",
-        "genre"
+        'trackNumber',
+        'title',
+        'artist',
+        'album',
+        'genre',
+        'year'
       ]
 
   $scope.columnPrefs = JSON.parse localStorage.columnPrefs
@@ -168,9 +180,42 @@ app.controller 'main', ['$scope', ($scope) ->
     $scope.updateLocalStorage()
 
   $scope.toggleColVisibility = (col) ->
-    availableColumns[val].visible = !col.visible
+    availableColumns[col.field].visible = !col.visible
     $scope.columnPrefs.visibility[col.field] = !col.visible
     $scope.updateLocalStorage()
+
+  selectOne = (track) ->
+    $scope.gridOptions.selectAll false
+    $scope.gridOptions.selectRow getTrackPosition(track), true
+
+  selectOneToggle = (track) ->
+    selected = $scope.gridOptions.selectedItems.indexOf(track) isnt -1
+    $scope.gridOptions.selectRow getTrackPosition(track), not selected
+
+  getTrackPosition = (track) ->
+    if $scope.sortedData
+      $scope.sortedData.indexOf track
+    else
+      $scope.dataValues.indexOf track
+
+  selectRange = (startTrack, endTrack) ->
+    startIndex = getTrackPosition startTrack
+    endIndex = getTrackPosition endTrack
+    if startIndex < endIndex
+      range = _.range startIndex, endIndex + 1
+    else
+      range = _.range startIndex, endIndex - 1, -1
+    $scope.gridOptions.selectAll false
+    _.each range, (n) ->
+      $scope.gridOptions.selectRow n, true
+
+  $scope.selectRow = (e, track) ->
+    if $scope.gridOptions.selectedItems.length
+      if e.shiftKey
+        return selectRange $scope.gridOptions.selectedItems[0], track
+      else if e.altKey
+        return selectOneToggle track
+    selectOne track
 
   getAdjacentTrackInArray = (array, direction) ->
     currentIndex = array.indexOf $scope.player.entity
@@ -342,13 +387,18 @@ app.directive 'volumeSlider', ->
       .on 'slide', setVolume
       .on 'set', setVolume
 
+    $scope.$watch 'player.volume', (n, o) ->
+      if n isnt o
+        $scope.volume = n
+        slider.val 100 - n
+
 app.directive 'slider', ->
   restrict: 'E'
   link: ($scope, el, attrs) ->
     sliding = false
     sliderOptions =
       start: 0
-      connect: "lower"
+      connect: 'lower'
       range:
         'min': 0
         'max': 398203
