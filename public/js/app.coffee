@@ -121,10 +121,6 @@ app.controller 'main', ['$scope', ($scope) ->
     enableColumnResize: true
     headerRowHeight: rowHeight
     rowHeight: rowHeight
-    selectRow: (rowIndex, state) ->
-      console.log rowIndex, state
-    selectItem: (rowIndex, state) ->
-      console.log rowIndex, state
     rowTemplate:
       '<div ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}">
         <div class="ngVerticalBar ngVerticalBarVisible" ng-style="{height: rowHeight}">&nbsp;</div>
