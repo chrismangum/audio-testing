@@ -126,40 +126,6 @@ app.controller 'main', ['$scope', ($scope) ->
     selectedItems: []
     showColumnMenu: true
 
-  selectOne = (track, clear = true) ->
-    if clear
-      $scope.gridOptions.selectAll false
-    else if $scope.gridOptions.selectedItems.indexOf(track) isnt -1
-      $scope.gridOptions.selectItem $scope.dataValues.indexOf(track), false
-      return
-    $scope.gridOptions.selectItem $scope.dataValues.indexOf(track), true
-
-  selectRange = (startTrack, endTrack) ->
-    if $scope.sortedData
-      startIndex = $scope.sortedData.indexOf startTrack
-      endIndex = $scope.sortedData.indexOf endTrack
-    else
-      startIndex = $scope.dataValues.indexOf startTrack
-      endIndex = $scope.dataValues.indexOf endTrack
-    if startIndex < endIndex
-      range = _.range startIndex, endIndex + 1
-    else
-      range = _.range startIndex, endIndex - 1, -1
-    $scope.gridOptions.selectAll false
-    _.each range, (n) ->
-      $scope.gridOptions.selectRow n, true
-
-  $scope.selectRow = (e, track) ->
-    if $scope.gridOptions.selectedItems.length
-      if e.shiftKey
-        selectRange $scope.gridOptions.selectedItems[0], track
-      else if e.altKey
-        selectOne track, false
-      else
-        selectOne track
-    else
-      selectOne track
-
   $scope.updateLocalStorage = (prefs) ->
     localStorage.columnPrefs = JSON.stringify prefs or $scope.columnPrefs
 
@@ -208,6 +174,39 @@ app.controller 'main', ['$scope', ($scope) ->
     availableColumns[val].visible = !col.visible
     $scope.columnPrefs.visibility[col.field] = !col.visible
     $scope.updateLocalStorage()
+
+  selectOne = (track) ->
+    $scope.gridOptions.selectAll false
+    $scope.gridOptions.selectRow getTrackPosition(track), true
+
+  selectOneToggle = (track) ->
+    selected = $scope.gridOptions.selectedItems.indexOf(track) isnt -1
+    $scope.gridOptions.selectRow getTrackPosition(track), not selected
+
+  getTrackPosition = (track) ->
+    if $scope.sortedData
+      $scope.sortedData.indexOf track
+    else
+      $scope.dataValues.indexOf track
+
+  selectRange = (startTrack, endTrack) ->
+    startIndex = getTrackPosition startTrack
+    endIndex = getTrackPosition endTrack
+    if startIndex < endIndex
+      range = _.range startIndex, endIndex + 1
+    else
+      range = _.range startIndex, endIndex - 1, -1
+    $scope.gridOptions.selectAll false
+    _.each range, (n) ->
+      $scope.gridOptions.selectRow n, true
+
+  $scope.selectRow = (e, track) ->
+    if $scope.gridOptions.selectedItems.length
+      if e.shiftKey
+        return selectRange $scope.gridOptions.selectedItems[0], track
+      else if e.altKey
+        return selectOneToggle track
+    selectOne track
 
   getAdjacentTrackInArray = (array, direction) ->
     currentIndex = array.indexOf $scope.player.entity
