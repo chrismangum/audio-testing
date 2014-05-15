@@ -328,6 +328,14 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
     $scope.player = new Player track, $scope
     $scope.safeApply()
 
+  getFirstCoverArt = (songs) ->
+    coverArtURL = _.find songs, (song) ->
+      _.has song, 'coverArtURL'
+    if coverArtURL
+      coverArtURL.coverArtURL
+    else
+      false
+
   socket = io.connect location.origin
 
   socket.on 'metadata', (data) ->
@@ -337,27 +345,16 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
   socket.on 'json', (data) ->
     $scope.data = data
     $scope.songs = _.values data.tracks
-    $scope.albums = _.groupBy $scope.songs, 'album'
-    _.each $scope.albums, (songs, name) ->
-      coverArtURL = _.find songs, (song) ->
-        _.has song, 'coverArtURL'
-      $scope.albums[name] =
+    $scope.artists = _.map _.groupBy($scope.songs, 'artist'), (songs, artistName) ->
+      songs: songs
+      name: artistName
+      coverArtURL: getFirstCoverArt songs
+      albums: _.map _.groupBy(songs, 'album'), (songs, albumName) ->
         songs: songs
-        artist: songs[0].artist
-      if coverArtURL
-        $scope.albums[name].coverArtURL = coverArtURL.coverArtURL
-    $scope.artists = _.groupBy $scope.songs, 'artist'
-    _.each $scope.artists, (songs, name) ->
-      albumCount = _.countBy songs, (s) ->
-        s.album
-      coverArtURL = _.find songs, (song) ->
-        _.has song, 'coverArtURL'
-      $scope.artists[name] =
-        songs: songs
-        albumCount: _.keys(albumCount).length
-      if coverArtURL
-        $scope.artists[name].coverArtURL = coverArtURL.coverArtURL
-    console.log $scope.albums
+        name: albumName
+        artist: artistName
+        coverArtURL: getFirstCoverArt songs
+    $scope.albums = _.flatten _.pluck($scope.artists, 'albums')
     $scope.safeApply()
 
   $(document).on 'keydown', (e) ->
