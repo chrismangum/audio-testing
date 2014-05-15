@@ -183,12 +183,19 @@ app.controller 'main', ['$scope', ($scope) ->
       $scope.gridOptions.selectAll false
       $scope.gridOptions.selectRow track, true
 
-  selectAdjacentTrack = (direction) ->
+  selectAdjacentTrack = (e, direction) ->
     if $scope.gridOptions.selectedItems.length
-      index = getTrackPosition($scope.gridOptions.selectedItems[0]) + direction
-      if $scope.dataValues[index]
-        selectOne index
-        scrollToIndex index
+      index = getTrackPosition $scope.gridOptions.selectedItems[0]
+      if e.shiftKey
+        endIndex = getTrackPosition($scope.gridOptions.selectedItems.slice(-1)[0]) + direction
+        if $scope.dataValues[endIndex]
+          selectRange index, endIndex
+          scrollToIndex endIndex, true
+      else
+        index += direction
+        if $scope.dataValues[index]
+          selectOne index
+          scrollToIndex index
 
   selectOneToggle = (track) ->
     selected = $scope.gridOptions.selectedItems.indexOf(track) isnt -1
@@ -200,9 +207,11 @@ app.controller 'main', ['$scope', ($scope) ->
     else
       $scope.dataValues.indexOf track
 
-  selectRange = (startTrack, endTrack) ->
-    startIndex = getTrackPosition startTrack
-    endIndex = getTrackPosition endTrack
+  selectRange = (startIndex, endIndex) ->
+    if _.isObject startIndex
+      startIndex = getTrackPosition startIndex
+    if _.isObject endIndex
+      endIndex = getTrackPosition endIndex
     if startIndex < endIndex
       range = _.range startIndex, endIndex + 1
     else
@@ -237,7 +246,7 @@ app.controller 'main', ['$scope', ($scope) ->
       else
         scrollToIndex $scope.dataValues.indexOf track
 
-  scrollToIndex = (index) ->
+  scrollToIndex = (index, disablePageJump) ->
     if index isnt -1
       viewPort = $ '.ngViewport'
       top = viewPort.scrollTop()
@@ -245,7 +254,10 @@ app.controller 'main', ['$scope', ($scope) ->
       bottom = top + height
       trackPosition = index * rowHeight
       unless top < trackPosition + rowHeight < bottom
-        viewPort.scrollTop trackPosition
+        if trackPosition + rowHeight > bottom and disablePageJump
+          viewPort.scrollTop trackPosition + rowHeight - height
+        else
+          viewPort.scrollTop trackPosition
 
   getAdjacentTrack = (direction) ->
     if $scope.shuffling
@@ -328,14 +340,14 @@ app.controller 'main', ['$scope', ($scope) ->
           $scope.previous()
           false
         when 38
-          selectAdjacentTrack -1
+          selectAdjacentTrack e, -1
           $scope.safeApply()
           false
         when 39
           $scope.next()
           false
         when 40
-          selectAdjacentTrack 1
+          selectAdjacentTrack e, 1
           $scope.safeApply()
           false
         when 48 then $scope.player?.seekToPercent 0
