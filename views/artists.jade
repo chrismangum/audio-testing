@@ -1,5 +1,5 @@
 ul.view-defaults.list-view
-  li.item(ng-repeat="artist in artists")
+  li.item(ng-repeat="artist in artists", ng-click="activateItem(artist, 'artist')", ng-class="{active: artist.active}")
     a
       .item-image
         img(ng-src="{{artist.coverArtURL || '/static/img/missing-artwork.png'}}")

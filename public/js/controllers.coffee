@@ -1,20 +1,38 @@
 
+app.controller 'tmp', ['$scope', ($scope) ->
+  if $scope.songs.length
+    $scope.checkRoute()
+]
+
 app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
   rowHeight = 26
   $scope.songs = []
+  $scope.artists = []
+  $scope.albums = []
   $scope.data = {}
   $scope.player = null
   $scope.progress = 0
   $scope.repeat = false
   $scope.shuffling = false
   $scope.params = $routeParams
+  $scope.activeItems = {}
 
-  $scope.shuffle = ->
+  $scope.filterData = (songs) ->
+    $scope.gridData = songs
+
+  $scope.unfilterData = ->
+    $scope.gridData = $scope.songs
+
+  $scope.toggleShuffle = ->
     $scope.shuffling = !$scope.shuffling
     if $scope.shuffling
-      $scope.shuffledData = _.shuffle $scope.songs
+      $scope.shuffledData = _.shuffle $scope.gridData
     else
       $scope.shuffledData = false
+
+  $scope.$watch 'gridData', (n, o) ->
+    if n isnt o and $scope.shuffling
+      $scope.shuffledData = _.shuffle n
 
   $scope.$watch 'searchText', (n, o) ->
     if n isnt o
@@ -49,9 +67,10 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
           <span ng-cell-text>{{ COL_FIELD }}</span>
         </div>'
 
+  $scope.gridData = []
   $scope.gridOptions =
     columnDefs: []
-    data: 'songs'
+    data: 'gridData'
     filterOptions: {}
     enableColumnReordering: true
     enableColumnResize: true
@@ -129,7 +148,7 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
       endIndex = getTrackPosition $scope.gridOptions.selectedItems.slice(-1)[0]
       if e.shiftKey
         endIndex = endIndex + direction
-        if $scope.songs[endIndex]
+        if $scope.gridData[endIndex]
           selectRange index, endIndex
           scrollToIndex endIndex, true
       else if $scope.gridOptions.selectedItems.length > 1
@@ -147,8 +166,8 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
   selectIndex = (index) ->
     if index < 0
       index = 0
-    else if index >= $scope.songs.length
-      index = $scope.songs.length - 1
+    else if index >= $scope.gridData.length
+      index = $scope.gridData.length - 1
     selectOne index
     scrollToIndex index
 
@@ -160,7 +179,7 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
     if $scope.sortedData
       $scope.sortedData.indexOf track
     else
-      $scope.songs.indexOf track
+      $scope.gridData.indexOf track
 
   selectRange = (startIndex, endIndex) ->
     if _.isObject startIndex
@@ -199,7 +218,7 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
       if $scope.sortedData
         scrollToIndex $scope.sortedData.indexOf track
       else
-        scrollToIndex $scope.songs.indexOf track
+        scrollToIndex $scope.gridData.indexOf track
 
   scrollToIndex = (index, disablePageJump) ->
     if index isnt -1
@@ -220,7 +239,7 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
     else if $scope.sortedData
       getAdjacentTrackInArray $scope.sortedData, direction
     else
-      getAdjacentTrackInArray $scope.songs, direction
+      getAdjacentTrackInArray $scope.gridData, direction
 
   $scope.toggleRepeat = ->
     switch $scope.repeat
@@ -236,7 +255,7 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
     else if $scope.sortedData
       track = $scope.sortedData[0]
     else
-      track = $scope.songs[0]
+      track = $scope.gridData[0]
     scrollToTrack track
     track
 
@@ -280,6 +299,28 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
     else
       false
 
+  $scope.activateItem = (item, type) ->
+    if $scope.activeItems[type]
+      $scope.activeItems[type].active = false
+    item.active = true
+    $scope.activeItems[type] = item
+    $scope.filterData item.songs
+
+  $scope.checkRoute = ->
+    switch $scope.params.group
+      when 'artists'
+        if $scope.activeItems.artist
+          $scope.filterData $scope.activeItems.artist.songs
+        else
+          $scope.activateItem $scope.artists[0], 'artist'
+      when 'genres'
+        if $scope.activeItems.genre
+          $scope.filterData $scope.activeItems.genre.songs
+        else
+          $scope.activateItem $scope.genres[0], 'genre'
+      else
+        $scope.unfilterData()
+
   socket = io.connect location.origin
 
   socket.on 'metadata', (data) ->
@@ -299,6 +340,10 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
         artist: artistName
         coverArtURL: getFirstCoverArt songs
     $scope.albums = _.flatten _.pluck($scope.artists, 'albums')
+    $scope.genres = _.map _.groupBy($scope.songs, 'genre'), (songs, genreName) ->
+      name: genreName
+      songs: songs
+    $scope.checkRoute()
     $scope.safeApply()
 
   $(document).on 'keydown', (e) ->
@@ -336,8 +381,6 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
         when 187 then $scope.player?.increaseVolume()
         when 189 then $scope.player?.decreaseVolume()
 ]
-
-app.controller 'tmp', ['$scope', ($scope) ->]
 
 class Player extends AV.Player
   constructor: (@entity, $scope) ->
