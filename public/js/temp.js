@@ -1,26 +1,16 @@
-var toggleNowPlaying = $('.now-playing-container .sidebar-title'),
+var toggleNowPlaying = $('.now-playing .sidebar-title'),
     nowPlayingButton = $('.now-playing-button');
-    nowPlaying = $('.now-playing');
-
-// $(window).on('resize', function() {
-//   $('.main').css({
-//     height: $(window).height() + 'px'
-//   });
-// }).resize();
-
-// $(window).on('resize', function() {
-//   console.log($('.toolbar').height()
-// }).resize();
+    nowPlayingArtwork = $('.now-playing-artwork');
 
 toggleNowPlaying.on('click', function() {
   nowPlayingButton.toggleClass('flip-icon');
-  nowPlaying.toggleClass('now-playing-hide');
-  if (nowPlaying.hasClass('now-playing-hide')) {
-    nowPlaying.css({
-      marginBottom: -(nowPlaying.height()) + 'px'
+  nowPlayingArtwork.toggleClass('now-playing-hide');
+  if (nowPlayingArtwork.hasClass('now-playing-hide')) {
+    nowPlayingArtwork.css({
+      marginBottom: -(nowPlayingArtwork.height()) + 'px'
     });
   } else {
-    nowPlaying.css({
+    nowPlayingArtwork.css({
       marginBottom: 0 + 'px'
     });
   }

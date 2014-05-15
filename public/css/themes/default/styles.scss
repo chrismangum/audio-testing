@@ -12,7 +12,7 @@
   $app-min-width: 700px;
   $toolbar-height: 34px;
   $sidebar-width: 200px;
-  $player-height: 80px;
+  $player-height: 60px;
 
 
 //==========================================================================
@@ -76,18 +76,17 @@
   
   // Player
   //========================================================================
-  $player-background: $primary-dark;
+  $player-background: $primary-darker;
   $player-color: $primary-lighter;
   $player-button-color: $primary-light;
   $player-button-color-hover: $primary-lighter;
   $player-button-color-active: $secondary;
   $player-button-text-shadow-active: 0 0 2px rgba($secondary, .5), 0 0 6px rgba($secondary, .3), 0 0 10px rgba($secondary, .1);
-  $player-button-circle-border-color: $primary-light;
-  $player-button-circle-border-color-active: $primary-lighter;
   
     // Progress Bar
-    $progress-bar-filled-background: $primary-lighter;
-    $progress-bar-empty-background: $primary-darker;
+    $progress-bar-filled-background: tint($primary-darker, 50%);
+    $progress-bar-empty-background: shade($primary-darker, 50%);
+    $progress-bar-empty-box-shadow: 0 1px 0 tint($primary-darker, 2%);
     $progress-bar-handle-background: tint($primary-lighter, 50%);
     $progress-bar-handle-background-hover: $secondary;
 
@@ -102,6 +101,7 @@
   //========================================================================
   $sidebar-background: $primary-darker;
   $sidebar-color: $primary-lighter;
+  $sidebar-title-height: 35px;
   $sidebar-title-color: $primary-light;
   $sidebar-title-button-color: $secondary;
   $sidebar-link-color: $primary-lighter;
@@ -115,6 +115,7 @@
     $now-playing-sidebar-title-background-hover: tint($primary, 2%);
     $now-playing-sidebar-title-color-hover: $secondary;
     $now-playing-background-color: $primary-darker;
+    $now-playing-info-height: 50px;
     $now-playing-info-background: rgba($primary-darker, .9);
     $now-playing-info-track-name: $secondary;
     $now-playing-info-track-info: $secondary;

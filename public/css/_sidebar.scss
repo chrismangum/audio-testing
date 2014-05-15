@@ -27,8 +27,10 @@
 
   .sidebar-title {
     @extend %label;
-    padding: 10px 12px;
+    padding: 0 12px;
+    height: $sidebar-title-height;
     color: $sidebar-title-color;
+    line-height: $sidebar-title-height;
 
     .button {
       position: absolute;
@@ -50,10 +52,10 @@
     }
   }
 
-  .now-playing-container {
+  .now-playing {
     @extend %flex-column;
     position: relative;
-    margin-bottom: -250px;
+    margin-bottom: -($sidebar-title-height + $sidebar-width + $now-playing-info-height);
     transition: all .4s cubic-bezier(0, 0.75, 0.4, 1.25);
 
     &.isPlaying {
@@ -77,39 +79,40 @@
     }
   }
 
-  .now-playing {
-    position: relative;
-    background-color: $now-playing-background-color;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    transition: all .3s cubic-bezier(0.250, -0.150, 0.250, 1.150);
-  
-    .now-playing-info {
-      position: absolute;
-      bottom: 0;
-      z-index: 2;
-      padding: 10px;
-      background: $now-playing-info-background;
-
-      .track-name {
-        color: $now-playing-info-track-name;
-      }
-
-      .track-info {
-        color: $now-playing-info-track-info;
-      }
-    }
-  }
-
   .now-playing-artwork {
     display: block;
     height: $sidebar-width;
     background: $now-playing-artwork-missing-background;
     background-size: cover;
+    transition: all .3s cubic-bezier(0.250, -0.150, 0.250, 1.150);
 
     img {
       max-width: 100%;
       height: auto;
+    }
+  }
+
+  .now-playing-info {
+    @extend %flex-column;
+    position: relative;
+    padding: 0 10px;
+    width: 100%;
+    height: $now-playing-info-height;
+    background: $now-playing-info-background;
+    align-items: flex-start;
+    justify-content: center;
+
+    .track-name {
+      @extend %no-wrap;
+      color: $now-playing-info-track-name;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .track-info {
+      @extend %no-wrap;
+      color: $now-playing-info-track-info;
+      font-weight: 300;
+      font-size: 11px;
     }
   }
