@@ -1,0 +1,35 @@
+//==========================================================================
+// Grid View
+//==========================================================================
+
+  .grid-view {
+    @extend %flex-row;
+    padding: 2%;
+    flex-wrap: wrap;
+
+    .item {
+      @include rowMachine(3, 2%);
+      float: left;
+
+      @media (min-width: 900px) {
+        @include rowMachine(4, 2%);
+      }
+      
+      @media (min-width: 1100px) {
+        @include rowMachine(5, 2%);
+      }
+      
+      @media (min-width: 1300px) {
+        @include rowMachine(6, 2%);
+      }
+    } 
+
+    .item-image {
+      margin-bottom: 8px;
+      background: $primary-dark;
+    }
+
+    .item-info-name {
+      margin-bottom: 2px;
+    }
+  }

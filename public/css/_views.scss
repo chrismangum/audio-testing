@@ -1,0 +1,33 @@
+//==========================================================================
+// View
+//==========================================================================
+  
+  .view-defaults {
+    position: relative;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    line-height: 1;
+
+    .item-image {
+      img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+    }
+
+    .item-info-name {
+      @extend %no-wrap;
+      color: $primary;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .item-info-details {
+      @extend %no-wrap;
+      color: $primary-lighter;
+      font-size: 12px;
+    }
+  }
