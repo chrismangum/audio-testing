@@ -320,4 +320,29 @@
     font-weight: $row-font-weight;
     font-size: $row-font-size;
     line-height: $row-line-height;
+
+    &.now-playing-indicator,
+    &.now-paused-indicator {
+      padding-right: 25px;
+
+      &:before {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        display: block;
+        font-size: 18px;
+      }
+    }
+
+    &.now-playing-indicator {
+      &:before {
+        @extend .icon-volume-high;
+      }
+    }
+
+    &.now-paused-indicator {
+      &:before {
+        @extend .icon-volume-off;
+      }
+    }
   }
