@@ -19,12 +19,7 @@ app.config ['$routeProvider', '$locationProvider'
     $locationProvider.html5Mode true
 ]
 
-app.controller 'tmp', ['$scope', '$routeParams'
-  ($scope, $routeParams) ->
-    if $routeParams.group
-      $scope.gridOptions.groups = [$routeParams.group.replace /\w$/, '']
-    else
-      $scope.gridOptions.groups = []
+app.controller 'tmp', ['$scope', ($scope) ->
 ]
 
 class Player extends AV.Player
@@ -60,19 +55,20 @@ class Player extends AV.Player
     super()
 
 
-app.controller 'main', ['$scope', ($scope) ->
+app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
   rowHeight = 26
-  $scope.dataValues = []
+  $scope.songs = []
   $scope.data = {}
   $scope.player = null
   $scope.progress = 0
   $scope.repeat = false
   $scope.shuffling = false
+  $scope.params = $routeParams
 
   $scope.shuffle = ->
     $scope.shuffling = !$scope.shuffling
     if $scope.shuffling
-      $scope.shuffledData = _.shuffle $scope.dataValues
+      $scope.shuffledData = _.shuffle $scope.songs
     else
       $scope.shuffledData = false
 
@@ -111,7 +107,7 @@ app.controller 'main', ['$scope', ($scope) ->
 
   $scope.gridOptions =
     columnDefs: []
-    data: 'dataValues'
+    data: 'songs'
     filterOptions: {}
     enableColumnReordering: true
     enableColumnResize: true
@@ -189,7 +185,7 @@ app.controller 'main', ['$scope', ($scope) ->
       endIndex = getTrackPosition $scope.gridOptions.selectedItems.slice(-1)[0]
       if e.shiftKey
         endIndex = endIndex + direction
-        if $scope.dataValues[endIndex]
+        if $scope.songs[endIndex]
           selectRange index, endIndex
           scrollToIndex endIndex, true
       else if $scope.gridOptions.selectedItems.length > 1
@@ -207,8 +203,8 @@ app.controller 'main', ['$scope', ($scope) ->
   selectIndex = (index) ->
     if index < 0
       index = 0
-    else if index >= $scope.dataValues.length
-      index = $scope.dataValues.length - 1
+    else if index >= $scope.songs.length
+      index = $scope.songs.length - 1
     selectOne index
     scrollToIndex index
 
@@ -220,7 +216,7 @@ app.controller 'main', ['$scope', ($scope) ->
     if $scope.sortedData
       $scope.sortedData.indexOf track
     else
-      $scope.dataValues.indexOf track
+      $scope.songs.indexOf track
 
   selectRange = (startIndex, endIndex) ->
     if _.isObject startIndex
@@ -259,7 +255,7 @@ app.controller 'main', ['$scope', ($scope) ->
       if $scope.sortedData
         scrollToIndex $scope.sortedData.indexOf track
       else
-        scrollToIndex $scope.dataValues.indexOf track
+        scrollToIndex $scope.songs.indexOf track
 
   scrollToIndex = (index, disablePageJump) ->
     if index isnt -1
@@ -280,7 +276,7 @@ app.controller 'main', ['$scope', ($scope) ->
     else if $scope.sortedData
       getAdjacentTrackInArray $scope.sortedData, direction
     else
-      getAdjacentTrackInArray $scope.dataValues, direction
+      getAdjacentTrackInArray $scope.songs, direction
 
   $scope.toggleRepeat = ->
     switch $scope.repeat
@@ -296,7 +292,7 @@ app.controller 'main', ['$scope', ($scope) ->
     else if $scope.sortedData
       track = $scope.sortedData[0]
     else
-      track = $scope.dataValues[0]
+      track = $scope.songs[0]
     scrollToTrack track
     track
 
@@ -340,7 +336,28 @@ app.controller 'main', ['$scope', ($scope) ->
 
   socket.on 'json', (data) ->
     $scope.data = data
-    $scope.dataValues = _.values data.tracks
+    $scope.songs = _.values data.tracks
+    $scope.albums = _.groupBy $scope.songs, 'album'
+    _.each $scope.albums, (songs, name) ->
+      coverArtURL = _.find songs, (song) ->
+        _.has song, 'coverArtURL'
+      $scope.albums[name] =
+        songs: songs
+        artist: songs[0].artist
+      if coverArtURL
+        $scope.albums[name].coverArtURL = coverArtURL.coverArtURL
+    $scope.artists = _.groupBy $scope.songs, 'artist'
+    _.each $scope.artists, (songs, name) ->
+      albumCount = _.countBy songs, (s) ->
+        s.album
+      coverArtURL = _.find songs, (song) ->
+        _.has song, 'coverArtURL'
+      $scope.artists[name] =
+        songs: songs
+        albumCount: _.keys(albumCount).length
+      if coverArtURL
+        $scope.artists[name].coverArtURL = coverArtURL.coverArtURL
+    console.log $scope.albums
     $scope.safeApply()
 
   $(document).on 'keydown', (e) ->
