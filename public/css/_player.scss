@@ -112,14 +112,8 @@
       bottom: 45px;
       left: 8px;
       padding: 15px 5px;
-      height: 0;
       border-radius: 20px;
       background: $volume-background;
-      transition: all .3s ease;
-
-      &.show {
-        height: auto;
-      }
     }
   }
 
