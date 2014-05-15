@@ -186,16 +186,31 @@ app.controller 'main', ['$scope', ($scope) ->
   selectAdjacentTrack = (e, direction) ->
     if $scope.gridOptions.selectedItems.length
       index = getTrackPosition $scope.gridOptions.selectedItems[0]
+      endIndex = getTrackPosition $scope.gridOptions.selectedItems.slice(-1)[0]
       if e.shiftKey
-        endIndex = getTrackPosition($scope.gridOptions.selectedItems.slice(-1)[0]) + direction
+        endIndex = endIndex + direction
         if $scope.dataValues[endIndex]
           selectRange index, endIndex
           scrollToIndex endIndex, true
+      else if $scope.gridOptions.selectedItems.length > 1
+        selectIndex getIndexOutideBounds index, endIndex, direction
       else
-        index += direction
-        if $scope.dataValues[index]
-          selectOne index
-          scrollToIndex index
+        selectIndex index + direction
+
+  getIndexOutideBounds = (a, b, direction) ->
+    if direction is 1
+      item = if a > b then a else b
+    else
+      item = if a < b then a else b
+    item + direction
+
+  selectIndex = (index) ->
+    if index < 0
+      index = 0
+    else if index >= $scope.dataValues.length
+      index = $scope.dataValues.length - 1
+    selectOne index
+    scrollToIndex index
 
   selectOneToggle = (track) ->
     selected = $scope.gridOptions.selectedItems.indexOf(track) isnt -1
