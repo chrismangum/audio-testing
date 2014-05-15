@@ -77,7 +77,7 @@ html
       .player-col-side
         button.button(ng-class="{'active': repeat}", ng-click="toggleRepeat()")
           span(class="{{ repeat == 'one' ? 'icon-repeat-one' : 'icon-repeat' }}")
-        button.button(ng-class="{active: shuffling}", ng-click="shuffle()")
+        button.button(ng-class="{active: shuffling}", ng-click="toggleShuffle()")
           span.icon-shuffle
         volume-slider
       script(src="/static/js/aurora.js")
