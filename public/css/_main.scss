@@ -3,29 +3,32 @@
 //==========================================================================
 
   .main {
+    @extend %flex-column;
     position: relative;
-    padding-bottom: $player-height;
-    padding-left: $sidebar-width;
     min-width: $app-min-width;
     background: $main-background;
+    flex: 1;
   }
   
   .toolbar {
-    position: absolute;
-    left: 0;
+    @extend %flex-row;
     z-index: 1;
-    padding-left: $sidebar-width;
-    min-width: $app-min-width;
     width: 100%;
     height: $toolbar-height;
     background: $toolbar-background;
+    font-size: 0;
 
-    a {
+    .nav {
+      flex: 1;
+    }
+
+    a,
+    .button {
       padding-top: 0;
       padding-bottom: 0;
       height: $toolbar-height;
-      line-height: $toolbar-height;
       color: $toolbar-nav-color;
+      line-height: $toolbar-height;
       
       &:hover {
         background: $toolbar-nav-hover;
@@ -40,18 +43,28 @@
       }
     }
 
+    .button {
+      margin: 0;
+      padding: 0 10px;
+      vertical-align: top;
+      font-size: 15px;
+      line-height: 0;
+    }
+
     .search {
       position: relative;
-      float: right;
       width: $sidebar-width;
 
       .icon-search {
         position: absolute;
         top: 10px;
         left: 10px;
-        color: $search-color;
-        font-size: 15px;
-        line-height: 1;
+        
+        &:before {
+          color: $search-color;
+          font-size: 15px;
+          line-height: 1;
+        }
       }
      
       input {
@@ -67,10 +80,11 @@
   }
 
   .media-list {
-    padding-top: $toolbar-height;
-    height: 100%;
+    overflow: hidden;
+    width: 100%;
     color: $media-list-color;
     line-height: 1;
+    flex: 1;
   }
 
   .now-playing-indicator,
@@ -94,4 +108,4 @@
     &:before {
       @extend .icon-volume-off;
     }
-  }
+  } 

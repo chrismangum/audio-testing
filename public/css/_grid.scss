@@ -174,11 +174,11 @@
 
   .ngHeaderButtonArrow {
     @extend %icon;
-    @extend .icon-gear;
+    @extend .icon-columns;
     position: absolute;
-    top: 4px;
-    left: 4px;
-    font-size: 19px;
+    top: 2px;
+    left: 2px;
+    font-size: 22px;
   }
 
   .ngColMenu {
@@ -227,8 +227,7 @@
       left: -60px;
 
       &:before {
-        @extend .icon;
-        @extend .icon-check;
+        @extend %icon-check;
         position: absolute;
         top: 0;
         left: 70px;
@@ -284,22 +283,11 @@
   .ngRow {
     position: absolute;
     min-width: 100%;
+    background-color: $row-background-color;
     color: $row-color;
 
-    &.odd {
-      background-color: $row-odd-background-color;
-
-      &:hover {
-        background-color: $row-odd-background-color-hover;
-      }
-    }
-
-    &.even {
-      background-color: $row-even-background-color;
-
-      &:hover {
-        background-color: $row-even-background-color-hover;
-      }
+    &:hover {
+      background-color: $row-background-color-hover;
     }
 
     &.selected {

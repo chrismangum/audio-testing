@@ -32,55 +32,74 @@
 //==========================================================================
   
   // Main
-  $main-background: tint($primary-light, 20%);
-  $toolbar-background: $primary-darker;
-  $toolbar-nav-hover: $primary-dark;
-  $toolbar-nav-active: $primary-light;
-  $toolbar-nav-color: $secondary;
-  $search-color: $primary-light;
-  $search-background: $primary-darker;
-  $search-input-color: $secondary;
+  //========================================================================
+  $main-background: tint($primary-lighter, 50%);
+  
+    // Toolbar
+    $toolbar-background: $primary-darker;
+    $toolbar-nav-hover: $primary-dark;
+    $toolbar-nav-active: $primary-light;
+    $toolbar-nav-color: $secondary;
+    
+    // Search
+    $search-color: $primary-light;
+    $search-background: $primary-darker;
+    $search-input-color: $secondary;
 
   // Grid
+  //========================================================================
   $media-list-color: $primary-dark;
-  $label-height: 26px;
-  $label-background-color: $primary-light;
-  $label-background-color-hover: linear-gradient(tint($primary-light, 5%), $primary-light);
-  $label-background-color-active: linear-gradient($primary-light, tint($primary-light, 5%));
-  $label-background-color-sorted: linear-gradient(shade($primary-light, 15%), shade($primary-light, 5%));
-  $label-color: $secondary;
-  $label-column-border: shade($primary-light, 20%);
-  $label-sort-arrow-color: $secondary;
-  $row-odd-background-color: tint($primary-lighter, 50%);
-  $row-odd-background-color-hover: tint($primary-lighter, 55%);
-  $row-even-background-color: tint($primary-lighter, 50%);
-  $row-even-background-color-hover: tint($primary-lighter, 55%);
-  $row-color: $primary;
-  $row-selected-background-color: $primary;
-  $row-selected-color: $secondary;
-  $row-font-size: 12px;
-  $row-font-weight: 600;
-  $row-line-height: 14px;
-  $row-column-border: transparent;
-  $row-group-background: linear-gradient(tint($primary-light, 40%), tint($primary-light, 35%));
-  $row-group-background-hover: linear-gradient(tint($primary-light, 45%), tint($primary-light, 35%));
-  $row-group-arrow-color: $primary;
+  
+    // Column Labels
+    $label-height: 26px;
+    $label-background-color: $primary-light;
+    $label-background-color-hover: linear-gradient(tint($primary-light, 5%), $primary-light);
+    $label-background-color-active: linear-gradient($primary-light, tint($primary-light, 5%));
+    $label-background-color-sorted: linear-gradient(shade($primary-light, 15%), shade($primary-light, 5%));
+    $label-color: $secondary;
+    $label-column-border: shade($primary-light, 20%);
+    $label-sort-arrow-color: $secondary;
+    
+    // Rows
+    $row-background-color: tint($primary-lighter, 50%);
+    $row-background-color-hover: tint($primary-lighter, 55%);
+    $row-color: $primary-light;
+    $row-selected-background-color: $primary;
+    $row-selected-color: $secondary;
+    $row-font-size: 12px;
+    $row-font-weight: 600;
+    $row-line-height: 14px;
+    $row-column-border: transparent;
+    $row-group-background: linear-gradient(tint($primary-light, 40%), tint($primary-light, 35%));
+    $row-group-background-hover: linear-gradient(tint($primary-light, 45%), tint($primary-light, 35%));
+    $row-group-arrow-color: $primary;
   
   // Player
+  //========================================================================
   $player-background: $primary-dark;
-  $player-color: $primary-light;
+  $player-color: $primary-lighter;
   $player-button-color: $primary-light;
   $player-button-color-hover: $primary-lighter;
   $player-button-color-active: $secondary;
   $player-button-text-shadow-active: 0 0 2px rgba($secondary, .5), 0 0 6px rgba($secondary, .3), 0 0 10px rgba($secondary, .1);
   $player-button-circle-border-color: $primary-light;
   $player-button-circle-border-color-active: $primary-lighter;
-  $progress-bar-passed-background: $primary-light;
-  $progress-bar-remain-background: $primary-darker;
-  $progress-bar-handle-background: tint($primary-lighter, 50%);
-  $progress-bar-handle-background-hover: $secondary;
+  
+    // Progress Bar
+    $progress-bar-filled-background: $primary-lighter;
+    $progress-bar-empty-background: $primary-darker;
+    $progress-bar-handle-background: tint($primary-lighter, 50%);
+    $progress-bar-handle-background-hover: $secondary;
+
+    // Volume Slider
+    $volume-background: $primary-lighter;
+    $volume-filled-background: $primary-dark;
+    $volume-empty-background: shade($primary-lighter, 20%);
+    $volume-handle-background: tint($primary-lighter, 50%);
+    $volume-handle-background-hover: $secondary;
 
   // Sidebar
+  //========================================================================
   $sidebar-background: $primary-darker;
   $sidebar-color: $primary-lighter;
   $sidebar-title-color: $primary-light;
@@ -88,15 +107,17 @@
   $sidebar-link-color: $primary-lighter;
   $sidebar-link-background-hover: $primary-dark;
   $sidebar-link-color-hover: $secondary;
-  $now-playing-artwork-missing-background: darken($primary-darker, 10%) url(../../../../static/img/missing-artwork.png);
-  $now-playing-sidebar-title-background: $primary;
-  $now-playing-sidebar-title-color: $primary-light;
-  $now-playing-sidebar-title-background-hover: tint($primary, 2%);
-  $now-playing-sidebar-title-color-hover: $secondary;
-  $now-playing-background-color: $primary-darker;
-  $now-playing-info-background: rgba($primary-darker, .9);
-  $now-playing-info-track-name: $secondary;
-  $now-playing-info-track-info: $secondary;
+  
+    // Now Playing
+    $now-playing-artwork-missing-background: darken($primary-darker, 10%) url(../../../../static/img/missing-artwork.png);
+    $now-playing-sidebar-title-background: $primary;
+    $now-playing-sidebar-title-color: $primary-light;
+    $now-playing-sidebar-title-background-hover: tint($primary, 2%);
+    $now-playing-sidebar-title-color-hover: $secondary;
+    $now-playing-background-color: $primary-darker;
+    $now-playing-info-background: rgba($primary-darker, .9);
+    $now-playing-info-track-name: $secondary;
+    $now-playing-info-track-info: $secondary;
 
 
 //==========================================================================

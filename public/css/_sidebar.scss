@@ -3,20 +3,14 @@
 //==========================================================================
 
   .sidebar {
-    position: absolute;
-    left: 0;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: $player-height;
+    @extend %flex-column;
     width: $sidebar-width;
-    height: 100%;
     background: $sidebar-background;
     color: $sidebar-color;
 
     .nav {
       overflow-x: hidden;
-      overflow-y: scroll;
+      overflow-y: auto;
       height: 100%;
       flex: 1;
 
@@ -39,27 +33,31 @@
     .button {
       position: absolute;
       top: 0;
-      right: 4px;
-      width: 30px;
-      height: 30px;
+      right: 0;
+      width: 34px;
+      height: 34px;
       color: inherit;
-      font-size: 21px;
 
       &:hover {
         color: $sidebar-title-button-color;
+      }
+
+      span {
+        &:before {  
+          font-size: 21px;
+        }
       }
     }
   }
 
   .now-playing-container {
+    @extend %flex-column;
     position: relative;
-    display: flex;
-    flex-direction: column;
-    bottom: -250px;
+    margin-bottom: -250px;
     transition: all .4s cubic-bezier(0, 0.75, 0.4, 1.25);
 
     &.isPlaying {
-      bottom: 0;
+      margin-bottom: 0;
     }
 
     .sidebar-title {
@@ -95,7 +93,6 @@
       background: $now-playing-info-background;
 
       .track-name {
-        margin-bottom: 2px;
         color: $now-playing-info-track-name;
       }
 

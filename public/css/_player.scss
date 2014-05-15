@@ -3,10 +3,8 @@
 //==========================================================================
 
   .player {
-    position: absolute;
-    bottom: 0;
+    @extend %flex-row;
     z-index: 2;
-    display: flex;
     min-width: $app-min-width;
     width: 100%;
     height: $player-height;
@@ -15,15 +13,14 @@
     text-align: center;
 
     .player-col-side {
-      display: flex;
+      @extend %flex-row;
       width: $sidebar-width;
       align-items: center;
       justify-content: center;
     }
 
     .player-col-middle {
-      display: flex;
-      flex-direction: column;
+      @extend %flex-column;
       flex: 1;
       justify-content: center;
       align-items: center;
@@ -95,116 +92,40 @@
     }
   }
 
-  .progress-bar-container {
+  .progress-bar {
     position: relative;
     margin: 0 35px;
-  }
-  
-  .noUi-target {
-    display: block;
-  }
 
-  .noUi-horizontal,
-  .noUi-vertical {
-
-    .noUi-base,
-    .noUi-origin {
-      background: transparent;
-
+    .noUi-base {
       &:before {
-        position: absolute;
-        display: block;
-        content: '';
+        background: $progress-bar-filled-background;
       }
     }
-  }
 
-  .noUi-horizontal {
-
-    .noUi-base,
     .noUi-origin {
-      padding: 7px 0;
-      
       &:before {
-        top: 6px;
-        width: 100%;
-        height: 2px;
+        background: $progress-bar-empty-background;
       }
     }
-  }
 
-  .noUi-vertical {
-    .noUi-base,
-    .noUi-origin {
-      padding: 0 7px;
+    .noUi-handle {
+      background: $progress-bar-handle-background;
+      box-shadow: 0 1px 3px rgba($primary-darker, .3);
 
-      &:before {
-        left: 6px;
-        width: 2px;
-        height: 100%;
+      &:hover {
+        background: $progress-bar-handle-background-hover;
       }
-    }
-  }
-
-  .noUi-base {
-    position: relative;
-    width: 100%;
-    height: 100%;
-
-    &:before {
-      background: $progress-bar-passed-background;
-    }
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  .noUi-origin {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    
-    &:before {
-      background: $progress-bar-remain-background;
-    }
-  }
-
-  .noUi-handle {
-    position: relative;
-    top: -7px;
-    left: -7px;
-    z-index: 1;
-    width: 14px;
-    height: 14px;
-    border: 0;
-    border-radius: 50%;
-    background: $progress-bar-handle-background;
-    box-shadow: 0 1px 3px rgba($primary-darker, .3);
-    transition: background 1s ease;
-
-    &:hover {
-      background: $progress-bar-handle-background-hover;
-      cursor: pointer;
-    }
-
-    &:before,
-    &:after {
-      display: none;
     }
   }
 
   .volume-dropdown {
-
     .dropdown {
       bottom: 45px;
       left: 8px;
       padding: 15px 5px;
       height: 0;
       border-radius: 20px;
-      background: $primary-lighter;
+      background: $volume-background;
       transition: all .3s ease;
 
       &.show {
@@ -215,4 +136,25 @@
 
   .volume-slider {
     height: 100px;
+
+    .noUi-base {
+      &:before {
+        background: $volume-empty-background;
+      }
+    }
+
+    .noUi-origin {
+      &:before {
+        background: $volume-filled-background;
+      }
+    }
+
+    .noUi-handle {
+      background: $volume-handle-background;
+      box-shadow: 0 1px 3px rgba($primary-darker, .3);
+
+      &:hover {
+        background: $volume-handle-background-hover;
+      }
+    }
   }
