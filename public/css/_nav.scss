@@ -6,8 +6,10 @@
     &.nav-horizontal {
       display: inline-block;
 
-      li {
-        display: inline-block;
+      > ul {
+        > li {
+          display: inline-block;
+        }
       }
     }
 
@@ -16,19 +18,19 @@
       padding: 0;
       list-style: none;
       font-size: 0;
-    }
+    
+      a {
+        position: relative;
+        display: block;
+        padding: 6px 10px;
+        font-weight: 600;
+        font-size: 13px;
+        line-height: 22px;
 
-    a {
-      position: relative;
-      display: block;
-      padding: 6px 10px;
-      font-weight: 600;
-      font-size: 13px;
-      line-height: 22px;
-
-      > span {
-        margin: -2px 4px 0 0;
-        font-size: 20px;
+        > span {
+          margin: -2px 4px 0 0;
+          font-size: 20px;
+        }
       }
     }
   }

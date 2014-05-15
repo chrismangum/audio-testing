@@ -104,3 +104,28 @@
       pointer-events: all;
     }
   }
+
+  .dropdown-menu {
+    position: relative;
+    left: -10px;
+    overflow: hidden;
+    margin: 10px;
+    min-width: 200px;
+    border: 1px solid $primary-light;
+    border-radius: 5px;
+    background: tint($primary-lighter, 50%);
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    
+    a {
+      background: $primary-lighter;
+      border-bottom: 1px solid $primary-light;
+
+      &:hover {
+        background: tint($primary-lighter, 50%);
+      }
+    }
+
+    li:last-child a {
+      border-bottom: none;
+    }
+  }
