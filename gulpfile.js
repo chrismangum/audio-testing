@@ -23,8 +23,7 @@ gulp.task('clientJS', function () {
   gulp.src(paths.clientJS)
     .pipe(coffee())
     //.pipe(uglify())
-    .pipe(concat('app.min.js'))
-    .pipe(gulp.dest('public/js'));
+    .pipe(gulp.dest('public/js/compiled'));
 });
 
 gulp.task('serverJS', function () {
