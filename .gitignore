@@ -6,7 +6,7 @@ node_modules/*
 public/*.html
 target
 cache.json
-server/app.js
+server/*.js
 public/css/_icon-font.scss
 public/fonts/icon-font.eot
 public/fonts/icon-font.svg

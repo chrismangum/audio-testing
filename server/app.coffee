@@ -121,7 +121,7 @@ class Json
     else if @json.tracks[track].scanned
       callback()
     else
-      exec './getTrackMetaData.js "' + track + '"',
+      exec 'node ./getTrackMetaData.js "' + track + '"',
         (err, stdout, stderr) =>
           if stdout.length
             @extendTrackInfo track, JSON.parse(stdout)[0]
