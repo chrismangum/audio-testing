@@ -2,8 +2,29 @@
 // Placeholders
 //==========================================================================
 
+	%flex-row {
+    display: flex;
+    flex-direction: row;
+  }
+
+  %flex-column {
+    display: flex;
+    flex-direction: column;
+  }
+  
 	%no-wrap {
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+	}
+
+	%clearfix {
+	  &:before,
+	  &:after {
+	    content: " ";
+	    display: table;
+	  }
+	  &:after { 
+	   clear: both;
+	  }
 	}

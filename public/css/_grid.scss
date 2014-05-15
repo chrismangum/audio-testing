@@ -227,8 +227,7 @@
       left: -60px;
 
       &:before {
-        @extend .icon;
-        @extend .icon-check;
+        @extend %icon-check;
         position: absolute;
         top: 0;
         left: 70px;

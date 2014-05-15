@@ -11,13 +11,41 @@
     }
   }
 
+  html {
+    position: relative;
+    height: 100%;
+  }
+
   body {
+    @extend %flex-column;
     position: relative;
     overflow: hidden;
     margin: 0;
     min-width: $app-min-width;
+    height: 100%;
     font-size: 13px;
     font-family: "Source Sans Pro", sans-serif;
+  }
+
+  .container {
+    @extend %flex-row;
+    flex: 1;
+  }
+
+  .view {
+    @extend %flex-row;
+    align-items: stretch;
+    flex: 1;
+  }
+
+  .view-list {
+    position: relative;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    width: 280px;
+    list-style: none;
+    line-height: 1;
   }
   
   a {
@@ -97,8 +125,8 @@
   }
 
   .dropdown {
-    display: none;
     position: absolute;
+    display: none;
 
     &.show {
       display: block;

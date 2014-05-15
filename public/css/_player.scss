@@ -3,10 +3,8 @@
 //==========================================================================
 
   .player {
-    position: absolute;
-    bottom: 0;
+    @extend %flex-row;
     z-index: 2;
-    display: flex;
     min-width: $app-min-width;
     width: 100%;
     height: $player-height;
@@ -15,15 +13,14 @@
     text-align: center;
 
     .player-col-side {
-      display: flex;
+      @extend %flex-row;
       width: $sidebar-width;
       align-items: center;
       justify-content: center;
     }
 
     .player-col-middle {
-      display: flex;
-      flex-direction: column;
+      @extend %flex-column;
       flex: 1;
       justify-content: center;
       align-items: center;
