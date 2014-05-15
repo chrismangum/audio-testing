@@ -30,7 +30,7 @@ gulp.task('clientJS', function () {
 gulp.task('serverJS', function () {
   gulp.src(paths.serverJS)
     .pipe(coffee())
-    .pipe(concat('app.js'))
+    //.pipe(concat('app.js'))
     .pipe(gulp.dest('server'));
 });
 

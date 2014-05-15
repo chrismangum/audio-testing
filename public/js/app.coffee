@@ -29,7 +29,7 @@ app.controller 'tmp', ['$scope', '$routeParams'
 
 class Player extends AV.Player
   constructor: (@entity, $scope) ->
-    super AV.Asset.fromURL 'target/' + @entity.filePath
+    super AV.Asset.fromURL '/target/' + @entity.filePath
     if localStorage.volume
       @volume = parseInt localStorage.volume, 10
     if @entity.playing
@@ -38,10 +38,6 @@ class Player extends AV.Player
     @.on 'progress', (timestamp) ->
       @progress = timestamp / @duration * 100
       $scope.safeApply()
-    @.on 'metadata', (data) ->
-      if data.coverArt
-        @entity.coverArtURL = data.coverArt.toBlobURL()
-        $scope.safeApply()
     @.on 'end', ->
       if $scope.repeat is 'one'
         $scope.play @entity
@@ -121,10 +117,6 @@ app.controller 'main', ['$scope', ($scope) ->
     enableColumnResize: true
     headerRowHeight: rowHeight
     rowHeight: rowHeight
-    selectRow: (rowIndex, state) ->
-      console.log rowIndex, state
-    selectItem: (rowIndex, state) ->
-      console.log rowIndex, state
     rowTemplate:
       '<div ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}">
         <div class="ngVerticalBar ngVerticalBarVisible" ng-style="{height: rowHeight}">&nbsp;</div>
@@ -185,8 +177,18 @@ app.controller 'main', ['$scope', ($scope) ->
     $scope.updateLocalStorage()
 
   selectOne = (track) ->
-    $scope.gridOptions.selectAll false
-    $scope.gridOptions.selectRow getTrackPosition(track), true
+    if track?
+      if _.isObject track
+        track = getTrackPosition track
+      $scope.gridOptions.selectAll false
+      $scope.gridOptions.selectRow track, true
+
+  selectAdjacentTrack = (direction) ->
+    if $scope.gridOptions.selectedItems.length
+      index = getTrackPosition($scope.gridOptions.selectedItems[0]) + direction
+      if $scope.dataValues[index]
+        selectOne index
+        scrollToIndex index
 
   selectOneToggle = (track) ->
     selected = $scope.gridOptions.selectedItems.indexOf(track) isnt -1
@@ -325,8 +327,16 @@ app.controller 'main', ['$scope', ($scope) ->
         when 37
           $scope.previous()
           false
+        when 38
+          selectAdjacentTrack -1
+          $scope.safeApply()
+          false
         when 39
           $scope.next()
+          false
+        when 40
+          selectAdjacentTrack 1
+          $scope.safeApply()
           false
         when 48 then $scope.player?.seekToPercent 0
         when 49 then $scope.player?.seekToPercent 10
@@ -341,17 +351,6 @@ app.controller 'main', ['$scope', ($scope) ->
         when 187 then $scope.player?.increaseVolume()
         when 189 then $scope.player?.decreaseVolume()
 ]
-
-app.directive 'nowPlayingArtwork', ->
-  restrict: 'E'
-  template: '<div class="now-playing-artwork"><img ng-show="player.entity.coverArtURL"></div>'
-  replace: true
-  link: ($scope, el, attrs) ->
-    img = el.children()
-    $scope.$watch 'player.entity.coverArtURL', (n, o) ->
-      if n isnt o and n
-        img[0].src = n
-
 
 app.directive 'volumeSlider', ->
   restrict: 'E'
