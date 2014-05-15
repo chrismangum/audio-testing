@@ -1,8 +1,8 @@
 ul.view-defaults.grid-view
-  li.item(ng-repeat="(name, album) in albums")
+  li.item(ng-repeat="album in albums")
     a
       .item-image
         img(ng-src="{{album.coverArtURL || '/static/img/missing-artwork.png'}}")
       .item-info
-        .item-info-name {{name}}
+        .item-info-name {{album.name}}
         .item-info-details {{album.artist}}

@@ -4,6 +4,7 @@ public/vendor
 .sass-cache
 node_modules/*
 public/*.html
+public/js/compiled
 target
 cache.json
 server/*.js

@@ -1,59 +1,3 @@
-app = angular.module 'app', ['ngRoute', 'ngGrid']
-
-app.config ['$routeProvider', '$locationProvider'
-  ($routeProvider, $locationProvider) ->
-    $routeProvider
-      .when '/:group',
-        templateUrl: (params) ->
-          '/static/' + params.group + '.html'
-        controller: 'tmp'
-      .when '/artists/:artist',
-        templateUrl: '/static/artistDetail.html'
-        controller: 'tmp'
-      .when '/artists/:artist/:album',
-        templateUrl: '/static/albumDetail.html'
-        controller: 'tmp'
-      .otherwise
-        templateUrl: '/static/songs.html'
-        controller: 'tmp'
-    $locationProvider.html5Mode true
-]
-
-app.controller 'tmp', ['$scope', ($scope) ->
-]
-
-class Player extends AV.Player
-  constructor: (@entity, $scope) ->
-    super AV.Asset.fromURL '/target/' + @entity.filePath
-    if localStorage.volume
-      @volume = parseInt localStorage.volume, 10
-    if @entity.playing
-      @play()
-    #player events:
-    @.on 'progress', (timestamp) ->
-      @progress = timestamp / @duration * 100
-      $scope.safeApply()
-    @.on 'end', ->
-      if $scope.repeat is 'one'
-        $scope.play @entity
-      else
-        $scope.next()
-
-  increaseVolume: (amount = 10) ->
-    @volume += amount
-    @volume = 100 if @volume > 100
-
-  decreaseVolume: (amount = 10) ->
-    @volume -= amount
-    @volume = 0 if @volume < 0
-
-  seekToPercent: (percent) ->
-    @seek percent / 100 * @duration
-
-  togglePlayback: ->
-    @entity.playing = !@entity.playing
-    super()
-
 
 app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
   rowHeight = 26
@@ -328,6 +272,14 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
     $scope.player = new Player track, $scope
     $scope.safeApply()
 
+  getFirstCoverArt = (songs) ->
+    coverArtURL = _.find songs, (song) ->
+      _.has song, 'coverArtURL'
+    if coverArtURL
+      coverArtURL.coverArtURL
+    else
+      false
+
   socket = io.connect location.origin
 
   socket.on 'metadata', (data) ->
@@ -337,27 +289,16 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
   socket.on 'json', (data) ->
     $scope.data = data
     $scope.songs = _.values data.tracks
-    $scope.albums = _.groupBy $scope.songs, 'album'
-    _.each $scope.albums, (songs, name) ->
-      coverArtURL = _.find songs, (song) ->
-        _.has song, 'coverArtURL'
-      $scope.albums[name] =
+    $scope.artists = _.map _.groupBy($scope.songs, 'artist'), (songs, artistName) ->
+      songs: songs
+      name: artistName
+      coverArtURL: getFirstCoverArt songs
+      albums: _.map _.groupBy(songs, 'album'), (songs, albumName) ->
         songs: songs
-        artist: songs[0].artist
-      if coverArtURL
-        $scope.albums[name].coverArtURL = coverArtURL.coverArtURL
-    $scope.artists = _.groupBy $scope.songs, 'artist'
-    _.each $scope.artists, (songs, name) ->
-      albumCount = _.countBy songs, (s) ->
-        s.album
-      coverArtURL = _.find songs, (song) ->
-        _.has song, 'coverArtURL'
-      $scope.artists[name] =
-        songs: songs
-        albumCount: _.keys(albumCount).length
-      if coverArtURL
-        $scope.artists[name].coverArtURL = coverArtURL.coverArtURL
-    console.log $scope.albums
+        name: albumName
+        artist: artistName
+        coverArtURL: getFirstCoverArt songs
+    $scope.albums = _.flatten _.pluck($scope.artists, 'albums')
     $scope.safeApply()
 
   $(document).on 'keydown', (e) ->
@@ -396,89 +337,37 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
         when 189 then $scope.player?.decreaseVolume()
 ]
 
-app.directive 'volumeSlider', ->
-  restrict: 'E'
-  template:
-    '<div class="dropdown-wrapper volume-dropdown" ng-click="showSlider = !showSlider">
-      <button class="button dropdown-toggle">
-        <span ng-class="{\'icon-volume-high\': volume > 66, \'icon-volume-medium\': volume > 33 && volume <= 66, \'icon-volume-low\': volume > 0 && volume <= 33, \'icon-volume-off\': !volume}"></span>
-      </button>
-      <div class="dropdown" ng-class="{show: showSlider}">
-        <div class="volume-slider"></div>
-      </div>
-    </div>'
-  replace: true
-  link: ($scope, el, attrs) ->
-    $scope.showSlider = false
-    $scope.volume = localStorage.volume or 100
+app.controller 'tmp', ['$scope', ($scope) ->]
 
-    setVolume = ->
-      $scope.volume = 100 - $(@).val()
-      $scope.player?.volume = $scope.volume
-      localStorage.volume = $scope.volume
+class Player extends AV.Player
+  constructor: (@entity, $scope) ->
+    super AV.Asset.fromURL '/target/' + @entity.filePath
+    if localStorage.volume
+      @volume = parseInt localStorage.volume, 10
+    if @entity.playing
+      @play()
+    #player events:
+    @.on 'progress', (timestamp) ->
+      @progress = timestamp / @duration * 100
       $scope.safeApply()
+    @.on 'end', ->
+      if $scope.repeat is 'one'
+        $scope.play @entity
+      else
+        $scope.next()
 
-    slider = el
-      .find '.volume-slider'
-      .noUiSlider
-        start: 100 - $scope.volume
-        orientation: 'vertical'
-        connect: 'lower'
-        range:
-          'min': 0
-          'max': 100
-      .on 'slide', setVolume
-      .on 'set', setVolume
+  increaseVolume: (amount = 10) ->
+    @volume += amount
+    @volume = 100 if @volume > 100
 
-    $scope.$watch 'player.volume', (n, o) ->
-      if n isnt o
-        $scope.volume = n
-        slider.val 100 - n
+  decreaseVolume: (amount = 10) ->
+    @volume -= amount
+    @volume = 0 if @volume < 0
 
-app.directive 'slider', ->
-  restrict: 'E'
-  link: ($scope, el, attrs) ->
-    sliding = false
-    sliderOptions =
-      start: 0
-      connect: 'lower'
-      range:
-        'min': 0
-        'max': 398203
+  seekToPercent: (percent) ->
+    @seek percent / 100 * @duration
 
-    el.noUiSlider sliderOptions
-
-    el.on 'slide', ->
-      sliding = true
-
-    el.on 'set', ->
-      sliding = false
-      $scope.player.seek parseInt $(@).val(), 10
-
-    $scope.$watch 'player.duration', (n, o) ->
-      if n and n isnt o
-        sliderOptions.range.max = n
-        el.noUiSlider sliderOptions, true
-
-    $scope.$watch 'player.currentTime', (n, o) ->
-      if n isnt o and not sliding
-        el.val n
-
-app.filter 'convertTimestamp', ->
-  padTime = (n) ->
-    if n < 10
-      n = '0' + n
-    return n
-
-  (s = 0) ->
-    ms = s % 1000
-    s = (s - ms) / 1000
-    secs = s % 60
-    s = (s - secs) / 60
-    mins = s % 60
-    hrs = (s - mins) / 60
-    if hrs
-      return hrs + ':' + padTime mins + ':' + padTime secs
-    else
-      return mins + ':' + padTime secs
+  togglePlayback: ->
+    @entity.playing = !@entity.playing
+    super()
 
