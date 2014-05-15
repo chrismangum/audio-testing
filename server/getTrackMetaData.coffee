@@ -21,15 +21,22 @@ processCoverArt = (track, data) ->
   unless fs.existsSync filePath
     unless fs.existsSync folderPath
       fs.mkdirSync folderPath
-    fs.writeFileSync filePath, toBuffer data.coverArt.data.buffer
+    fs.writeFileSync filePath, toBuffer data.coverArt
   filePath.slice 2
+
+stripOutNullChars = (data) ->
+  _.each data, (val, key) ->
+    if _.isString val
+      data[key] = val.replace /\u0000/g, ''
 
 processData = (track, data, callback) ->
   player = AV.Player.fromBuffer new Uint8Array data
   player.preload()
   player.on 'metadata', (data) ->
+    stripOutNullChars data
     data.trackNumber = data.trackNumber or data.tracknumber
     data.year = data.year or data.date or data.releaseDate
+    data.coverArt = data.coverArt?.data.buffer or data.PIC?.data.data.buffer
     if data.trackNumber
       data.trackNumber = parseInt data.trackNumber, 10
     if data.coverArt
@@ -46,22 +53,10 @@ processData = (track, data, callback) ->
 
 processDataOnce = _.once processData
 
-readEntireFile = (track, callback) ->
+getTrackMetaData = (track, callback) ->
   fs.readFile track, (err, data) ->
     throw err if err
     processData track, data, callback
-
-readStream = (track, callback) ->
-  stream = fs.createReadStream track,
-    start: 0, end: 9999
-  stream.on 'data', (data) ->
-    processDataOnce track, data, callback
-
-getTrackMetaData = (track, callback) ->
-  if path.extname(track) is '.m4a'
-    readEntireFile track, callback
-  else
-    readStream track, callback
 
 async.map process.argv.slice(2), getTrackMetaData,
   (err, result) ->
