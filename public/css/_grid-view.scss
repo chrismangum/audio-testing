@@ -2,21 +2,10 @@
 // Grid View
 //==========================================================================
 
-  @mixin rowMachine($numPerRow, $margin) {
-    width: ((100% - (($numPerRow - 1) * $margin)) / $numPerRow);
-    &:nth-child(n) {
-      margin-bottom: $margin;
-      margin-right: $margin;
-    }
-    &:nth-child(#{$numPerRow}n) {
-      margin-right: 0;
-    }
-  }
-
   .grid-view {
     @extend %flex-row;
-    flex-wrap: wrap;
     padding: 2%;
+    flex-wrap: wrap;
 
     .item {
       @include rowMachine(3, 2%);

@@ -2,19 +2,15 @@
 // View
 //==========================================================================
   
-	.view-defaults {
-		position: relative;
+  .view-defaults {
+    position: relative;
     overflow-y: auto;
-		margin: 0;
+    margin: 0;
     padding: 0;
     list-style: none;
     line-height: 1;
-		
-		.item {
 
-		}
-
-		.item-image {
+    .item-image {
       img {
         display: block;
         max-width: 100%;
@@ -34,4 +30,4 @@
       color: $primary-lighter;
       font-size: 12px;
     }
-	}
+  }

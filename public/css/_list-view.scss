@@ -32,14 +32,15 @@
     }
 
     .item-image {
+      margin-right: 6px;
       width: 32px;
       height: 32px;
       background: $primary-dark;
     }
 
     .item-info {
+      margin-left: 4px;
       flex: 1;
-      margin-left: 10px;
     }
 
     .item-info-name {
