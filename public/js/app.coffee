@@ -177,8 +177,18 @@ app.controller 'main', ['$scope', ($scope) ->
     $scope.updateLocalStorage()
 
   selectOne = (track) ->
-    $scope.gridOptions.selectAll false
-    $scope.gridOptions.selectRow getTrackPosition(track), true
+    if track?
+      if _.isObject track
+        track = getTrackPosition track
+      $scope.gridOptions.selectAll false
+      $scope.gridOptions.selectRow track, true
+
+  selectAdjacentTrack = (direction) ->
+    if $scope.gridOptions.selectedItems.length
+      index = getTrackPosition($scope.gridOptions.selectedItems[0]) + direction
+      if $scope.dataValues[index]
+        selectOne index
+        scrollToIndex index
 
   selectOneToggle = (track) ->
     selected = $scope.gridOptions.selectedItems.indexOf(track) isnt -1
@@ -317,8 +327,16 @@ app.controller 'main', ['$scope', ($scope) ->
         when 37
           $scope.previous()
           false
+        when 38
+          selectAdjacentTrack -1
+          $scope.safeApply()
+          false
         when 39
           $scope.next()
+          false
+        when 40
+          selectAdjacentTrack 1
+          $scope.safeApply()
           false
         when 48 then $scope.player?.seekToPercent 0
         when 49 then $scope.player?.seekToPercent 10
