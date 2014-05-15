@@ -65,13 +65,6 @@
     &:hover {
       cursor: pointer;
     }
-  
-    &.button-circle {
-      margin-right: 4px;
-      margin-left: 4px;
-      border: 1px solid transparent;
-      border-radius: 50%;
-    }
   }
 
   .flip-icon {
@@ -91,22 +84,6 @@
     font-weight: 600;
     font-size: 12px;
     line-height: 14px;
-  }
-
-  .now-playing-info {
-    width: 100%;
-  }
-
-  .track-name {
-    @extend %no-wrap;
-    font-weight: 600;
-    font-size: 12px;
-  }
-
-  .track-info {
-    @extend %no-wrap;
-    font-weight: 300;
-    font-size: 11px;
   }
 
   .dropdown-wrapper {

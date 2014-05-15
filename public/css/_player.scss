@@ -14,7 +14,7 @@
 
     .player-col-side {
       @extend %flex-row;
-      width: $sidebar-width;
+      padding: 0 20px;
       align-items: center;
       justify-content: center;
     }
@@ -30,7 +30,7 @@
       width: 40px;
       height: 40px;
       color: $player-button-color;
-      font-size: 30px;
+      font-size: 22px;
       line-height: 0;
 
       &:hover {
@@ -41,25 +41,13 @@
         color: $player-button-color-active;
         text-shadow: $player-button-text-shadow-active;
       }
-
-      &.button-circle {
-        border-color: $player-button-circle-border-color;
-
-        &:hover {
-          border-color: $player-button-circle-border-color-active;
-        }
-      }
-    }
-
-    .now-playing-info {
-      margin-bottom: 8px;
     }
   }
 
   .player-info-wrapper {
     position: relative;
     bottom: -$player-height;
-    padding: 0 35px;
+    padding: 4px 0 0 0;
     width: 100%;
     transition: all .4s cubic-bezier(0, 0.75, 0.4, 1.25);
 
@@ -105,7 +93,7 @@
     .noUi-origin {
       &:before {
         background: $progress-bar-empty-background;
-        box-shadow: 0 1px 0 tint($player-background, 5%);
+        box-shadow: $progress-bar-empty-box-shadow;
       }
     }
 
