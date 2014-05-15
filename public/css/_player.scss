@@ -105,6 +105,7 @@
     .noUi-origin {
       &:before {
         background: $progress-bar-empty-background;
+        box-shadow: 0 1px 0 tint($player-background, 5%);
       }
     }
 

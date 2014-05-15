@@ -1,0 +1,52 @@
+//==========================================================================
+// List View
+//==========================================================================
+
+  .list-view {
+    width: 280px;
+
+    .item {
+      a {
+        @extend %flex-row;
+        position: relative;
+        padding: 10px;
+        border-bottom: 1px solid tint($primary-lighter, 40%);
+        background: tint($primary-lighter, 50%);
+        font-size: 0;
+
+        &:hover {
+          background: tint($primary-lighter, 60%);
+        }
+
+        &:after {
+          @extend %icon-arrow;
+          position: absolute;
+          top: 16px;
+          right: 10px;
+          display: block;
+          color: $primary-lighter;
+          font-size: 22px;
+          transform: rotate(-90deg);
+        }
+      }
+    }
+
+    .item-image {
+      width: 32px;
+      height: 32px;
+      background: $primary-dark;
+    }
+
+    .item-info {
+      flex: 1;
+      margin-left: 10px;
+    }
+
+    .item-info-name {
+      padding: 1px 0 3px 0;
+    }
+
+    .item-info-details {
+      padding-bottom: 2px;
+    }
+  }
