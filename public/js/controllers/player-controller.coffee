@@ -16,17 +16,6 @@ app.controller 'player', ['$scope', ($scope) ->
     else
       $scope.play()
 
-  $scope.previous = ->
-    if $scope.player
-      if $scope.player.currentTime > 1000
-        $scope.player.seek 0
-      else
-        $scope.play getAdjacentTrack(-1), $scope.player.playing
-
-  $scope.next = ->
-    if $scope.player
-      $scope.play getAdjacentTrack(1), $scope.player.playing
-
   getAdjacentTrackInArray = (array, direction) ->
     currentIndex = array.indexOf $scope.player.entity
     newIndex = currentIndex + direction
@@ -38,7 +27,7 @@ app.controller 'player', ['$scope', ($scope) ->
     $scope.scrollToTrack array[newIndex]
     array[newIndex] or false
 
-  getAdjacentTrack = (direction) ->
+  $scope.getAdjacentTrack = (direction) ->
     if $scope.shuffling
       getAdjacentTrackInArray $scope.data.shuffledData, direction
     else if $scope.data.sortedData.length
@@ -81,10 +70,10 @@ app.controller 'player', ['$scope', ($scope) ->
           false
         when 13 then $scope.play()
         when 37
-          $scope.previous()
+          $scope.player.previous()
           false
         when 39
-          $scope.next()
+          $scope.player.next()
           false
         when 48 then $scope.player?.seekToPercent 0
         when 49 then $scope.player?.seekToPercent 10
@@ -101,7 +90,7 @@ app.controller 'player', ['$scope', ($scope) ->
 ]
 
 class Player extends AV.Player
-  constructor: (@entity, $scope) ->
+  constructor: (@entity, @scope) ->
     super AV.Asset.fromURL '/target/' + @entity.filePath
     if localStorage.volume
       @volume = parseInt localStorage.volume, 10
@@ -110,12 +99,21 @@ class Player extends AV.Player
     #player events:
     @.on 'progress', (timestamp) ->
       @progress = timestamp / @duration * 100
-      $scope.safeApply()
+      @scope.safeApply()
     @.on 'end', ->
-      if $scope.repeat is 'one'
-        $scope.play @entity
+      if @scope.repeat is 'one'
+        @scope.play @entity
       else
-        $scope.next()
+        @next()
+
+  previous: ->
+    if @currentTime > 1000
+      @seek 0
+    else
+      @scope.play @scope.getAdjacentTrack(-1), @playing
+
+  next: ->
+    @scope.play @scope.getAdjacentTrack(1), @playing
 
   increaseVolume: (amount = 10) ->
     @volume += amount
