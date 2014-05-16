@@ -38,48 +38,9 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
   $scope.scrollToTrack = (track) ->
     $scope.$broadcast 'scrollToTrack', track
 
-  getAdjacentTrackInArray = (array, direction, track, repeat) ->
-    currentIndex = array.indexOf track
-    newIndex = currentIndex + direction
-    if repeat is 'all'
-      if currentIndex is array.length - 1 and direction is 1
-        newIndex = 0
-      else if currentIndex is 0 and direction is -1
-        newIndex = array.length - 1
-    $scope.scrollToTrack array[newIndex]
-    array[newIndex] or false
-
-  $scope.getAdjacentTrack = (direction, track, repeat) ->
-    if $scope.shuffling
-      getAdjacentTrackInArray $scope.data.shuffledData, direction, track, repeat
-    else if $scope.data.sortedData.length
-      getAdjacentTrackInArray $scope.data.sortedData, direction, track, repeat
-    else
-      getAdjacentTrackInArray $scope.gridOptions.gridData, direction, track, repeat
-
-  $scope.getSelectedTrack = ->
-    if $scope.gridOptions.selectedItems.length
-      track = $scope.gridOptions.selectedItems[0]
-    else if $scope.shuffling
-      track = $scope.data.shuffledData[0]
-    else if $scope.data.sortedData.length
-      track = $scope.data.sortedData[0]
-    else
-      track = $scope.gridOptions.gridData[0]
-    $scope.scrollToTrack track
-    track
-
   $scope.safeApply = (fn) ->
     unless $scope.$$phase
       $scope.$apply fn
-
-  getFirstCoverArt = (songs) ->
-    coverArtURL = _.find songs, (song) ->
-      _.has song, 'coverArtURL'
-    if coverArtURL
-      coverArtURL.coverArtURL
-    else
-      false
 
   $scope.checkRoute = ->
     switch $scope.params.group
@@ -142,18 +103,15 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
     else
       genre.songs.push track
 
-  socket = io.connect location.origin
+  getFirstCoverArt = (songs) ->
+    coverArtURL = _.find songs, (song) ->
+      _.has song, 'coverArtURL'
+    if coverArtURL
+      coverArtURL.coverArtURL
+    else
+      false
 
-  socket.on 'metadata', (data) ->
-    track = $scope.data.tracks[data.filePath]
-    _.extend track, _.omit data, 'filePath'
-    checkArtist track
-    checkGenre track
-    $scope.checkRoute()
-    $scope.safeApply()
-
-  socket.on 'json', (data) ->
-    _.extend $scope.data, data
+  parseData = (data) ->
     $scope.data.songs = _.values data.tracks
     $scope.data.artists = _.compact _.map _.groupBy($scope.data.songs, 'artist'), (songs, artistName) ->
       if artistName isnt "undefined"
@@ -170,6 +128,20 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
       if genreName isnt "undefined"
         name: genreName
         songs: songs
+
+  socket = io.connect location.origin
+
+  socket.on 'metadata', (data) ->
+    track = $scope.data.tracks[data.filePath]
+    _.extend track, _.omit data, 'filePath'
+    checkArtist track
+    checkGenre track
+    $scope.checkRoute()
+    $scope.safeApply()
+
+  socket.on 'json', (data) ->
+    _.extend $scope.data, data
+    parseData data
     $scope.checkRoute()
     $scope.safeApply()
 ]

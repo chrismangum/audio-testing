@@ -27,8 +27,36 @@ app.controller 'player', ['$scope', ($scope) ->
     if $scope.player
       $scope.play getAdjacentTrack(1), $scope.player.playing
 
+  getAdjacentTrackInArray = (array, direction) ->
+    currentIndex = array.indexOf $scope.player.entity
+    newIndex = currentIndex + direction
+    if $scope.repeat is 'all'
+      if currentIndex is array.length - 1 and direction is 1
+        newIndex = 0
+      else if currentIndex is 0 and direction is -1
+        newIndex = array.length - 1
+    $scope.scrollToTrack array[newIndex]
+    array[newIndex] or false
+
   getAdjacentTrack = (direction) ->
-    $scope.getAdjacentTrack direction, $scope.player.entity, $scope.repeat
+    if $scope.shuffling
+      getAdjacentTrackInArray $scope.data.shuffledData, direction
+    else if $scope.data.sortedData.length
+      getAdjacentTrackInArray $scope.data.sortedData, direction
+    else
+      getAdjacentTrackInArray $scope.gridOptions.gridData, direction
+
+  getSelectedTrack = ->
+    if $scope.gridOptions.selectedItems.length
+      track = $scope.gridOptions.selectedItems[0]
+    else if $scope.shuffling
+      track = $scope.data.shuffledData[0]
+    else if $scope.data.sortedData.length
+      track = $scope.data.sortedData[0]
+    else
+      track = $scope.gridOptions.gridData[0]
+    $scope.scrollToTrack track
+    track
 
   $scope.play = (track, play = true) ->
     if track is false
@@ -36,7 +64,7 @@ app.controller 'player', ['$scope', ($scope) ->
     if $scope.player
       delete $scope.player.entity.playing
       $scope.player.stop()
-    track ?= $scope.getSelectedTrack()
+    track ?= getSelectedTrack()
     track.playing = play
     $scope.player = new Player track, $scope
     $scope.safeApply()
