@@ -123,9 +123,11 @@ class Json
     else
       exec 'node ./getTrackMetaData.js "' + track + '"',
         (err, stdout, stderr) =>
-          if stdout.length
+          if err
+            console.log stderr
+          else if stdout.length
             @extendTrackInfo track, JSON.parse(stdout)[0]
-          callback err
+          callback()
 
   extendTrackInfo: (track, obj) ->
     _.extend @json.tracks[track], obj
