@@ -176,7 +176,7 @@ app.controller 'grid', ['$scope', ($scope) ->
 
   scrollToTrack = (track) ->
     if track
-      if $scope.data.sortedData
+      if $scope.data.sortedData.length
         scrollToIndex $scope.data.sortedData.indexOf track
       else
         scrollToIndex $scope.gridOptions.gridData.indexOf track
