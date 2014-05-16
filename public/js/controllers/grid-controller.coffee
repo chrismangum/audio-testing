@@ -56,11 +56,11 @@ app.controller 'grid', ['$scope', ($scope) ->
     selectedItems: []
     showColumnMenu: true
 
-  $scope.updateLocalStorage = (prefs) ->
+  updateLocalStorage = (prefs) ->
     localStorage.columnPrefs = JSON.stringify prefs or $scope.columnPrefs
 
   unless localStorage.columnPrefs
-    $scope.updateLocalStorage
+    updateLocalStorage
       visibility:
         trackNumber: true
         title: true
@@ -93,19 +93,19 @@ app.controller 'grid', ['$scope', ($scope) ->
   $scope.$on 'newColumnWidth', (e, col) ->
     availableColumns[col.field].width = col.width
     $scope.columnPrefs.widths[col.field] = col.width
-    $scope.updateLocalStorage()
+    updateLocalStorage()
 
   $scope.$on 'newColumnOrder', (e, columns) ->
     order = _.compact _.pluck columns, 'field'
     _.each order, (val, i) ->
       $scope.gridOptions.columnDefs[i] = availableColumns[val]
     $scope.columnPrefs.order = order
-    $scope.updateLocalStorage()
+    updateLocalStorage()
 
   $scope.toggleColVisibility = (col) ->
     availableColumns[col.field].visible = !col.visible
     $scope.columnPrefs.visibility[col.field] = !col.visible
-    $scope.updateLocalStorage()
+    updateLocalStorage()
 
   selectOne = (track) ->
     if track?
