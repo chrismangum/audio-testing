@@ -1,9 +1,5 @@
 
 app.controller 'grid', ['$scope', ($scope) ->
-  $scope.$watch 'gridOptions.gridData', (n, o) ->
-    if n isnt o and $scope.shuffling
-      $scope.data.shuffledData = _.shuffle n
-
   $scope.$watch 'searchText', (n, o) ->
     if n isnt o
       $scope.gridOptions.filterOptions.filterText = n

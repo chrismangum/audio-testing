@@ -3,7 +3,6 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
   $scope.params = $routeParams
   $scope.activeItems = {}
   $scope.gridOptions = {}
-  $scope.shuffling = false
   $scope.data =
     shuffledData: []
     sortedData: []
@@ -18,13 +17,6 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
     item.active = true
     $scope.activeItems[type] = item
     $scope.filterData item.songs
-
-  $scope.toggleShuffle = ->
-    $scope.shuffling = !$scope.shuffling
-    if $scope.shuffling
-      $scope.data.shuffledData = _.shuffle $scope.gridOptions.gridData
-    else
-      $scope.data.shuffledData = false
 
   $scope.filterData = (songs) ->
     $scope.gridOptions.gridData = songs

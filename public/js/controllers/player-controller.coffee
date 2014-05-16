@@ -3,6 +3,18 @@ app.controller 'player', ['$scope', ($scope) ->
   $scope.progress = 0
   $scope.player = null
   $scope.repeat = false
+  $scope.shuffling = false
+
+  $scope.toggleShuffle = ->
+    $scope.shuffling = !$scope.shuffling
+    if $scope.shuffling
+      $scope.data.shuffledData = _.shuffle $scope.gridOptions.gridData
+    else
+      $scope.data.shuffledData = false
+
+  $scope.$watch 'gridOptions.gridData', (n, o) ->
+    if n isnt o and $scope.shuffling
+      $scope.data.shuffledData = _.shuffle n
 
   $scope.toggleRepeat = ->
     switch $scope.repeat
