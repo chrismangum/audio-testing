@@ -1,7 +1,5 @@
 
 app.controller 'grid', ['$scope', ($scope) ->
-  rowHeight = 26
-
   $scope.$watch 'gridOptions.gridData', (n, o) ->
     if n isnt o and $scope.shuffling
       $scope.data.shuffledData = _.shuffle n
@@ -46,8 +44,8 @@ app.controller 'grid', ['$scope', ($scope) ->
     gridData: []
     enableColumnReordering: true
     enableColumnResize: true
-    headerRowHeight: rowHeight
-    rowHeight: rowHeight
+    headerRowHeight: 26
+    rowHeight: 26
     rowTemplate:
       '<div ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}">
         <div class="ngVerticalBar ngVerticalBarVisible" ng-style="{height: rowHeight}">&nbsp;</div>
@@ -187,6 +185,7 @@ app.controller 'grid', ['$scope', ($scope) ->
       top = viewPort.scrollTop()
       height = viewPort.height()
       bottom = top + height
+      rowHeight = $scope.gridOptions.rowHeight
       trackPosition = index * rowHeight
       unless top < trackPosition + rowHeight < bottom
         if trackPosition + rowHeight > bottom and disablePageJump
