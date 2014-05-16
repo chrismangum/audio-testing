@@ -29,7 +29,7 @@ html
           .now-playing-info
             .track-name {{ player.entity.title }}
             .track-info {{ player.entity.artist }} - {{ player.entity.album }}
-      .main
+      .main(ng-controller="grid")
         .toolbar
           nav.nav.nav-horizontal
             ul
@@ -48,7 +48,7 @@ html
             span.icon-search
             input(type="text", placeholder="Search", ng-model="searchText", ng-focus="searchFocus = true", ng-blur="searchFocus = false")
         ng-view.view
-    .player
+    .player(ng-controller="player")
       .player-col-side
         button.button
           span.icon-prev(ng-click="previous()")
@@ -84,7 +84,10 @@ html
       script(src="/static/js/ng-grid.js")
       script(src="/static/vendor/lodash/dist/lodash.js")
       script(src="/static/js/compiled/config.js")
-      script(src="/static/js/compiled/controllers.js")
+      script(src="/static/js/compiled/controllers/main-controller.js")
+      script(src="/static/js/compiled/controllers/grid-controller.js")
+      script(src="/static/js/compiled/controllers/player-controller.js")
+      script(src="/static/js/compiled/controllers/template-controller.js")
       script(src="/static/js/compiled/directives.js")
       script(src="/static/js/compiled/filters.js")
       script(src="/static/js/temp.js")
