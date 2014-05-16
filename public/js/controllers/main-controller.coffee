@@ -12,6 +12,13 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
     albums: []
     genres: []
 
+  $scope.activateItem = (item, type) ->
+    if $scope.activeItems[type]
+      $scope.activeItems[type].active = false
+    item.active = true
+    $scope.activeItems[type] = item
+    $scope.filterData item.songs
+
   $scope.toggleShuffle = ->
     $scope.shuffling = !$scope.shuffling
     if $scope.shuffling
@@ -28,6 +35,9 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
   $scope.play = (track) ->
     $scope.$broadcast 'play', track
 
+  $scope.scrollToTrack = (track) ->
+    $scope.$broadcast 'scrollToTrack', track
+
   getAdjacentTrackInArray = (array, direction, track, repeat) ->
     currentIndex = array.indexOf track
     newIndex = currentIndex + direction
@@ -36,7 +46,7 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
         newIndex = 0
       else if currentIndex is 0 and direction is -1
         newIndex = array.length - 1
-    scrollToTrack array[newIndex]
+    $scope.scrollToTrack array[newIndex]
     array[newIndex] or false
 
   $scope.getAdjacentTrack = (direction, track, repeat) ->
@@ -56,11 +66,8 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
       track = $scope.data.sortedData[0]
     else
       track = $scope.gridOptions.gridData[0]
-    scrollToTrack track
+    $scope.scrollToTrack track
     track
-
-  scrollToTrack = (track) ->
-    $scope.$broadcast 'scrollToTrack', track
 
   $scope.safeApply = (fn) ->
     unless $scope.$$phase
@@ -73,13 +80,6 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
       coverArtURL.coverArtURL
     else
       false
-
-  $scope.activateItem = (item, type) ->
-    if $scope.activeItems[type]
-      $scope.activeItems[type].active = false
-    item.active = true
-    $scope.activeItems[type] = item
-    $scope.filterData item.songs
 
   $scope.checkRoute = ->
     switch $scope.params.group
@@ -172,6 +172,4 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
         songs: songs
     $scope.checkRoute()
     $scope.safeApply()
-
 ]
-
