@@ -12,7 +12,7 @@ var gulp = require('gulp'),
   iconfontCss = require('gulp-iconfont-css');
 
 var paths = {
-  clientJS: 'public/js/*.coffee',
+  clientJS: 'public/js/**/*.coffee',
   serverJS: 'server/*.coffee',
   jade: 'views/*.jade',
   scss: ['public/css/**/*.scss', '!public/css/_icon-font.scss'],

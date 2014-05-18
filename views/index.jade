@@ -33,7 +33,7 @@ html
             .now-playing-info
               .track-name {{ player.entity.title }}
               .track-info {{ player.entity.artist }} - {{ player.entity.album }}
-      .main
+      .main(ng-controller="grid")
         .toolbar
           nav.nav.nav-horizontal
             ul
@@ -63,13 +63,13 @@ html
             span.icon-search
             input(type="text", placeholder="Search", ng-model="searchText", ng-focus="searchFocus = true", ng-blur="searchFocus = false")
         ng-view.view
-    .control-bar
+    .control-bar(ng-controller="player")
       .control-buttons
-        button.button(ng-click="previous()")
+        button.button(ng-click="player.previous()")
           span.icon-prev
         button.button(ng-click="togglePlayback()")
           span(class="{{player.entity.playing ? 'icon-pause' : 'icon-play'}}")
-        button.button(ng-click="next()")
+        button.button(ng-click="player.next()")
           span.icon-next
       .progress-container
         .progress(ng-class="{isPlaying: !!player}")
@@ -83,22 +83,25 @@ html
         button.button(ng-class="{active: shuffling}", ng-click="toggleShuffle()")
           span.icon-shuffle
         volume-slider
-      script(src="/static/js/aurora.js")
-      script(src="/static/js/flac.js")
-      script(src="/static/js/mp3.js")
-      script(src="/static/js/aac.js")
-      script(src="/static/js/alac.js")
-      script(src="/socket.io/socket.io.js")
-      script(src="/static/vendor/jquery/dist/jquery.min.js")
-      script(src="/static/vendor/classval/jquery.classval.js")
-      script(src="/static/vendor/nouislider/Link.js")
-      script(src="/static/vendor/nouislider/jquery.nouislider.js")
-      script(src="/static/vendor/angular/angular.js")
-      script(src="/static/vendor/angular-route/angular-route.js")
-      script(src="/static/js/ng-grid.js")
-      script(src="/static/vendor/lodash/dist/lodash.js")
-      script(src="/static/js/compiled/config.js")
-      script(src="/static/js/compiled/controllers.js")
-      script(src="/static/js/compiled/directives.js")
-      script(src="/static/js/compiled/filters.js")
-      script(src="/static/js/temp.js")
+    script(src="/static/js/aurora.js")
+    script(src="/static/js/flac.js")
+    script(src="/static/js/mp3.js")
+    script(src="/static/js/aac.js")
+    script(src="/static/js/alac.js")
+    script(src="/socket.io/socket.io.js")
+    script(src="/static/vendor/jquery/dist/jquery.min.js")
+    script(src="/static/vendor/classval/jquery.classval.js")
+    script(src="/static/vendor/nouislider/Link.js")
+    script(src="/static/vendor/nouislider/jquery.nouislider.js")
+    script(src="/static/vendor/angular/angular.js")
+    script(src="/static/vendor/angular-route/angular-route.js")
+    script(src="/static/js/ng-grid.js")
+    script(src="/static/vendor/lodash/dist/lodash.js")
+    script(src="/static/js/compiled/config.js")
+    script(src="/static/js/compiled/controllers/main-controller.js")
+    script(src="/static/js/compiled/controllers/grid-controller.js")
+    script(src="/static/js/compiled/controllers/player-controller.js")
+    script(src="/static/js/compiled/controllers/template-controller.js")
+    script(src="/static/js/compiled/directives.js")
+    script(src="/static/js/compiled/filters.js")
+    script(src="/static/js/temp.js")
