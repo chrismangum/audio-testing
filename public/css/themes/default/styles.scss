@@ -10,37 +10,64 @@
 //==========================================================================
   
   $app-min-width: 700px;
-  $toolbar-height: 34px;
+  $toolbar-height: 32px;
   $sidebar-width: 200px;
   $player-height: 60px;
 
-
+  
 //==========================================================================
 // Color Variables
 //==========================================================================
   
-  $primary: #34495e;
+  // Colors
+  $wet-asphalt: #34495e;
+  $emerald: #2ecc71;
+  $dark-green: #27ae60;
+  $pomegranate: #c0392b;
+  $light-royal: #3498db;
+  $dark-royal: #2980b9;
+  $light-navy: #34495e;
+  $dark-navy: #2c3e50;
+
+  // Theme
+  $primary: $light-navy;
   $primary-light: tint($primary, 20%);
   $primary-lighter: tint($primary, 40%);
+  $primary-lightest: tint($primary, 60%);
   $primary-dark: shade($primary, 20%);
   $primary-darker: shade($primary, 40%);
-  $secondary: #ecf0f1;
+  $primary-darkest: shade($primary, 60%);
+  
+  $secondary: #fff;
+  $secondary-light: tint($secondary, 20%);
+  $secondary-lighter: tint($secondary, 40%);
+  $secondary-lightest: tint($secondary, 60%);
+  $secondary-dark: shade($secondary, 20%);
+  $secondary-darker: shade($secondary, 40%);
+  $secondary-darkest: shade($secondary, 60%);
+
+  $tertiary: $light-navy;
+  $tertiary-light: tint($tertiary, 60%);
+  $tertiary-lighter: tint($tertiary, 80%);
+  $tertiary-lightest: tint($tertiary, 100%);
+  $tertiary-dark: shade($tertiary, 20%);
+  $tertiary-darker: shade($tertiary, 40%);
+  $tertiary-darkest: shade($tertiary, 60%);
 
 
 //==========================================================================
 // Theme Variables
 //==========================================================================
   
-  // Main
+  // Toolbar
   //========================================================================
-  $main-background: tint($primary-lighter, 50%);
-  
-    // Toolbar
-    $toolbar-background: $primary-darker;
+  $toolbar-background: $primary-darker;
+
+    // Nav
     $toolbar-nav-hover: $primary-dark;
     $toolbar-nav-active: $primary-light;
     $toolbar-nav-color: $secondary;
-    
+  
     // Search
     $search-color: $primary-light;
     $search-background: $primary-darker;
@@ -50,45 +77,41 @@
   //========================================================================
   $media-list-color: $primary-dark;
   
+    $row-height: 24px; // Set equal to "rowHeight" in controllers.coffee
+
     // Column Labels
-    $label-height: 26px;
-    $label-background-color: $primary-light;
-    $label-background-color-hover: linear-gradient(tint($primary-light, 5%), $primary-light);
-    $label-background-color-active: linear-gradient($primary-light, tint($primary-light, 5%));
-    $label-background-color-sorted: linear-gradient(shade($primary-light, 15%), shade($primary-light, 5%));
-    $label-color: $secondary;
-    $label-column-border: shade($primary-light, 20%);
+    $label-color: $primary-light;
+    $label-color-hover: $primary;
+    $label-column-border: rgba(0,0,0,0.1);
     $label-sort-arrow-color: $secondary;
     
     // Rows
-    $row-background-color: tint($primary-lighter, 50%);
     $row-background-color-hover: tint($primary-lighter, 55%);
     $row-color: $primary-light;
     $row-selected-background-color: $primary;
     $row-selected-color: $secondary;
+    $row-padding: 0 8px;
     $row-font-size: 12px;
-    $row-font-weight: 600;
-    $row-line-height: 14px;
-    $row-column-border: transparent;
+    $row-font-weight: bold;
     $row-group-background: linear-gradient(tint($primary-light, 40%), tint($primary-light, 35%));
     $row-group-background-hover: linear-gradient(tint($primary-light, 45%), tint($primary-light, 35%));
     $row-group-arrow-color: $primary;
   
   // Player
   //========================================================================
-  $player-background: $primary-darker;
-  $player-color: $primary-lighter;
-  $player-button-color: $primary-light;
-  $player-button-color-hover: $primary-lighter;
-  $player-button-color-active: $secondary;
-  $player-button-text-shadow-active: 0 0 2px rgba($secondary, .5), 0 0 6px rgba($secondary, .3), 0 0 10px rgba($secondary, .1);
+  $player-background: $tertiary;
+  $player-color: $tertiary-light;
+  $player-button-color: $tertiary-light;
+  $player-button-color-hover: $tertiary-lighter;
+  $player-button-color-active: $tertiary-lightest;
+  $player-button-text-shadow-active: 0 0 2px rgba(tint($tertiary, 50%), .5), 0 0 6px rgba(tint($tertiary, 50%), .3), 0 0 10px rgba($secondary, .1);
   
     // Progress Bar
-    $progress-bar-filled-background: tint($primary-darker, 50%);
-    $progress-bar-empty-background: shade($primary-darker, 50%);
-    $progress-bar-empty-box-shadow: 0 1px 0 tint($primary-darker, 2%);
-    $progress-bar-handle-background: tint($primary-lighter, 50%);
-    $progress-bar-handle-background-hover: $secondary;
+    $progress-bar-filled-background: $tertiary-lighter;
+    $progress-bar-empty-background: $tertiary-dark;
+    $progress-bar-handle-background: $tertiary-lighter;
+    $progress-bar-handle-background-hover: $tertiary-lightest;
+    $progress-bar-handle-border-color: $tertiary;
 
     // Volume Slider
     $volume-background: $primary-lighter;
@@ -115,8 +138,8 @@
     $now-playing-sidebar-title-background-hover: tint($primary, 2%);
     $now-playing-sidebar-title-color-hover: $secondary;
     $now-playing-background-color: $primary-darker;
-    $now-playing-info-height: 50px;
-    $now-playing-info-background: rgba($primary-darker, .9);
+    $now-playing-info-height: 45px;
+    $now-playing-info-background: $sidebar-background;
     $now-playing-info-track-name: $secondary;
     $now-playing-info-track-info: $secondary;
 

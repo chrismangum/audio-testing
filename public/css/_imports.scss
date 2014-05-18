@@ -2,7 +2,7 @@
 // Imports
 //==========================================================================
 
-  @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700);
+  @import url(http://fonts.googleapis.com/css?family=Cabin+Condensed:400,700);
   @import "placeholders";
   @import "icon-font";
   @import "slider";
@@ -13,5 +13,7 @@
   @import "views";
   @import "list-view";
   @import "grid-view";
-  @import "player";
   @import "grid";
+  
+  // Modules
+  @import "control-bar";

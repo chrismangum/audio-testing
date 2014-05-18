@@ -1,8 +1,8 @@
 //==========================================================================
-// Player
+// Control Bar
 //==========================================================================
 
-  .player {
+  .control-bar {
     @extend %flex-row;
     z-index: 2;
     min-width: $app-min-width;
@@ -12,26 +12,16 @@
     color: $player-color;
     text-align: center;
 
-    .player-col-side {
-      @extend %flex-row;
-      padding: 0 20px;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .player-col-middle {
-      @extend %flex-column;
-      flex: 1;
-      justify-content: center;
-      align-items: center;
-    }
-
     .button {
-      width: 40px;
-      height: 40px;
+      margin: 0;
       color: $player-button-color;
-      font-size: 22px;
-      line-height: 0;
+
+      > span {
+        width: 40px;
+        height: 40px;
+        font-size: 30px;
+        line-height: 40px;
+      }
 
       &:hover {
         color: $player-button-color-hover;
@@ -44,29 +34,34 @@
     }
   }
 
-  .player-info-wrapper {
+  .control-buttons {
+    @extend %flex-row;
+    @extend %flex-center;
+    padding: 0 20px;
+  }
+
+  .progress-container {
+    @extend %flex-column;
+    @extend %flex-center;
+    flex: 1;
+  }
+
+  .progress {
+    @extend %flex-row;
+    @extend %flex-center;
     position: relative;
     bottom: -$player-height;
-    padding: 4px 0 0 0;
+    padding-top: 1px;
     width: 100%;
     transition: all .4s cubic-bezier(0, 0.75, 0.4, 1.25);
 
     &.isPlaying {
       bottom: 0;
     }
-  }
-
-  .progress {
-    position: relative;
-    width: 100%;
-
-    &.disabled {
-      display: none;
-    }
 
     .time {
-      position: absolute;
-      z-index: 1;
+      width: 30px;
+      font-weight: bold;
       font-size: 12px;
       line-height: 1;
 
@@ -82,7 +77,8 @@
 
   .progress-bar {
     position: relative;
-    margin: 0 35px;
+    margin: 0 15px;
+    flex: 1;
 
     .noUi-base {
       &:before {
@@ -93,13 +89,12 @@
     .noUi-origin {
       &:before {
         background: $progress-bar-empty-background;
-        box-shadow: $progress-bar-empty-box-shadow;
       }
     }
 
     .noUi-handle {
+      border-color: $progress-bar-handle-border-color;
       background: $progress-bar-handle-background;
-      box-shadow: 0 1px 3px rgba($primary-darker, .3);
 
       &:hover {
         background: $progress-bar-handle-background-hover;
@@ -118,6 +113,7 @@
   }
 
   .volume-slider {
+    position: relative;
     height: 100px;
 
     .noUi-base {
@@ -133,8 +129,8 @@
     }
 
     .noUi-handle {
+      border-color: $volume-background;
       background: $volume-handle-background;
-      box-shadow: 0 1px 3px rgba($primary-darker, .3);
 
       &:hover {
         background: $volume-handle-background-hover;

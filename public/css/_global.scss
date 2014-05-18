@@ -3,6 +3,7 @@
 //==========================================================================
 
   * {
+    @include scrollbar(10px, $primary-light, $primary-lighter);
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     
@@ -24,7 +25,7 @@
     min-width: $app-min-width;
     height: 100%;
     font-size: 13px;
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: "Cabin Condensed", sans-serif;
   }
 
   .container {
@@ -36,6 +37,14 @@
     @extend %flex-row;
     align-items: stretch;
     flex: 1;
+
+    > div {
+      overflow: hidden;
+      width: 100%;
+      color: $media-list-color;
+      line-height: 1;
+      flex: 1;
+    }
   }
   
   a {
@@ -52,7 +61,7 @@
     padding: 10px;
     border: none;
     font-size: 13px;
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: "Cabin Condensed", sans-serif;
   }
   
   .button {
@@ -66,12 +75,6 @@
       cursor: pointer;
     }
   }
-
-  .flip-icon {
-    > span {
-      transform: rotateX(180deg);
-    }
-  }
   
   .hidden {
     display: none !important;
@@ -81,7 +84,7 @@
   .label {
     position: relative;
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: bold;
     font-size: 12px;
     line-height: 14px;
   }
@@ -92,40 +95,40 @@
   }
 
   .dropdown {
+    @extend %hide;
     position: absolute;
-    opacity: 0;
-    transition: all .2s ease;
-    transform: scale(0.95);
-    pointer-events: none;
 
     &.show {
-      opacity: 1;
-      transform: scale(1);
-      pointer-events: all;
+      @extend %show;
     }
-  }
 
-  .dropdown-menu {
-    position: relative;
-    left: -10px;
-    overflow: hidden;
-    margin: 10px;
-    min-width: 200px;
-    border: 1px solid $primary-light;
-    border-radius: 5px;
-    background: tint($primary-lighter, 50%);
-    box-shadow: 0 0 5px rgba(0,0,0,0.3);
-    
-    a {
-      background: $primary-lighter;
-      border-bottom: 1px solid $primary-light;
-
-      &:hover {
-        background: tint($primary-lighter, 50%);
+    .nav {
+      position: relative;
+      left: -10px;
+      overflow: hidden;
+      margin: 10px;
+      min-width: 200px;
+      border: 1px solid $primary-lighter;
+      border-radius: 5px;
+      background: tint($primary-lighter, 50%);
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+      
+      li {
+        display: block;
       }
-    }
 
-    li:last-child a {
-      border-bottom: none;
+      a {
+        background: tint($primary-lighter, 60%);
+        border-bottom: 1px solid $primary-lighter;
+        color: $primary-light;
+
+        &:hover {
+          background: tint($primary-lighter, 80%);
+        }
+      }
+
+      li:last-child a {
+        border-bottom: none;
+      }
     }
   }

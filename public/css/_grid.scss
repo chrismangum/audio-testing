@@ -33,10 +33,11 @@
 
   .ngVerticalBar {
     position: absolute;
+    top: 25%;
     right: 0;
     z-index: 1;
     width: 1px;
-    background-color: $row-column-border;
+    height: 50% !important; // Overrides inline style set to "rowHeight"
   }
 
   #testDataLength {
@@ -49,8 +50,6 @@
   .ngHeaderContainer {
     position: relative;
     overflow: hidden;
-    background-color: inherit;
-    font-weight: bold;
   }
 
   .ngHeaderCell {
@@ -71,56 +70,26 @@
   .ngHeaderSortColumn {
     position: absolute;
     overflow: hidden;
-
-    &:hover {
-      background: $label-background-color-hover;
-    }
-
-    &:active {
-      background: $label-background-color-active;
-    }
-
-    &.ngSorted {
-      background: $label-background-color-sorted;
-    }
   }
 
   .ngTopPanel {
     position: relative;
     z-index: 1;
-    padding-right: 200px;
-    background-color: $label-background-color;
-  }
-
-  .ngSortButtonUp,
-  .ngSortButtonDown,
-  .ngAggArrowCollapsed,
-  .ngAggArrowExpanded {
-    @extend %icon;
-    @extend .icon-arrow;
-    position: absolute;
-    top: 7px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
   }
 
   .ngSortButtonUp,
   .ngSortButtonDown {
+    @extend %icon;
+    @extend .icon-arrow;
+    position: absolute;
+    top: 0;
     right: 6px;
-    color: $label-sort-arrow-color;
-  }
-
-  .ngAggArrowCollapsed,
-  .ngAggArrowExpanded {
-    left: 6px;
-    color: $row-group-arrow-color;
+    line-height: $row-height;
   }
 
   .ngSortButtonUp {
-    top: 6px;
     transform: rotateX(180deg);
-  }
-
-  .ngAggArrowCollapsed {
-    transform: rotate(-90deg);
   }
 
   .ngNoSort {
@@ -132,16 +101,11 @@
     top: 0;
     right: 0;
     z-index: 1;
-    width: $label-height;
-    height: $label-height;
+    width: $row-height;
+    height: $row-height;
     background-color: $primary-dark;
     color: $secondary;
     cursor: pointer;
-  }
-
-  .ngHeaderScroller {
-    position: absolute;
-    background-color: inherit;
   }
 
   .ngSortPriority {
@@ -159,26 +123,32 @@
     z-index: 1;
     width: 11px;
     height: 100%;
-    background-color: transparent;
     cursor: col-resize;
   }
 
   .ngHeaderText {
     @extend %label;
     overflow: hidden;
-    padding: 6px 8px;
+    padding: $row-padding;
     color: $label-color;
     text-overflow: ellipsis;
     white-space: nowrap;
+    line-height: $row-height;
+
+    &:hover {
+      color: $label-color-hover;
+    }
   }
 
   .ngHeaderButtonArrow {
     @extend %icon;
     @extend .icon-columns;
     position: absolute;
-    top: 2px;
-    left: 2px;
+    top: 0;
+    width: 100%;
+    text-align: center;
     font-size: 22px;
+    line-height: $row-height;
   }
 
   .ngColMenu {
@@ -213,7 +183,7 @@
       border-bottom: 1px solid shade($secondary, 10%);
       text-transform: uppercase;
       white-space: nowrap;
-      font-weight: 600;
+      font-weight: bold;
       font-size: 12px;
 
       &:hover {
@@ -246,44 +216,9 @@
     display: none;
   }
 
-  .ngAggHeader {
-    position: absolute;
-    border: none;
-  }
-
-  .ngGroupingNumber {
-    display: none;
-  }
-
-  .ngAggregate {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    overflow: hidden;
-    background: $row-group-background;
-
-    &:hover {
-      background: $row-group-background-hover;
-      cursor: pointer;
-    }
-  }
-
-  .ngAggregateText {
-    display: block;
-    margin-left: 25px;
-    padding: 6px 8px;
-    white-space: nowrap;
-    font-weight: $row-font-weight;
-    font-size: $row-font-size;
-    line-height: $row-line-height;
-  }
-
   .ngRow {
     position: absolute;
     min-width: 100%;
-    background-color: $row-background-color;
     color: $row-color;
 
     &:hover {
@@ -314,12 +249,12 @@
 
   .ngCellText {
     overflow: hidden;
-    padding: 6px 8px;
+    padding: $row-padding;
     text-overflow: ellipsis;
     white-space: nowrap;
     font-weight: $row-font-weight;
     font-size: $row-font-size;
-    line-height: $row-line-height;
+    line-height: $row-height;
 
     &.now-playing-indicator,
     &.now-paused-indicator {
@@ -327,10 +262,10 @@
 
       &:before {
         position: absolute;
-        top: 4px;
         right: 4px;
         display: block;
         font-size: 18px;
+        line-height: $row-height;
       }
     }
 

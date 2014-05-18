@@ -7,7 +7,7 @@ html
   body(ng-app="app", ng-controller="main")
     .container
       .sidebar
-        nav.nav.nav-vertical
+        nav.nav
           .label.sidebar-title Playlists
             button.button
               span.icon-add
@@ -20,15 +20,19 @@ html
               a
                 span.icon-playlist
                 | Hibbity Hoppity
-        .now-playing(ng-class="{isPlaying: !!player}")
-          .label.sidebar-title Now Playing
-            button.button.now-playing-button
-              span.icon-arrow
-          .now-playing-artwork
+        .now-playing-container(ng-class="{isPlaying: !!player}")
+          .now-playing-artwork.now-playing-artwork-large
+            button.button.resize-artwork
+              span.icon-minimize
             img(ng-if="player.entity.coverArtURL", ng-src="{{player.entity.coverArtURL}}")
-          .now-playing-info
-            .track-name {{ player.entity.title }}
-            .track-info {{ player.entity.artist }} - {{ player.entity.album }}
+          .now-playing
+            .now-playing-artwork.now-playing-artwork-small.hide-artwork
+              button.button.resize-artwork
+                span.icon-maximize
+              img(ng-if="player.entity.coverArtURL", ng-src="{{player.entity.coverArtURL}}")
+            .now-playing-info
+              .track-name {{ player.entity.title }}
+              .track-info {{ player.entity.artist }} - {{ player.entity.album }}
       .main
         .toolbar
           nav.nav.nav-horizontal
@@ -45,7 +49,7 @@ html
                 a.dropdown-toggle(ng-click="showDropdown = !showDropdown")
                   .icon-gear
                 .dropdown(ng-class="{show: showDropdown}")
-                  .dropdown-menu
+                  nav.nav
                     ul
                       li
                         a Action
@@ -59,22 +63,21 @@ html
             span.icon-search
             input(type="text", placeholder="Search", ng-model="searchText", ng-focus="searchFocus = true", ng-blur="searchFocus = false")
         ng-view.view
-    .player
-      .player-col-side
-        button.button
-          span.icon-prev(ng-click="previous()")
-        button.button
-          span(ng-click="togglePlayback()", class="{{player.entity.playing ? 'icon-pause' : 'icon-play'}}")
-        button.button
-          span.icon-next(ng-click="next()")
-      .player-col-middle
-        .player-info-wrapper(ng-class="{isPlaying: !!player}")
-          .progress
-            .time.time-passed {{ player.currentTime | convertTimestamp }}
-            .time.time-remain {{ player.duration | convertTimestamp }}
-            .progress-bar
-              slider
-      .player-col-side
+    .control-bar
+      .control-buttons
+        button.button(ng-click="previous()")
+          span.icon-prev
+        button.button(ng-click="togglePlayback()")
+          span(class="{{player.entity.playing ? 'icon-pause' : 'icon-play'}}")
+        button.button(ng-click="next()")
+          span.icon-next
+      .progress-container
+        .progress(ng-class="{isPlaying: !!player}")
+          .time.time-passed {{ player.currentTime | convertTimestamp }}
+          .progress-bar
+            slider
+          .time.time-remain {{ player.duration | convertTimestamp }}
+      .control-buttons
         button.button(ng-class="{'active': repeat}", ng-click="toggleRepeat()")
           span(class="{{ repeat == 'one' ? 'icon-repeat-one' : 'icon-repeat' }}")
         button.button(ng-class="{active: shuffling}", ng-click="toggleShuffle()")

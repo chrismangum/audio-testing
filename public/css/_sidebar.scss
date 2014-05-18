@@ -33,11 +33,10 @@
     line-height: $sidebar-title-height;
 
     .button {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 34px;
-      height: 34px;
+      position: relative;
+      float: right;
+      margin: 0;
+      height: $sidebar-title-height;
       color: inherit;
 
       &:hover {
@@ -52,7 +51,7 @@
     }
   }
 
-  .now-playing {
+  .now-playing-container {
     @extend %flex-column;
     position: relative;
     margin-bottom: -($sidebar-title-height + $sidebar-width + $now-playing-info-height);
@@ -61,58 +60,100 @@
     &.isPlaying {
       margin-bottom: 0;
     }
+  }
 
-    .sidebar-title {
-      background: $now-playing-sidebar-title-background;
-      color: $now-playing-sidebar-title-color;
-      transition: all .2s ease;
-
-      &:hover {
-        background: $now-playing-sidebar-title-background-hover;
-        color: $now-playing-sidebar-title-color-hover;
-        cursor: pointer;
+  .now-playing-artwork {
+    position: relative;
+    display: block;
+    background: $now-playing-artwork-missing-background;
+    background-size: cover;
+    transition: all .2s ease;
+    
+    &.now-playing-artwork-large {
+      width: $sidebar-width;
+      height: $sidebar-width;
+      
+      &.hide-artwork {
+        margin-bottom: -$sidebar-width;
+        margin-left: -$sidebar-width;
       }
 
-      .button {
-        transition: none;
+      .resize-artwork {
+        top: 8px;
+        right: 8px;
+      }
+    }
+
+    &.now-playing-artwork-small {
+      width: $now-playing-info-height;
+      height: $now-playing-info-height;
+
+      &.hide-artwork {
+        margin-left: -$now-playing-info-height;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+      
+      .resize-artwork {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &:hover {
+      button {
+        @extend %show;
+      }
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .resize-artwork {
+      @extend %hide;
+      position: absolute;
+      margin: 0;
+      padding: 5px;
+      background: rgba(#000, .2);
+      color: #fff;
+      font-size: 20px;
+      line-height: 0;
+
+      &:hover {
+        color: $sidebar-title-button-color;
       }
     }
   }
 
-  .now-playing-artwork {
-    display: block;
-    height: $sidebar-width;
-    background: $now-playing-artwork-missing-background;
-    background-size: cover;
-    transition: all .3s cubic-bezier(0.250, -0.150, 0.250, 1.150);
-
-    img {
-      max-width: 100%;
-      height: auto;
-    }
+  .now-playing {
+    @extend %flex-row;
+    position: relative;
+    width: 100%;
+    height: $now-playing-info-height;
+    background: $now-playing-info-background;
   }
 
   .now-playing-info {
     @extend %flex-column;
-    position: relative;
-    padding: 0 10px;
-    width: 100%;
-    height: $now-playing-info-height;
-    background: $now-playing-info-background;
+    padding: 0 8px;
     align-items: flex-start;
     justify-content: center;
+    flex: 1;
 
     .track-name {
       @extend %no-wrap;
       color: $now-playing-info-track-name;
-      font-weight: 600;
+      font-weight: bold;
       font-size: 12px;
     }
 
     .track-info {
       @extend %no-wrap;
       color: $now-playing-info-track-info;
-      font-weight: 300;
       font-size: 11px;
     }
   }

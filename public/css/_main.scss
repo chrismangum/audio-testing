@@ -4,9 +4,7 @@
 
   .main {
     @extend %flex-column;
-    position: relative;
-    min-width: $app-min-width;
-    background: $main-background;
+    background: tint($primary-lighter, 50%);
     flex: 1;
   }
   
@@ -22,33 +20,28 @@
       flex: 1;
     }
 
-    a,
-    .button {
+    .nav-horizontal > ul > li > a {
       padding-top: 0;
       padding-bottom: 0;
       height: $toolbar-height;
-      color: $toolbar-nav-color;
+      color: tint($toolbar-background, 20%);
+      text-transform: uppercase;
+      font-size: 12px;
       line-height: $toolbar-height;
+      transition: all .3s ease;
       
       &:hover {
-        background: $toolbar-nav-hover;
+        color: tint($toolbar-background, 80%);
       }
       
       &.active {
-        background: $toolbar-nav-active;
+        border-bottom: 4px solid tint($toolbar-background, 50%);
+        color: tint($toolbar-background, 80%);
 
         &:hover {
           cursor: default;
         }
       }
-    }
-
-    .button {
-      margin: 0;
-      padding: 0 10px;
-      vertical-align: top;
-      font-size: 15px;
-      line-height: 0;
     }
 
     .search {
@@ -57,13 +50,12 @@
 
       .icon-search {
         position: absolute;
-        top: 10px;
         left: 10px;
         
         &:before {
           color: $search-color;
           font-size: 15px;
-          line-height: 1;
+          line-height: $toolbar-height;
         }
       }
      
@@ -74,15 +66,9 @@
         height: $toolbar-height;
         background: $search-background;
         color: $search-input-color;
-        font-weight: 600;
+        font-weight: bold;
+        font-size: 12px;
+        line-height: $toolbar-height;
       }
     }
-  }
-
-  .media-list {
-    overflow: hidden;
-    width: 100%;
-    color: $media-list-color;
-    line-height: 1;
-    flex: 1;
   }

@@ -5,7 +5,7 @@ app.controller 'tmp', ['$scope', ($scope) ->
 ]
 
 app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
-  rowHeight = 26
+  rowHeight = 24
   $scope.songs = []
   $scope.artists = []
   $scope.albums = []

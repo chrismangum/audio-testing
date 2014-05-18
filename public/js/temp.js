@@ -1,17 +1,13 @@
-var toggleNowPlaying = $('.now-playing .sidebar-title'),
-    nowPlayingButton = $('.now-playing-button');
-    nowPlayingArtwork = $('.now-playing-artwork');
+var resizeArtwork = $('.resize-artwork');
+    nowPlayingArtworkLarge = $('.now-playing-artwork-large');
+    nowPlayingArtworkSmall = $('.now-playing-artwork-small')
 
-toggleNowPlaying.on('click', function() {
-  nowPlayingButton.toggleClass('flip-icon');
-  nowPlayingArtwork.toggleClass('now-playing-hide');
-  if (nowPlayingArtwork.hasClass('now-playing-hide')) {
-    nowPlayingArtwork.css({
-      marginBottom: -(nowPlayingArtwork.height()) + 'px'
-    });
-  } else {
-    nowPlayingArtwork.css({
-      marginBottom: 0 + 'px'
-    });
-  }
+resizeArtwork.on('click', function() {
+  nowPlayingArtworkLarge.addClass('hide-artwork');
+  nowPlayingArtworkSmall.removeClass('hide-artwork');
+});
+
+nowPlayingArtworkSmall.on('click', function() {
+  $(this).addClass('hide-artwork');
+  nowPlayingArtworkLarge.removeClass('hide-artwork');
 });

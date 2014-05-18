@@ -6,36 +6,39 @@
     width: 280px;
 
     .item {
+      position: relative;
+
+      &:hover {
+        background: tint($primary-lighter, 60%);
+      }
+
+      &.active {
+        background: tint($primary-lighter, 70%);
+      }
+
+      &:after {
+        @extend %icon-arrow-right;
+        position: absolute;
+        top: 0;
+        right: 10px;
+        display: flex;
+        height: 100%;
+        color: $primary-lighter;
+        font-size: 22px;
+        align-items: center;
+      }
+
       a {
         @extend %flex-row;
-        position: relative;
-        padding: 10px;
-        border-bottom: 1px solid tint($primary-lighter, 40%);
-        background: tint($primary-lighter, 50%);
-        font-size: 0;
-
-        &:hover {
-          background: tint($primary-lighter, 60%);
-        }
-
-        &:after {
-          @extend %icon-arrow;
-          position: absolute;
-          top: 16px;
-          right: 10px;
-          display: block;
-          color: $primary-lighter;
-          font-size: 22px;
-          transform: rotate(-90deg);
-        }
+        padding: 8px;
+        align-items: center;
       }
     }
 
     .item-image {
       margin-right: 6px;
-      width: 32px;
-      height: 32px;
-      background: $primary-dark;
+      width: 50px;
+      height: 50px;
     }
 
     .item-info {

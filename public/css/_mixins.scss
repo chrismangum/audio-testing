@@ -31,3 +31,16 @@
       margin-right: 0;
     }
   }
+
+  // Custom Scrollbar
+  @mixin scrollbar($size, $scrollbar-background, $scrollbar-thumb-background) {
+    &::-webkit-scrollbar {
+      width: $size;
+      height: $size;
+      background: $scrollbar-background;
+      box-shadow: 0 0 5px shade($scrollbar-background, 30%) inset;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: $scrollbar-thumb-background;
+    }
+  }

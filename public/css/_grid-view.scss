@@ -4,29 +4,48 @@
 
   .grid-view {
     @extend %flex-row;
-    padding: 2%;
+    padding: 3%;
+    width: 100%;
     flex-wrap: wrap;
+    align-content: flex-start;
 
     .item {
-      @include rowMachine(3, 2%);
-      float: left;
+      @include rowMachine(4, 3%);
+      position: relative;
 
       @media (min-width: 900px) {
-        @include rowMachine(4, 2%);
+        @include rowMachine(5, 3%);
       }
       
       @media (min-width: 1100px) {
-        @include rowMachine(5, 2%);
+        @include rowMachine(6, 3%);
       }
       
       @media (min-width: 1300px) {
-        @include rowMachine(6, 2%);
+        @include rowMachine(7, 3%);
+      }
+
+      @media (min-width: 1500px) {
+        @include rowMachine(8, 3%);
+      }
+
+      &:hover {
+        //background: #fff;
       }
     } 
 
     .item-image {
       margin-bottom: 8px;
-      background: $primary-dark;
+      padding-top: 100%;
+      
+      img {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+      }
     }
 
     .item-info-name {
