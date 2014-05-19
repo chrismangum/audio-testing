@@ -50,6 +50,8 @@
   .ngHeaderContainer {
     position: relative;
     overflow: hidden;
+    background: $label-background;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
   }
 
   .ngHeaderCell {
@@ -84,7 +86,7 @@
     position: absolute;
     top: 0;
     right: 6px;
-    line-height: $row-height;
+    line-height: $label-height;
   }
 
   .ngSortButtonUp {
@@ -100,8 +102,8 @@
     top: 0;
     right: 0;
     z-index: 1;
-    width: $row-height;
-    height: $row-height;
+    width: $label-height;
+    height: $label-height;
     background-color: $primary-dark;
     color: $secondary;
     cursor: pointer;
@@ -132,7 +134,7 @@
     color: $label-color;
     text-overflow: ellipsis;
     white-space: nowrap;
-    line-height: $row-height;
+    line-height: $label-height;
 
     &:hover {
       color: $label-color-hover;
@@ -147,7 +149,7 @@
     width: 100%;
     text-align: center;
     font-size: 22px;
-    line-height: $row-height;
+    line-height: $label-height;
   }
 
   .ngColMenu {
