@@ -2,18 +2,27 @@
 // View
 //==========================================================================
   
-  .view-defaults {
+  .view {
+    @extend %flex-row;
+    flex: 1;
+    align-items: stretch;
+  }
+
+  .view-items {
     position: relative;
     overflow-y: scroll;
-    margin: 0;
-    padding: 0;
-    list-style: none;
     line-height: 1;
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
 
     .item-image {
       position: relative;
       background: $primary-dark;
-      
+    
       img {
         display: block;
         width: 100%;
@@ -32,17 +41,31 @@
         content: '';
       }
     }
+    
+    .item-info-name {
+      @extend %no-wrap;
+      color: $primary;
+      font-weight: bold;
+      font-size: 13px;
+    }
+
+    .item-info-details {
+      @extend %no-wrap;
+      color: $primary-lighter;
+      font-size: 12px;
+    }
   }
 
-  .item-info-name {
-    @extend %no-wrap;
-    color: $primary;
-    font-weight: bold;
-    font-size: 13px;
+  .view-details {
+    @extend %flex-column;
+    flex: 1;
+    align-items: stretch;
   }
 
-  .item-info-details {
-    @extend %no-wrap;
-    color: $primary-lighter;
-    font-size: 12px;
+  .view-header {
+    padding: 12px;
+
+    .view-heading {
+      margin: 0;
+    }
   }

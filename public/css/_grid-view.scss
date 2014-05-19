@@ -9,9 +9,14 @@
     flex-wrap: wrap;
     align-content: flex-start;
 
+    ul {
+      width: 100%;
+    }
+
     .item {
       @include rowMachine(4, 3%);
       position: relative;
+      float: left;
 
       @media (min-width: 900px) {
         @include rowMachine(5, 3%);

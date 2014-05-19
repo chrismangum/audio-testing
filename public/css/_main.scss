@@ -72,3 +72,17 @@
       }
     }
   }
+
+  .view {
+    @extend %flex-row;
+    align-items: stretch;
+    flex: 1;
+  }
+
+  .media-list {
+    overflow: hidden;
+    width: 100%;
+    color: $media-list-color;
+    line-height: 1;
+    flex: 1;
+  }

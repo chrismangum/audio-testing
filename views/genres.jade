@@ -1,7 +1,11 @@
-ul.view-defaults.list-view
-  li.item(ng-repeat="genre in data.genres", ng-click="activateItem(genre, 'genre')", ng-class="{active: genre.active}")
-    a
-      .item-info
-        .item-info-name {{genre.name}}
-        .item-info-details {{genre.songs.length}} Songs
-.media-list(ng-grid="gridOptions")
+.view-items.list-view
+  ul
+    li.item(ng-repeat="genre in data.genres", ng-click="activateItem(genre, 'genre')", ng-class="{active: genre.active}")
+      a
+        .item-info
+          .item-info-name {{genre.name}}
+          .item-info-details {{genre.songs.length}} Songs
+.view-details
+  .view-header
+    h1.view-heading Genre
+  .media-list(ng-grid="gridOptions")

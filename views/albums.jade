@@ -1,8 +1,9 @@
-ul.view-defaults.grid-view
-  li.item(ng-repeat="album in data.albums")
-    a
-      .item-image
-        img(ng-src="{{album.coverArtURL || '/static/img/missing-artwork.png'}}")
-      .item-info
-        .item-info-name {{album.name}}
-        .item-info-details {{album.artist}}
+.view-items.grid-view
+  ul
+    li.item(ng-repeat="album in data.albums")
+      a
+        .item-image
+          img(ng-src="{{album.coverArtURL || '/static/img/missing-artwork.png'}}")
+        .item-info
+          .item-info-name {{album.name}}
+          .item-info-details {{album.artist}}
