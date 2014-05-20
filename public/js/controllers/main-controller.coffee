@@ -10,6 +10,7 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
     artists: []
     albums: []
     genres: []
+    nowPlaying: false
 
   $scope.activateItem = (item, type) ->
     if $scope.activeItems[type]

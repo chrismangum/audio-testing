@@ -68,6 +68,7 @@ app.controller 'player', ['$scope', ($scope) ->
     track ?= getSelectedTrack()
     track.playing = play
     $scope.player = new Player track, $scope
+    $scope.data.nowPlaying = track
     $scope.safeApply()
 
   $scope.$on 'play', (e, track) ->
