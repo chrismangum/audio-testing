@@ -20,19 +20,19 @@ html
               a
                 span.icon-playlist
                 | Hibbity Hoppity
-        .now-playing-container(ng-controller="player", ng-class="{isPlaying: !!player}")
+        .now-playing-container(ng-class="{isPlaying: !!data.nowPlaying}")
           .now-playing-artwork.now-playing-artwork-large
             button.button.resize-artwork
               span.icon-minimize
-            img(ng-if="player.entity.coverArtURL", ng-src="{{player.entity.coverArtURL}}")
+            img(ng-if="data.nowPlaying.coverArtURL", ng-src="{{data.nowPlaying.coverArtURL}}")
           .now-playing
             .now-playing-artwork.now-playing-artwork-small.hide-artwork
               button.button.resize-artwork
                 span.icon-maximize
-              img(ng-if="player.entity.coverArtURL", ng-src="{{player.entity.coverArtURL}}")
+              img(ng-if="data.nowPlaying.coverArtURL", ng-src="{{data.nowPlaying.coverArtURL}}")
             .now-playing-info
-              .track-name {{ player.entity.title }}
-              .track-info {{ player.entity.artist }} - {{ player.entity.album }}
+              .track-name {{ data.nowPlaying.title }}
+              .track-info {{ data.nowPlaying.artist }} - {{ data.nowPlaying.album }}
       .main(ng-controller="grid")
         .toolbar
           nav.nav.nav-horizontal

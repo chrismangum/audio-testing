@@ -60,14 +60,14 @@ app.controller 'player', ['$scope', ($scope) ->
     track
 
   $scope.play = (track, play = true) ->
-    if track is false
-      return
     if $scope.player
       delete $scope.player.entity.playing
       $scope.player.stop()
-    track ?= getSelectedTrack()
-    track.playing = play
-    $scope.player = new Player track, $scope
+    if track isnt false
+      track ?= getSelectedTrack()
+      track.playing = play
+      $scope.player = new Player track, $scope
+      $scope.data.nowPlaying = track
     $scope.safeApply()
 
   $scope.$on 'play', (e, track) ->
