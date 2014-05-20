@@ -1,10 +1,43 @@
 
 app.controller 'grid', ['$scope', ($scope) ->
+
+  updateLocalStorage = (prefs) ->
+    localStorage.columnPrefs = JSON.stringify prefs or $scope.columnPrefs
+
+  #defaults:
+  unless localStorage.columnPrefs
+    updateLocalStorage
+      visibility:
+        trackNumber: true
+        title: true
+        artist: true
+        album: true
+        genre: true
+        year: true
+      widths:
+        trackNumber: 30
+      order: [
+        'trackNumber',
+        'title',
+        'artist',
+        'album',
+        'genre',
+        'year'
+      ]
+      sortInfo:
+        fields: ['artist', 'album', 'trackNumber']
+        directions: ['asc', 'asc', 'asc']
+
+  $scope.columnPrefs = JSON.parse localStorage.columnPrefs
+
   $scope.$watch 'searchText', (n, o) ->
     if n isnt o
       $scope.gridOptions.filterOptions.filterText = n
 
-  $scope.$on 'ngGridEventSorted', ->
+  #put a throttle around this:
+  $scope.$on 'ngGridEventSorted', (e, sortInfo) ->
+    $scope.columnPrefs.sortInfo =  _.pick sortInfo, 'fields', 'directions'
+    updateLocalStorage()
     $scope.data.sortedData = $scope.gridOptions.sortedData
 
   availableColumns =
@@ -49,31 +82,7 @@ app.controller 'grid', ['$scope', ($scope) ->
       </div>'
     selectedItems: []
     showColumnMenu: true
-
-  updateLocalStorage = (prefs) ->
-    localStorage.columnPrefs = JSON.stringify prefs or $scope.columnPrefs
-
-  unless localStorage.columnPrefs
-    updateLocalStorage
-      visibility:
-        trackNumber: true
-        title: true
-        artist: true
-        album: true
-        genre: true
-        year: true
-      widths:
-        trackNumber: 30
-      order: [
-        'trackNumber',
-        'title',
-        'artist',
-        'album',
-        'genre',
-        'year'
-      ]
-
-  $scope.columnPrefs = JSON.parse localStorage.columnPrefs
+    sortInfo: $scope.columnPrefs.sortInfo
 
   #set saved column order / visibility
   _.each $scope.columnPrefs.order, (val, i) ->
