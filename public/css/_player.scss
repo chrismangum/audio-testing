@@ -1,8 +1,8 @@
 //==========================================================================
-// Control Bar
+// Player Bar
 //==========================================================================
 
-  .control-bar {
+  .player-bar {
     @extend %flex-row;
     z-index: 2;
     min-width: $app-min-width;
@@ -34,7 +34,7 @@
     }
   }
 
-  .control-buttons {
+  .player-buttons {
     @extend %flex-row;
     @extend %flex-center;
     padding: 0 20px;

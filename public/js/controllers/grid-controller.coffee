@@ -40,8 +40,8 @@ app.controller 'grid', ['$scope', ($scope) ->
     gridData: []
     enableColumnReordering: true
     enableColumnResize: true
-    headerRowHeight: 40
-    rowHeight: 32
+    headerRowHeight: 32
+    rowHeight: 24
     rowTemplate:
       '<div ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}">
         <div class="ngVerticalBar ngVerticalBarVisible" ng-style="{height: rowHeight}">&nbsp;</div>

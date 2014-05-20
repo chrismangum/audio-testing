@@ -1,6 +1,14 @@
 //==========================================================================
-// Angular UI Grid
+// Media List (ngGrid)
 //==========================================================================
+
+  .media-list {
+    overflow: hidden;
+    width: 100%;
+    color: $media-list-color;
+    line-height: 1;
+    flex: 1;
+  }
 
   .ngGrid {
     input {
@@ -85,7 +93,7 @@
     @extend .icon-arrow;
     position: absolute;
     top: 0;
-    right: 6px;
+    right: $row-padding;
     line-height: $label-height;
   }
 
@@ -129,11 +137,9 @@
 
   .ngHeaderText {
     @extend %label;
-    overflow: hidden;
-    padding: $row-padding;
+    @extend %no-wrap;
+    padding: 0 $row-padding;
     color: $label-color;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     line-height: $label-height;
 
     &:hover {
@@ -249,10 +255,8 @@
   }
 
   .ngCellText {
-    overflow: hidden;
-    padding: $row-padding;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @extend %no-wrap;
+    padding: 0 $row-padding;
     font-weight: $row-font-weight;
     font-size: $row-font-size;
     line-height: $row-height;

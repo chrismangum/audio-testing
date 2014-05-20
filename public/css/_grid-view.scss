@@ -4,12 +4,12 @@
 
   .grid-view {
     @extend %flex-row;
-    padding: 3%;
     width: 100%;
     flex-wrap: wrap;
     align-content: flex-start;
 
     ul {
+      padding: 3%;
       width: 100%;
     }
 
@@ -35,7 +35,7 @@
       }
 
       &:hover {
-        //background: #fff;
+        // background: #fff;
       }
     } 
 

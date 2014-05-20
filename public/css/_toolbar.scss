@@ -64,25 +64,11 @@
         padding: 10px 15px 10px 30px;
         width: 100%;
         height: $toolbar-height;
-        background: $search-background;
+        background: transparent;
         color: $search-input-color;
         font-weight: bold;
         font-size: 12px;
         line-height: $toolbar-height;
       }
     }
-  }
-
-  .view {
-    @extend %flex-row;
-    align-items: stretch;
-    flex: 1;
-  }
-
-  .media-list {
-    overflow: hidden;
-    width: 100%;
-    color: $media-list-color;
-    line-height: 1;
-    flex: 1;
   }
