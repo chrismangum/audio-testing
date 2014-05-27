@@ -7,8 +7,7 @@
           .item-info-details {{genre.songs.length}} Songs
 .view-details
   .view-header
-    h2 Genre
-    h3 10 Songs, 2 Hours 11 Minutes
-    button.button Play
+    h2 {{activeItems.genre.name}}
+    h3 {{activeItems.genre.songs.length}} Songs
     button.button(ng-click="play()") Play
   .media-list(ng-grid="gridOptions")

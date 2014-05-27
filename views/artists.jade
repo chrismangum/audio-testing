@@ -9,7 +9,7 @@
           .item-info-details {{artist.albums.length}} Albums, {{artist.songs.length}} Songs
 .view-details
   .view-header
-    h2 Artist Name
-    h3 2 Albums, 10 Songs
+    h2 {{activeItems.artist.name}}
+    h3 {{activeItems.artist.albums.length}} Albums, {{activeItems.artist.songs.length}} Songs
     button.button(ng-click="play()") Play
   .media-list(ng-grid="gridOptions")
