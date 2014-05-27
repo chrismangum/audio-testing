@@ -61,7 +61,7 @@ html
                         a Action
           .search
             span.icon-search
-            input(type="text", placeholder="Search", ng-model="searchText", ng-focus="searchFocus = true", ng-blur="searchFocus = false")
+            input(type="text", placeholder="Search", ng-model="searchText", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
         ng-view.view
     .control-bar(ng-controller="player")
       .control-buttons

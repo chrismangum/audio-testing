@@ -74,7 +74,7 @@ app.controller 'player', ['$scope', ($scope) ->
     $scope.play track
 
   $(document).on 'keydown', (e) ->
-    unless $scope.searchFocus
+    unless $scope.data.searchFocus
       switch e.keyCode
         when 32
           $scope.togglePlayback()

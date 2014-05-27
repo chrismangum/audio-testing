@@ -211,7 +211,7 @@ app.controller 'grid', ['$scope', ($scope) ->
     scrollToTrack track
 
   $(document).on 'keydown', (e) ->
-    unless $scope.searchFocus
+    unless $scope.data.searchFocus
       switch e.keyCode
         when 38
           selectAdjacentTrack e, -1
