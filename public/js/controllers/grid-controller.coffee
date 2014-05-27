@@ -65,6 +65,15 @@ app.controller 'grid', ['$scope', ($scope) ->
         '<div class="ngCellText" ng-class="col.colIndex()" ng-dblclick="play(row.entity)">
           <span ng-cell-text>{{ COL_FIELD }}</span>
         </div>'
+      headerCellTemplate:
+        '<div class="ngHeaderSortColumn {{col.headerClass}}" ng-style="{\'cursor\': col.cursor}" ng-class="{ \'ngSorted\': !noSortVisible }">
+          <div ng-click="col.sort($event)" ng-class="\'colt\' + col.index" class="ngHeaderText">{{col.displayName}}</div>
+          <div class="ngSortButtonDown" ng-show="col.showSortButtonDown()"></div>
+          <div class="ngSortButtonUp" ng-show="col.showSortButtonUp()"></div>
+          <div ng-class="{ ngPinnedIcon: col.pinned, ngUnPinnedIcon: !col.pinned }" ng-click="togglePin(col)" ng-show="col.pinnable"></div>
+        </div>
+        <div ng-show="col.resizable" class="ngHeaderGrip" ng-click="col.gripClick($event)" ng-mousedown="col.gripOnMouseDown($event)"></div>'
+
 
   _.extend $scope.gridOptions,
     columnDefs: []
