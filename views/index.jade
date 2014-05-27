@@ -45,22 +45,21 @@ html
                 a(ng-href="/albums", ng-class="{active: params.group == 'albums'}") Albums
               li
                 a(ng-href="/genres", ng-class="{active: params.group == 'genres'}") Genres
-              li.dropdown-wrapper
-                a.dropdown-toggle(ng-click="showDropdown = !showDropdown")
-                  .icon-gear
-                .dropdown(ng-class="{show: showDropdown}")
-                  nav.nav
-                    ul
-                      li
-                        a Action
-                      li
-                        a Action
-                      li
-                        a Action
-                      li
-                        a Action
+          .dropdown-wrapper.actions
+            a.dropdown-toggle(ng-click="showDropdown = !showDropdown")
+              .icon-gear
+            .dropdown.dropdown-right(ng-class="{show: showDropdown}")
+              nav.nav
+                ul
+                  li
+                    a Action
+                  li
+                    a Action
+                  li
+                    a Action
+                  li
+                    a Action
           .search
-            span.icon-search
             input(type="text", placeholder="Search", ng-model="searchText", ng-focus="searchFocus = true", ng-blur="searchFocus = false")
         ng-view.view
     .player-bar(ng-controller="player")

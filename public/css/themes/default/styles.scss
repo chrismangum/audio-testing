@@ -10,7 +10,6 @@
 //==========================================================================
   
   $app-min-width: 700px;
-  $toolbar-height: 32px;
   $sidebar-width: 200px;
   $player-height: 60px;
 
@@ -61,19 +60,30 @@
   
   // Toolbar
   //========================================================================
+  $toolbar-height: 36px;
+  $toolbar-padding: 6px;
   $toolbar-background: $primary-darker;
 
     // Nav
     $toolbar-nav-hover: $primary-dark;
     $toolbar-nav-active: $primary-light;
     $toolbar-nav-color: $secondary;
-  
-    // Search
-    $search-color: $primary-light;
-    $search-background: $primary-darker;
+
+    $search-placeholder-color: $primary-lightest;
+    $search-icon-color: $primary-lightest;
     $search-input-color: $secondary;
+  
 
+  // Views
+  //========================================================================
+  $view-header-padding: 12px;
 
+  $view-toolbar-color: $primary-light;
+  $view-toolbar-play-button-background: $dark-green;
+  $view-toolbar-padding: 4px;
+  $view-toolbar-height: 24px; // $label-height - $view-toolbar-padding;
+
+  
   // Grid
   //========================================================================
   $media-list-color: $primary-dark;
@@ -83,7 +93,7 @@
     $label-background: tint($primary-lightest, 50%);
     $label-color: $primary-light;
     $label-color-hover: $primary;
-    $label-column-border: rgba(0,0,0,0.1);
+    $label-column-border: tint($primary-lightest, 15%);
     $label-sort-arrow-color: $secondary;
     
     // Rows
