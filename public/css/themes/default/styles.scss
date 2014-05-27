@@ -10,7 +10,6 @@
 //==========================================================================
   
   $app-min-width: 700px;
-  $toolbar-height: 32px;
   $sidebar-width: 200px;
   $player-height: 60px;
 
@@ -61,37 +60,49 @@
   
   // Toolbar
   //========================================================================
+  $toolbar-height: 36px;
+  $toolbar-padding: 6px;
   $toolbar-background: $primary-darker;
 
     // Nav
     $toolbar-nav-hover: $primary-dark;
     $toolbar-nav-active: $primary-light;
     $toolbar-nav-color: $secondary;
-  
-    // Search
-    $search-color: $primary-light;
-    $search-background: $primary-darker;
-    $search-input-color: $secondary;
 
+    $search-placeholder-color: $primary-lightest;
+    $search-icon-color: $primary-lightest;
+    $search-input-color: $secondary;
+  
+
+  // Views
+  //========================================================================
+  $view-header-padding: 12px;
+
+  $view-toolbar-color: $primary-light;
+  $view-toolbar-play-button-background: $dark-green;
+  $view-toolbar-padding: 4px;
+  $view-toolbar-height: 24px; // $label-height - $view-toolbar-padding;
+
+  
   // Grid
   //========================================================================
   $media-list-color: $primary-dark;
   
     // Column Labels
-    $label-height: 40px; // Set equal to "rowHeight" in controllers/grid-controller.coffee
+    $label-height: 32px; // Set equal to "rowHeight" in controllers/grid-controller.coffee
     $label-background: tint($primary-lightest, 50%);
     $label-color: $primary-light;
     $label-color-hover: $primary;
-    $label-column-border: rgba(0,0,0,0.1);
+    $label-column-border: tint($primary-lightest, 15%);
     $label-sort-arrow-color: $secondary;
     
     // Rows
-    $row-height: 32px; // Set equal to "headerRowHeight" in controllers/grid-controller.coffee
+    $row-height: 24px; // Set equal to "headerRowHeight" in controllers/grid-controller.coffee
     $row-background-color-hover: tint($primary-lighter, 55%);
     $row-color: $primary-light;
     $row-selected-background-color: $primary;
     $row-selected-color: $secondary;
-    $row-padding: 0 12px;
+    $row-padding: 8px; // Left & right value only (e.g. "12px")
     $row-font-size: 12px;
     $row-font-weight: bold;
 
@@ -118,6 +129,7 @@
     $volume-empty-background: shade($primary-lighter, 20%);
     $volume-handle-background: tint($primary-lighter, 50%);
     $volume-handle-background-hover: $secondary;
+
 
   // Sidebar
   //========================================================================

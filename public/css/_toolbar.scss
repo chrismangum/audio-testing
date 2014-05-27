@@ -1,5 +1,5 @@
 //==========================================================================
-// Main
+// Toolbar
 //==========================================================================
 
   .main {
@@ -12,9 +12,10 @@
     @extend %flex-row;
     z-index: 2;
     width: 100%;
-    height: $toolbar-height;
     background: $toolbar-background;
     font-size: 0;
+    align-items: center;
+    padding: $toolbar-padding;
 
     .nav {
       flex: 1;
@@ -35,7 +36,7 @@
       }
       
       &.active {
-        border-bottom: 4px solid tint($toolbar-background, 50%);
+        border-bottom: 2px solid tint($toolbar-background, 50%);
         color: tint($toolbar-background, 80%);
 
         &:hover {
@@ -44,45 +45,44 @@
       }
     }
 
-    .search {
-      position: relative;
-      width: $sidebar-width;
+    .actions {
+      display: block;
+      order: 3;
 
-      .icon-search {
-        position: absolute;
-        left: 10px;
-        
-        &:before {
-          color: $search-color;
-          font-size: 15px;
+      .dropdown-toggle {
+        display: block;
+        padding: 0 12px;
+        color: #fff;
+        font-size: 14px;
+
+        .icon-gear {
           line-height: $toolbar-height;
         }
-      }
-     
-      input {
-        @include placeholder($search-color);
-        padding: 10px 15px 10px 30px;
-        width: 100%;
-        height: $toolbar-height;
-        background: $search-background;
-        color: $search-input-color;
-        font-weight: bold;
-        font-size: 12px;
-        line-height: $toolbar-height;
       }
     }
   }
 
-  .view {
-    @extend %flex-row;
-    align-items: stretch;
-    flex: 1;
-  }
+  .search {
+    position: relative;
+    float: right;
 
-  .media-list {
-    overflow: hidden;
-    width: 100%;
-    color: $media-list-color;
-    line-height: 1;
-    flex: 1;
+    input {
+      @include placeholder($search-placeholder-color);
+      padding: 0 0 0 20px;
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: $search-input-color;
+      height: $toolbar-height;
+    }
+
+    &:before {
+      @extend %icon-search;
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: $search-icon-color;
+      font-size: 12px;
+      line-height: $toolbar-height;
+    }
   }

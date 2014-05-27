@@ -1,6 +1,6 @@
 .view-items.list-view
   ul
-    li.item(ng-repeat="artist in data.artists", ng-click="activateItem(artist, 'artist')", ng-class="{active: artist.active}")
+    li.item(ng-repeat="artist in data.artists | orderBy: artist.name", ng-click="activateItem(artist, 'artist')", ng-class="{active: artist.active}")
       a
         .item-image
           img(ng-src="{{artist.coverArtURL || '/static/img/missing-artwork.png'}}")
@@ -9,5 +9,7 @@
           .item-info-details {{artist.albums.length}} Albums, {{artist.songs.length}} Songs
 .view-details
   .view-header
-    h1.view-heading Artist Name
+    h2 Artist Name
+    h3 2 Albums, 10 Songs
+    button.button Play
   .media-list(ng-grid="gridOptions")

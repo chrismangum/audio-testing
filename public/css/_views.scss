@@ -1,7 +1,7 @@
 //==========================================================================
 // View
 //==========================================================================
-  
+
   .view {
     @extend %flex-row;
     flex: 1;
@@ -63,9 +63,33 @@
   }
 
   .view-header {
-    padding: 12px;
+    padding: $view-header-padding;
+    color: $primary-light;
 
-    .view-heading {
+    h2 {
+      margin: 0 0 4px 0;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    h3 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      font-weight: normal;
+    }
+
+    .button {
+      background: $view-toolbar-play-button-background;
+      color: #fff;
       margin: 0;
+      padding: 0 12px 0 8px;
+      line-height: $view-toolbar-height;
+      height: $view-toolbar-height;
+
+      &:before {
+        @extend %icon-play-fill;
+        line-height: 0;
+        margin-right: 4px;
+      }
     }
   }

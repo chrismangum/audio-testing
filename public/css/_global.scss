@@ -43,13 +43,6 @@
     }
   }
   
-  input {
-    padding: 10px;
-    border: none;
-    font-size: 13px;
-    font-family: "Cabin Condensed", sans-serif;
-  }
-  
   .button {
     padding: 0;
     border: 0;
@@ -83,6 +76,12 @@
   .dropdown {
     @extend %hide;
     position: absolute;
+    left: 0;
+
+    &.dropdown-right {
+      right: 0;
+      left: auto;
+    }
 
     &.show {
       @extend %show;
@@ -90,7 +89,6 @@
 
     .nav {
       position: relative;
-      left: -10px;
       overflow: hidden;
       margin: 10px;
       min-width: 200px;
@@ -98,7 +96,7 @@
       border-radius: 5px;
       background: tint($primary-lighter, 50%);
       box-shadow: 0 0 5px rgba(0,0,0,0.2);
-      
+
       li {
         display: block;
       }

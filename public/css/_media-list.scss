@@ -1,6 +1,14 @@
 //==========================================================================
-// Angular UI Grid
+// Media List (ngGrid)
 //==========================================================================
+
+  .media-list {
+    width: 100%;
+    border-top: 1px solid $label-column-border;
+    color: $media-list-color;
+    line-height: 1;
+    flex: 1;
+  }
 
   .ngGrid {
     input {
@@ -85,7 +93,7 @@
     @extend .icon-arrow;
     position: absolute;
     top: 0;
-    right: 6px;
+    right: $row-padding;
     line-height: $label-height;
   }
 
@@ -100,21 +108,19 @@
   .ngHeaderButton {
     position: absolute;
     top: 0;
-    right: 0;
+    top: -36px;
+    right: 12px;
     z-index: 1;
-    width: $label-height;
-    height: $label-height;
-    background-color: $primary-dark;
-    color: $secondary;
+    padding: 4px;
+    color: $view-toolbar-color;
+    font-size: 16px;
+    line-height: 0;
     cursor: pointer;
   }
 
-  .ngSortPriority {
-    position: absolute;
-    top: -5px;
-    left: 1px;
-    font-weight: bold;
-    font-size: 6pt;
+  .ngHeaderButtonArrow {
+    @extend %icon;
+    @extend .icon-columns;
   }
 
   .ngHeaderGrip {
@@ -129,11 +135,9 @@
 
   .ngHeaderText {
     @extend %label;
-    overflow: hidden;
-    padding: $row-padding;
+    @extend %no-wrap;
+    padding: 0 $row-padding;
     color: $label-color;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     line-height: $label-height;
 
     &:hover {
@@ -141,19 +145,9 @@
     }
   }
 
-  .ngHeaderButtonArrow {
-    @extend %icon;
-    @extend .icon-columns;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 22px;
-    line-height: $label-height;
-  }
-
   .ngColMenu {
     position: absolute;
+    top: 0;
     right: 0;
     z-index: 1;
     padding: 10px;
@@ -249,10 +243,8 @@
   }
 
   .ngCellText {
-    overflow: hidden;
-    padding: $row-padding;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @extend %no-wrap;
+    padding: 0 $row-padding;
     font-weight: $row-font-weight;
     font-size: $row-font-size;
     line-height: $row-height;

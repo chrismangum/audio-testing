@@ -45,26 +45,25 @@ html
                 a(ng-href="/albums", ng-class="{active: params.group == 'albums'}") Albums
               li
                 a(ng-href="/genres", ng-class="{active: params.group == 'genres'}") Genres
-              li.dropdown-wrapper
-                a.dropdown-toggle(ng-click="showDropdown = !showDropdown")
-                  .icon-gear
-                .dropdown(ng-class="{show: showDropdown}")
-                  nav.nav
-                    ul
-                      li
-                        a Action
-                      li
-                        a Action
-                      li
-                        a Action
-                      li
-                        a Action
+          .dropdown-wrapper.actions
+            a.dropdown-toggle(ng-click="showDropdown = !showDropdown")
+              .icon-gear
+            .dropdown.dropdown-right(ng-class="{show: showDropdown}")
+              nav.nav
+                ul
+                  li
+                    a Action
+                  li
+                    a Action
+                  li
+                    a Action
+                  li
+                    a Action
           .search
-            span.icon-search
             input(type="text", placeholder="Search", ng-model="searchText", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
         ng-view.view
-    .control-bar(ng-controller="player")
-      .control-buttons
+    .player-bar(ng-controller="player")
+      .player-buttons
         button.button(ng-click="player.previous()")
           span.icon-prev
         button.button(ng-click="togglePlayback()")
@@ -77,7 +76,7 @@ html
           .progress-bar
             slider
           .time.time-remain {{ player.duration | convertTimestamp }}
-      .control-buttons
+      .player-buttons
         button.button(ng-class="{'active': repeat}", ng-click="toggleRepeat()")
           span(class="{{ repeat == 'one' ? 'icon-repeat-one' : 'icon-repeat' }}")
         button.button(ng-class="{active: shuffling}", ng-click="toggleShuffle()")
