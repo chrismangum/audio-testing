@@ -1,15 +1,5 @@
 var gulp = require('gulp'),
-  coffee = require('gulp-coffee'),
-  uglify = require('gulp-uglify'),
-  concat = require('gulp-concat'),
-  nodemon = require('gulp-nodemon'),
-  jade = require('gulp-jade'),
-  sass = require('gulp-sass'),
-  prefix = require('gulp-autoprefixer'),
-  minifyCss = require('gulp-minify-css'),
-  svgmin = require('gulp-svgmin'),
-  iconfont = require('gulp-iconfont'),
-  iconfontCss = require('gulp-iconfont-css');
+    plugin = require('gulp-load-plugins')({camelize:true});
 
 var paths = {
   clientJS: 'public/js/**/*.coffee',
@@ -21,36 +11,36 @@ var paths = {
 
 gulp.task('clientJS', function () {
   gulp.src(paths.clientJS)
-    .pipe(coffee())
-    //.pipe(uglify())
+    .pipe(plugin.coffee())
+    //.pipe(plugin.uglify())
     .pipe(gulp.dest('public/js/compiled'));
 });
 
 gulp.task('serverJS', function () {
   gulp.src(paths.serverJS)
-    .pipe(coffee())
-    //.pipe(concat('app.js'))
+    .pipe(plugin.coffee())
+    //.pipe(plugin.concat('app.js'))
     .pipe(gulp.dest('server'));
 });
 
 gulp.task('css', ['iconfont'], function () {
   return gulp.src(paths.scss)
-    .pipe(sass())
-    .pipe(prefix("last 2 versions"))
-    .pipe(minifyCss())
+    .pipe(plugin.sass())
+    .pipe(plugin.autoprefixer("last 2 versions"))
+    .pipe(plugin.minifyCss())
     .pipe(gulp.dest('public/css'))
 });
 
 gulp.task('iconfont', function(){
   return gulp.src(['public/fonts/svg/*.svg'])
-    .pipe(svgmin())
-    .pipe(iconfontCss({
+    .pipe(plugin.svgmin())
+    .pipe(plugin.iconfontCss({
       fontName: 'icon-font',
       path: 'public/fonts/_icon-font.scss',
       targetPath: '../../public/css/_icon-font.scss',
       fontPath: '../../../fonts/'
     }))
-    .pipe(iconfont({
+    .pipe(plugin.iconfont({
       fontName: 'icon-font',
       normalize: true
     }))
@@ -59,14 +49,14 @@ gulp.task('iconfont', function(){
 
 gulp.task('jade', function () {
   gulp.src(paths.jade)
-    .pipe(jade({
+    .pipe(plugin.jade({
       pretty: true
     }))
     .pipe(gulp.dest('public/'));
 });
 
 gulp.task('nodemon', function () {
-  nodemon({
+  plugin.nodemon({
     script: 'server/app.js',
     ext: 'js,coffee',
     ignore: ['public/**', 'node_modules/**']
