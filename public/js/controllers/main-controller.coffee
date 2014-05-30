@@ -1,5 +1,6 @@
 
 app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
+  songToSelect = false
   $scope.params = $routeParams
   $scope.activeItems = {}
   $scope.gridOptions = {}
@@ -13,12 +14,22 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
     nowPlaying: false
     searchFocus: false
 
-  $scope.activateItem = (item, type) ->
+  $scope.activateItem = (item, type, song = true) ->
+    songToSelect = song
     if $scope.activeItems[type]
       $scope.activeItems[type].active = false
     item.active = true
     $scope.activeItems[type] = item
     $scope.filterData item.songs
+
+  $scope.$on 'ngGridEventSorted', (e, sortInfo) ->
+    if songToSelect
+      if _.isObject songToSelect
+        $scope.selectTrack songToSelect
+      else
+        $scope.gridOptions.selectAll false
+        $scope.gridOptions.selectRow 0, true
+      songToSelect = false
 
   $scope.filterData = (songs) ->
     $scope.gridOptions.gridData = songs
@@ -29,6 +40,9 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
   $scope.play = (track) ->
     $scope.$broadcast 'play', track
 
+  $scope.selectTrack = (track) ->
+    $scope.$broadcast 'selectTrack', track
+
   $scope.scrollToTrack = (track) ->
     $scope.$broadcast 'scrollToTrack', track
 
@@ -37,19 +51,19 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
       $scope.$apply fn
 
   $scope.checkRoute = ->
-    switch $scope.params.group
-      when 'artists'
-        if $scope.activeItems.artist
-          $scope.filterData $scope.activeItems.artist.songs
-        else if $scope.data.artists.length
-          $scope.activateItem $scope.data.artists[0], 'artist'
-      when 'genres'
-        if $scope.activeItems.genre
-          $scope.filterData $scope.activeItems.genre.songs
-        else if $scope.data.genres.length
-          $scope.activateItem $scope.data.genres[0], 'genre'
-      else
-        $scope.unfilterData()
+    if view = $scope.params.group
+      type = view[0...-1]
+      if $scope.gridOptions.selectedItems.length
+        item = $scope.gridOptions.selectedItems[0]
+        $scope.activateItem _.findWhere($scope.data[view],
+          name: item[type]
+        ), type, item
+      else if $scope.data.genres.length
+        $scope.activateItem $scope.data[view][0], type, false
+    else
+      if $scope.gridOptions.selectedItems.length
+        songToSelect = $scope.gridOptions.selectedItems[0]
+      $scope.unfilterData()
 
   createArtist = (track) ->
     artist =

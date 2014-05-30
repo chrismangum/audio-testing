@@ -121,12 +121,18 @@ app.controller 'grid', ['$scope', ($scope) ->
     $scope.columnPrefs.visibility[col.field] = !col.visible
     updateLocalStorage()
 
+  $scope.$on 'selectTrack', (e, track) ->
+    selectOne track
+    setTimeout (->
+      scrollToTrack track
+    ), 1
+
   selectOne = (track) ->
     if track?
       if _.isObject track
-        track = getTrackPosition track
+        index = getTrackPosition track
       $scope.gridOptions.selectAll false
-      $scope.gridOptions.selectRow track, true
+      $scope.gridOptions.selectRow index, true
 
   selectAdjacentTrack = (e, direction) ->
     if $scope.gridOptions.selectedItems.length
