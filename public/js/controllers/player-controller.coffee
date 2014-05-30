@@ -4,6 +4,7 @@ app.controller 'player', ['$scope', ($scope) ->
   $scope.player = null
   $scope.repeat = false
   $scope.shuffling = false
+  $scope.playerSocket = {}
 
   $scope.toggleShuffle = ->
     $scope.shuffling = !$scope.shuffling
@@ -60,25 +61,20 @@ app.controller 'player', ['$scope', ($scope) ->
     track
 
   $scope.play = (track, play = true) ->
-    if $scope.player
-      delete $scope.player.entity.playing
+    if $scope.player?.entity.playing
       $scope.player.stop()
     if track isnt false
       track ?= getSelectedTrack()
       track.playing = play
-      $scope.mainSocket.emit 'spawnPlayer'
-      $scope.track = track
-      #$scope.player = new Player track, $scope
-      #$scope.data.nowPlaying = track
+      $scope.player = new Player track, $scope
+      $scope.data.nowPlaying = track
     $scope.safeApply()
 
   $scope.$on 'play', (e, track) ->
     $scope.play track
 
   $scope.mainSocket.on 'playerReady', ->
-    $scope.playerSocket = io.connect 'http://localhost:3001'
-    $scope.playerSocket.on 'connect', ->
-      $scope.playerSocket.emit 'play', $scope.track.filePath
+    $scope.player.createSocket()
 
   $(document).on 'keydown', (e) ->
     unless $scope.data.searchFocus
@@ -108,22 +104,41 @@ app.controller 'player', ['$scope', ($scope) ->
         when 189 then $scope.player?.decreaseVolume()
 ]
 
-class Player extends AV.Player
+class Player
   constructor: (@entity, @scope) ->
-    super AV.Asset.fromURL '/target/' + @entity.filePath
     if localStorage.volume
       @volume = parseInt localStorage.volume, 10
-    if @entity.playing
-      @play()
-    #player events:
-    @.on 'progress', (timestamp) ->
+    @scope.mainSocket.emit 'spawnPlayer'
+    @socket = @scope.playerSocket
+
+  createSocket: ->
+    unless @socket.socket
+      @scope.playerSocket = io.connect 'http://localhost:3001'
+      @socket = @scope.playerSocket
+    else
+      @socket.socket.reconnect()
+
+    @socket.on 'connect', =>
+      if @entity.playing
+        @socket.emit 'play', @entity
+    @socket.on 'playerObj', (obj) =>
+      _.extend @, obj
+    @socket.on 'progress', (timestamp) =>
       @progress = timestamp / @duration * 100
       @scope.safeApply()
-    @.on 'end', ->
+    @socket.on 'end', =>
       if @scope.repeat is 'one'
         @scope.play @entity
       else
         @next()
+
+  stop: ->
+    @socket.emit 'stop'
+    @socket.disconnect()
+    delete @entity.playing
+
+  seek: (timestamp) ->
+    @socket.emit 'seek', timestamp
 
   previous: ->
     if @currentTime > 1000
@@ -146,6 +161,9 @@ class Player extends AV.Player
     @seek percent / 100 * @duration
 
   togglePlayback: ->
-    @entity.playing = !@entity.playing
-    super()
+    if @entity.playing
+      @stop()
+    else
+      @scope.play @entity
+
 

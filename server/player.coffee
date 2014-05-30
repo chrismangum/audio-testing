@@ -13,17 +13,18 @@ AV.require.apply null, [
 ]
 
 player = {}
+track = {}
 
 io.on 'connection', (socket) ->
-  socket.on 'play', (filePath) ->
-    fs.readFile '../target/' + filePath, (err, data) ->
+  socket.on 'play', (entity) ->
+    track = entity
+    fs.readFile '../target/' + track.filePath, (err, data) ->
       throw err if err
       player = AV.Player.fromBuffer new Uint8Array data
       player.play()
 
   socket.on 'stop', () ->
     player.stop()
-    socket.disconnect()
     process.exit 0
 
 process.send
