@@ -41,22 +41,24 @@ app.controller 'grid', ['$scope', ($scope) ->
     $scope.data.sortedData = $scope.gridOptions.sortedData
 
   availableColumns =
-    trackNumber: {
+    trackNumber:
       displayName: '#'
       field: 'trackNumber'
       minWidth: 10
-    }
-    title: {
+    title:
       field: 'title'
       cellTemplate:
         '<div class="ngCellText {{col.colIndex()}}" ng-class="{\'now-playing-indicator\': row.entity.playing, \'now-paused-indicator\': row.entity.playing === false}" ng-dblclick="play(row.entity)">
           <span ng-cell-text>{{ COL_FIELD }}</span>
         </div>'
-    }
-    artist: { field: 'artist' }
-    album: { field: 'album' }
-    genre: { field: 'genre' }
-    year: { field: 'year' }
+    artist:
+      field: 'artist'
+    album:
+      field: 'album'
+    genre:
+      field: 'genre'
+    year:
+      field: 'year'
 
   #set cellTemplate default for all columns:
   _.each availableColumns, (col) ->
@@ -118,6 +120,12 @@ app.controller 'grid', ['$scope', ($scope) ->
     availableColumns[col.field].visible = !col.visible
     $scope.columnPrefs.visibility[col.field] = !col.visible
     updateLocalStorage()
+
+  $scope.$on 'selectTrack', (e, track) ->
+    selectOne track
+    setTimeout (->
+      scrollToTrack track
+    ), 1
 
   selectOne = (track) ->
     if track?

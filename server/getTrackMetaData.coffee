@@ -3,10 +3,12 @@ async = require 'async'
 path = require 'path'
 _ = require 'lodash'
 
-require '../public/js/aurora.js'
-require '../public/js/flac.js'
-require '../public/js/mp3.js'
-require '../public/js/aac.js'
+AV = require '../public/js/nodeAurora.js'
+AV.require.apply null, [
+  './flac.js'
+  './mp3.js'
+  './aac.js'
+]
 
 toBuffer = (ab) ->
   buffer = new Buffer ab.byteLength
