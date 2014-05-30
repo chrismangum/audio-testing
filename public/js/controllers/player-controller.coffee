@@ -76,11 +76,8 @@ app.controller 'player', ['$scope', ($scope) ->
     $scope.play track
 
   $scope.mainSocket.on 'playerReady', ->
-    $scope.playerSocket = io.connect 3001
+    $scope.playerSocket = io.connect 'http://localhost:3001'
     $scope.playerSocket.on 'connect', ->
-      console.log 'player socket connected!'
-      $scope.mainSocket.emit 'playerConnected'
-      console.log 'emitting play...', $scope.track.filePath
       $scope.playerSocket.emit 'play', $scope.track.filePath
 
   $(document).on 'keydown', (e) ->

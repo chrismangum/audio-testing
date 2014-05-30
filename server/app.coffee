@@ -174,12 +174,8 @@ io.sockets.on 'connection', (socket) ->
   socket.on 'spawnPlayer', ->
     player = cp.fork './player.js'
     player.on 'message', (m) ->
-      console.log 'player sent message'
       if m.ready
         socket.emit 'playerReady'
-
-  socket.on 'playerConnected', ->
-    player.disconnect()
 
   socket.on 'disconnect', ->
     socket.disconnected = true

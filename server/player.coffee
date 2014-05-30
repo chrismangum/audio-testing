@@ -21,5 +21,10 @@ io.on 'connection', (socket) ->
       player = AV.Player.fromBuffer new Uint8Array data
       player.play()
 
+  socket.on 'stop', () ->
+    player.stop()
+    socket.disconnect()
+    process.exit 0
+
 process.send
   ready: true
