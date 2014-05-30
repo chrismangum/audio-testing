@@ -59,7 +59,7 @@ gulp.task('nodemon', function () {
   plugin.nodemon({
     script: 'server/app.js',
     ext: 'js,coffee',
-    ignore: ['public/**', 'node_modules/**']
+    ignore: ['public/*', 'node_modules/*']
   });
 });
 
