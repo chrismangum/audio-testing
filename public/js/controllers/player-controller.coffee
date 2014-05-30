@@ -66,12 +66,22 @@ app.controller 'player', ['$scope', ($scope) ->
     if track isnt false
       track ?= getSelectedTrack()
       track.playing = play
-      $scope.player = new Player track, $scope
-      $scope.data.nowPlaying = track
+      $scope.mainSocket.emit 'spawnPlayer'
+      $scope.track = track
+      #$scope.player = new Player track, $scope
+      #$scope.data.nowPlaying = track
     $scope.safeApply()
 
   $scope.$on 'play', (e, track) ->
     $scope.play track
+
+  $scope.mainSocket.on 'playerReady', ->
+    $scope.playerSocket = io.connect 3001
+    $scope.playerSocket.on 'connect', ->
+      console.log 'player socket connected!'
+      $scope.mainSocket.emit 'playerConnected'
+      console.log 'emitting play...', $scope.track.filePath
+      $scope.playerSocket.emit 'play', $scope.track.filePath
 
   $(document).on 'keydown', (e) ->
     unless $scope.data.searchFocus

@@ -137,9 +137,9 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
         name: genreName
         songs: songs
 
-  socket = io.connect location.origin
+  $scope.mainSocket = io.connect location.origin
 
-  socket.on 'metadata', (data) ->
+  $scope.mainSocket.on 'metadata', (data) ->
     track = $scope.data.tracks[data.filePath]
     _.extend track, _.omit data, 'filePath'
     checkArtist track
@@ -147,7 +147,7 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
     $scope.checkRoute()
     $scope.safeApply()
 
-  socket.on 'json', (data) ->
+  $scope.mainSocket.on 'json', (data) ->
     _.extend $scope.data, data
     parseData data
     $scope.checkRoute()
