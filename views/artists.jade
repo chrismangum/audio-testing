@@ -1,7 +1,7 @@
 .view-sidebar
   .view-sidebar-header
     .search
-      input(type="text", placeholder="Search", ng-model="searchText", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
+      input(type="text", placeholder="Search", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
   ul.view-sidebar-list
     li.item(ng-repeat="artist in data.artists | orderBy: artist.name", ng-click="activateItem(artist, 'artist')", ng-class="{active: artist.active}")
       a
@@ -20,5 +20,5 @@
         .item-info-details {{activeItems.artist.albums.length}} Albums, {{activeItems.artist.songs.length}} Songs
         button.button(ng-click="play()") Play All
     .search
-      input(type="text", placeholder="Search", ng-model="searchText", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
+      input(type="text", placeholder="Search", ng-model="search.searchText", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
   .view-main-list(ng-grid="gridOptions")

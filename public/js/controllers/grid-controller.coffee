@@ -30,7 +30,8 @@ app.controller 'grid', ['$scope', ($scope) ->
 
   $scope.columnPrefs = JSON.parse localStorage.columnPrefs
 
-  $scope.$watch 'searchText', (n, o) ->
+  $scope.search = {}
+  $scope.$watch 'search.searchText', (n, o) ->
     if n isnt o
       $scope.gridOptions.filterOptions.filterText = n
 
