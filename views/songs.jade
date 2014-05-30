@@ -6,5 +6,5 @@
         .item-info-details {{songs.length}} Songs
         button.button(ng-click="play()") Play All
     .search
-      input(type="text", placeholder="Search", ng-model="searchText", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
+      input(type="text", placeholder="Search", ng-model="search.searchText", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
   .view-main-list(ng-grid="gridOptions")
