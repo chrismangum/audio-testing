@@ -130,9 +130,9 @@ app.controller 'grid', ['$scope', ($scope) ->
   selectOne = (track) ->
     if track?
       if _.isObject track
-        index = getTrackPosition track
+        track = getTrackPosition track
       $scope.gridOptions.selectAll false
-      $scope.gridOptions.selectRow index, true
+      $scope.gridOptions.selectRow track, true
 
   selectAdjacentTrack = (e, direction) ->
     if $scope.gridOptions.selectedItems.length
