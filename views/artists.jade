@@ -1,5 +1,8 @@
-.view-items.list-view
-  ul
+.view-sidebar
+  .view-sidebar-header
+    .search
+      input(type="text", placeholder="Search", ng-model="searchText", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
+  ul.view-sidebar-list
     li.item(ng-repeat="artist in data.artists | orderBy: artist.name", ng-click="activateItem(artist, 'artist')", ng-class="{active: artist.active}")
       a
         .item-image
@@ -7,9 +10,15 @@
         .item-info
           .item-info-name {{artist.name}}
           .item-info-details {{artist.albums.length}} Albums, {{artist.songs.length}} Songs
-.view-details
-  .view-header
-    h2 {{activeItems.artist.name}}
-    h3 {{activeItems.artist.albums.length}} Albums, {{activeItems.artist.songs.length}} Songs
-    button.button(ng-click="play()") Play
-  .media-list(ng-grid="gridOptions")
+.view-main
+  .view-main-header
+    .view-details
+      .item-image
+        img(ng-src="{{activeItems.artist.coverArtURL || '/static/img/missing-artwork.png'}}")
+      .item-info
+        .item-info-name {{activeItems.artist.name}}
+        .item-info-details {{activeItems.artist.albums.length}} Albums, {{activeItems.artist.songs.length}} Songs
+        button.button(ng-click="play()") Play All
+    .search
+      input(type="text", placeholder="Search", ng-model="searchText", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
+  .view-main-list(ng-grid="gridOptions")

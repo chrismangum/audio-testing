@@ -1,0 +1,108 @@
+//==========================================================================
+// View Sidebar
+//==========================================================================
+
+  .view-sidebar {
+    @extend %flex-column;
+    position: relative;
+    line-height: 1;
+    width: 280px;
+  }
+    
+//==========================================================================
+// View Sidebar - Header
+//==========================================================================
+  
+  .view-sidebar-header {
+    @extend %flex-row;
+    padding: 10px;
+    background: $primary;
+    color: $secondary;
+    line-height: 20px;
+
+    .dropdown-toggle {
+      &:after {
+        @extend %icon-arrow;
+        margin-left: 4px;
+      }
+    }
+
+    .search {
+      line-height: 20px;
+      flex: 1;
+
+      &:before {
+        line-height: 20px;
+      }
+    }
+  }
+
+//==========================================================================
+// View Sidebar - List
+//==========================================================================
+
+  .view-sidebar-list {
+    overflow-y: scroll;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    flex: 1;
+
+    .item {
+      position: relative;
+
+      &:hover {
+        background: tint($primary-lighter, 60%);
+      }
+
+      &.active {
+        background: tint($primary-lighter, 70%);
+      }
+
+      &:after {
+        @extend %icon-arrow-right;
+        position: absolute;
+        top: 0;
+        right: 10px;
+        display: flex;
+        height: 100%;
+        color: $primary-lighter;
+        font-size: 22px;
+        align-items: center;
+      }
+
+      a {
+        @extend %flex-row;
+        padding: 8px;
+        align-items: center;
+      }
+    }
+
+    .item-image {
+      @extend %item-image;
+      margin-right: 6px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .item-info {
+      margin-left: 4px;
+      padding-right: 25px;
+      flex: 1;
+    }
+    
+    .item-info-name {
+      @extend %no-wrap;
+      color: $primary;
+      font-weight: bold;
+      font-size: 13px;
+      padding: 1px 0 3px 0;
+    }
+
+    .item-info-details {
+      @extend %no-wrap;
+      color: $primary-lighter;
+      font-size: 12px;
+      padding-bottom: 2px;
+    }
+  }

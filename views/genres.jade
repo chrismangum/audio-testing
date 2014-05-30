@@ -1,13 +1,17 @@
-.view-items.list-view
-  ul
+.view-sidebar
+  ul.view-sidebar-list
     li.item(ng-repeat="genre in data.genres", ng-click="activateItem(genre, 'genre')", ng-class="{active: genre.active}")
       a
         .item-info
           .item-info-name {{genre.name}}
           .item-info-details {{genre.songs.length}} Songs
-.view-details
-  .view-header
-    h2 {{activeItems.genre.name}}
-    h3 {{activeItems.genre.songs.length}} Songs
-    button.button(ng-click="play()") Play
-  .media-list(ng-grid="gridOptions")
+.view-main
+  .view-main-header
+    .view-details
+      .item-info
+        .item-info-name {{activeItems.genre.name}}
+        .item-info-details {{activeItems.genre.songs.length}} Songs
+        button.button(ng-click="play()") Play All
+    .search
+      input(type="text", placeholder="Search", ng-model="searchText", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
+  .view-main-list(ng-grid="gridOptions")

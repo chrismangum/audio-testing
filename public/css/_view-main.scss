@@ -1,8 +1,82 @@
 //==========================================================================
-// Media List (ngGrid)
+// View Main
 //==========================================================================
 
-  .media-list {
+  .view-main {
+    @extend %flex-column;
+    flex: 1;
+    align-items: stretch;
+  }
+
+//==========================================================================
+// View Main - Header
+//==========================================================================
+  
+  .view-main-header {
+    @extend %flex-row;
+    padding: $view-header-padding;
+    color: $primary-light;
+    justify-content: space-between;
+    align-items: flex-start;
+    
+    .item-image {
+      @extend %item-image;
+      float: left;
+      margin-right: 10px;
+      width: 68px;
+      height: 68px;
+    }
+
+    .item-info {
+      float: left;
+      padding-left: 2px;
+    }
+
+    .item-info-name {
+      margin: 0 0 2px 0;
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .item-info-details {
+      margin: 0 0 6px 0;
+      font-weight: normal;
+      font-size: 13px;
+    }
+
+    .button {
+      margin: 0;
+      padding: 0 12px 0 8px;
+      height: $view-toolbar-height;
+      background: $view-toolbar-play-button-background;
+      color: #fff;
+      line-height: $view-toolbar-height;
+
+      &:before {
+        @extend %icon-play-fill;
+        margin-right: 4px;
+        line-height: 0;
+      }
+    }
+
+    .search {
+      &:before {
+        color: $primary-light;
+      }
+
+      input {
+        @include placeholder($primary-light);
+        color: $primary-dark;
+      }
+    }
+  }
+
+//==========================================================================
+// View Main - List
+//==========================================================================
+
+  .view-main-list {
     width: 100%;
     border-top: 1px solid $label-column-border;
     color: $media-list-color;
@@ -147,11 +221,9 @@
 
   .ngColMenu {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: -10px;
+    right: 2px;
     z-index: 1;
-    padding: 10px;
-    background-color: $secondary;
   }
 
   .ngColListCheckbox {
@@ -162,9 +234,6 @@
   .ngColList {
     margin: 0;
     padding: 0;
-    border: 1px solid shade($secondary, 10%);
-    border-bottom: 0;
-    list-style-type: none;
   }
 
   .ngColListItem {
@@ -174,17 +243,20 @@
     label {
       display: block;
       padding: 10px 10px 10px 30px;
-      min-width: 200px;
-      border-bottom: 1px solid shade($secondary, 10%);
-      text-transform: uppercase;
+      color: $primary-light;
+      text-transform: capitalize;
       white-space: nowrap;
-      font-weight: bold;
       font-size: 12px;
+      cursor: pointer;
+      border-radius: 4px;
 
       &:hover {
-        background: tint($secondary, 50%);
-        cursor: pointer;
+        background: tint($primary-lightest, 80%);
       }
+    }
+
+    a {
+      padding: 0;
     }
 
     input[type="checkbox"] {
@@ -197,6 +269,7 @@
         top: 0;
         left: 70px;
         display: none;
+        color: $primary-light;
       }
     }
 

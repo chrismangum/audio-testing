@@ -1,4 +1,10 @@
-.view-details
-  .view-header
-    button.button(ng-click="play()") Play
-  .media-list(ng-grid="gridOptions")
+.view-main
+  .view-main-header
+    .view-details
+      .item-info
+        .item-info-name All Songs
+        .item-info-details {{songs.length}} Songs
+        button.button(ng-click="play()") Play All
+    .search
+      input(type="text", placeholder="Search", ng-model="searchText", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
+  .view-main-list(ng-grid="gridOptions")

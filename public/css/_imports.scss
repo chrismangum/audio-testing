@@ -2,27 +2,25 @@
 // Imports
 //==========================================================================
   
+  // Fonts
+  @import url(http://fonts.googleapis.com/css?family=Cabin+Condensed:400,700);
+  
   // Placeholders
   @import "placeholders";
-  
+  @import "icon-font";
+
   // Global
   @import "global";
-  @import "icon-font";
-  @import "slider";
-  @import "nav";
-  @import "forms";
   
-  // Sidebar
+  // Elements
+  @import "slider";
+  @import "dropdown";
+  
+  // Layout
   @import "sidebar";
-  @import "toolbar";
-
-  // Player
+  @import "now-playing";
   @import "player";
 
   // Views
-  @import "views";
-  @import "list-view";
-  @import "grid-view";
-
-  // Media List
-  @import "media-list";
+  @import "view-sidebar";
+  @import "view-main";

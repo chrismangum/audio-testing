@@ -1,11 +1,33 @@
-.view-items.grid-view
-  .view-header
-    h3.view-heading Sort Albums
-  ul
-    li.item(ng-repeat="album in data.albums")
+.view-sidebar
+  .view-sidebar-header
+    .search
+      input(type="text", placeholder="Search", ng-model="searchText", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
+    .dropdown-wrapper.actions
+      a.dropdown-toggle(ng-click="showDropdown = !showDropdown")
+        | Sorted By Artist
+      .dropdown.dropdown-right(ng-class="{show: showDropdown}")
+        ul.dropdown-menu
+          li
+            a Artist
+          li
+            a Title
+  ul.view-sidebar-list
+    li.item(ng-repeat="album in data.albums | orderBy: ['album.artist', 'album.name']", ng-click="activateItem(album, 'album')", ng-class="{active: album.active}")
       a
         .item-image
           img(ng-src="{{album.coverArtURL || '/static/img/missing-artwork.png'}}")
         .item-info
           .item-info-name {{album.name}}
           .item-info-details {{album.artist}}
+.view-main
+  .view-main-header
+    .view-details
+      .item-image
+        img(ng-src="{{activeItems.album.coverArtURL || '/static/img/missing-artwork.png'}}")
+      .item-info
+        .item-info-name {{activeItems.album.name}}
+        .item-info-details {{activeItems.album.artist}}
+        button.button(ng-click="play()") Play All
+    .search
+      input(type="text", placeholder="Search", ng-model="searchText", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
+  .view-main-list(ng-grid="gridOptions")

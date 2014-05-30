@@ -45,7 +45,7 @@
   $secondary-darker: shade($secondary, 40%);
   $secondary-darkest: shade($secondary, 60%);
 
-  $tertiary: $light-navy;
+  $tertiary: $dark-navy;
   $tertiary-light: tint($tertiary, 60%);
   $tertiary-lighter: tint($tertiary, 80%);
   $tertiary-lightest: tint($tertiary, 100%);
@@ -62,7 +62,7 @@
   //========================================================================
   $toolbar-height: 36px;
   $toolbar-padding: 6px;
-  $toolbar-background: $primary-darker;
+  $toolbar-background: $tertiary;
 
     // Nav
     $toolbar-nav-hover: $primary-dark;
@@ -138,9 +138,11 @@
   $sidebar-title-height: 35px;
   $sidebar-title-color: $primary-light;
   $sidebar-title-button-color: $secondary;
-  $sidebar-link-color: $primary-lighter;
+  $sidebar-link-color: $primary-lightest;
   $sidebar-link-background-hover: $primary-dark;
-  $sidebar-link-color-hover: $secondary;
+  $sidebar-link-color-hover: $primary-lightest;
+  $sidebar-link-background-active: $primary-lightest;
+  $sidebar-link-color-active: $primary-dark;
   
     // Now Playing
     $now-playing-artwork-missing-background: darken($primary-darker, 10%) url(../../../../static/img/missing-artwork.png);

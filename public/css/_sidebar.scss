@@ -14,12 +14,35 @@
       height: 100%;
       flex: 1;
 
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-size: 0;
+      }
+
       a {
+        position: relative;
+        display: block;
+        padding: 6px 10px;
+        font-weight: bold;
+        font-size: 13px;
+        line-height: 22px;
         color: $sidebar-link-color;
 
         &:hover {
           background: $sidebar-link-background-hover;
           color: $sidebar-link-color-hover;
+        }
+
+        &.active {
+          background: $sidebar-link-background-active;
+          color: $sidebar-link-color-active;
+        }
+
+        > span {
+          margin: -2px 4px 0 0;
+          font-size: 20px;
         }
       }
     }
@@ -48,112 +71,5 @@
           font-size: 21px;
         }
       }
-    }
-  }
-
-  .now-playing-container {
-    @extend %flex-column;
-    position: relative;
-    margin-bottom: -($sidebar-title-height + $sidebar-width + $now-playing-info-height);
-    transition: all .4s cubic-bezier(0, 0.75, 0.4, 1.25);
-
-    &.isPlaying {
-      margin-bottom: 0;
-    }
-  }
-
-  .now-playing-artwork {
-    position: relative;
-    display: block;
-    background: $now-playing-artwork-missing-background;
-    background-size: cover;
-    transition: all .2s ease;
-    
-    &.now-playing-artwork-large {
-      width: $sidebar-width;
-      height: $sidebar-width;
-      
-      &.hide-artwork {
-        margin-bottom: -$sidebar-width;
-        margin-left: -$sidebar-width;
-      }
-
-      .resize-artwork {
-        top: 8px;
-        right: 8px;
-      }
-    }
-
-    &.now-playing-artwork-small {
-      width: $now-playing-info-height;
-      height: $now-playing-info-height;
-
-      &.hide-artwork {
-        margin-left: -$now-playing-info-height;
-      }
-
-      &:hover {
-        cursor: pointer;
-      }
-      
-      .resize-artwork {
-        width: 100%;
-        height: 100%;
-      }
-    }
-
-    &:hover {
-      button {
-        @extend %show;
-      }
-    }
-
-    img {
-      width: 100%;
-      height: 100%;
-    }
-
-    .resize-artwork {
-      @extend %hide;
-      position: absolute;
-      margin: 0;
-      padding: 5px;
-      background: rgba(#000, .2);
-      color: #fff;
-      font-size: 20px;
-      line-height: 0;
-
-      &:hover {
-        color: $sidebar-title-button-color;
-      }
-    }
-  }
-
-  .now-playing {
-    @extend %flex-row;
-    position: relative;
-    width: 100%;
-    height: $now-playing-info-height;
-    background: $now-playing-info-background;
-  }
-
-  .now-playing-info {
-    @extend %flex-column;
-    padding: 0 8px;
-    align-items: flex-start;
-    justify-content: center;
-    flex: 1;
-
-    .track-name {
-      @extend %no-wrap;
-      color: $now-playing-info-track-name;
-      font-weight: bold;
-      font-size: 12px;
-    }
-
-    .track-info {
-      @extend %no-wrap;
-      color: $now-playing-info-track-info;
-      font-size: 11px;
     }
   }
