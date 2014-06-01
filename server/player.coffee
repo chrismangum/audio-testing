@@ -15,7 +15,9 @@ AV.require.apply null, [
 player = {}
 track = {}
 
+io.set 'log level', 1
 io.on 'connection', (socket) ->
+
   socket.on 'play', (entity) ->
     track = entity
     fs.readFile '../target/' + track.filePath, (err, data) ->
@@ -23,7 +25,19 @@ io.on 'connection', (socket) ->
       player = AV.Player.fromBuffer new Uint8Array data
       player.play()
 
-  socket.on 'stop', () ->
+      player.on 'duration', (time) ->
+        socket.emit 'duration', time
+
+      player.on 'progress', (currentTime) ->
+        socket.emit 'progress', currentTime
+
+      player.on 'end', ->
+        socket.emit 'end'
+
+  socket.on 'seek', (timestamp) ->
+    player.seek timestamp
+
+  socket.on 'disconnect', ->
     player.stop()
     process.exit 0
 

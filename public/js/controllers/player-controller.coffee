@@ -4,7 +4,7 @@ app.controller 'player', ['$scope', ($scope) ->
   $scope.player = null
   $scope.repeat = false
   $scope.shuffling = false
-  $scope.playerSocket = {}
+  $scope.playerSocket = null
 
   $scope.toggleShuffle = ->
     $scope.shuffling = !$scope.shuffling
@@ -73,8 +73,23 @@ app.controller 'player', ['$scope', ($scope) ->
   $scope.$on 'play', (e, track) ->
     $scope.play track
 
+  $scope.createSocket = ->
+    socket = io.connect 'http://localhost:3001'
+    socket.on 'connect', ->
+      $scope.player.play socket
+    socket.on 'duration', (duration) ->
+      $scope.player.duration = duration
+    socket.on 'progress', (currentTime) ->
+      $scope.player.setProgress currentTime
+    socket.on 'end', ->
+      $scope.player.end()
+    socket
+
   $scope.mainSocket.on 'playerReady', ->
-    $scope.player.createSocket()
+    unless $scope.playerSocket
+      $scope.playerSocket = $scope.createSocket()
+    else
+      $scope.playerSocket.socket.reconnect()
 
   $(document).on 'keydown', (e) ->
     unless $scope.data.searchFocus
@@ -109,36 +124,17 @@ class Player
     if localStorage.volume
       @volume = parseInt localStorage.volume, 10
     @scope.mainSocket.emit 'spawnPlayer'
-    @socket = @scope.playerSocket
-
-  createSocket: ->
-    unless @socket.socket
-      @scope.playerSocket = io.connect 'http://localhost:3001'
-      @socket = @scope.playerSocket
-    else
-      @socket.socket.reconnect()
-
-    @socket.on 'connect', =>
-      if @entity.playing
-        @socket.emit 'play', @entity
-    @socket.on 'playerObj', (obj) =>
-      _.extend @, obj
-    @socket.on 'progress', (timestamp) =>
-      @progress = timestamp / @duration * 100
-      @scope.safeApply()
-    @socket.on 'end', =>
-      if @scope.repeat is 'one'
-        @scope.play @entity
-      else
-        @next()
 
   stop: ->
-    @socket.emit 'stop'
-    @socket.disconnect()
+    @scope.playerSocket.disconnect()
     delete @entity.playing
 
   seek: (timestamp) ->
-    @socket.emit 'seek', timestamp
+    @scope.playerSocket.emit 'seek', timestamp
+
+  play: ->
+    if @entity.playing
+      @scope.playerSocket.emit 'play', @entity
 
   previous: ->
     if @currentTime > 1000
@@ -146,8 +142,19 @@ class Player
     else
       @scope.play @scope.getAdjacentTrack(-1), @playing
 
+  setProgress: (currentTime) ->
+    @currentTime = currentTime
+    @progress = currentTime / @duration * 100
+    @scope.safeApply()
+
   next: ->
     @scope.play @scope.getAdjacentTrack(1), @playing
+
+  end: ->
+    if @scope.repeat is 'one'
+      @scope.play @entity
+    else
+      @next()
 
   increaseVolume: (amount = 10) ->
     @volume += amount
