@@ -65,4 +65,4 @@ app.directive 'slider', ->
 
     $scope.$watch 'player.currentTime', (n, o) ->
       if n isnt o and not sliding
-        el.val n
+        el.val n or 0
