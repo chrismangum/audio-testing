@@ -144,7 +144,6 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
     _.extend track, _.omit data, 'filePath'
     checkArtist track
     checkGenre track
-    $scope.checkRoute()
     $scope.safeApply()
 
   $scope.mainSocket.on 'json', (data) ->
