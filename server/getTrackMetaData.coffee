@@ -55,10 +55,22 @@ processData = (track, data, callback) ->
 
 processDataOnce = _.once processData
 
-getTrackMetaData = (track, callback) ->
+readStream = (track, callback) ->
+  stream = fs.createReadStream track,
+    start: 0, end: 9999
+  stream.on 'data', (data) ->
+    processDataOnce track, data, callback
+
+readEntireFile = (track, callback) ->
   fs.readFile track, (err, data) ->
     throw err if err
     processData track, data, callback
+
+getTrackMetaData = (track, callback) ->
+  if path.extname(track) is '.flac'
+    readStream track, callback
+  else
+    readEntireFile track, callback
 
 async.map process.argv.slice(2), getTrackMetaData,
   (err, result) ->
