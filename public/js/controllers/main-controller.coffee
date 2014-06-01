@@ -58,12 +58,12 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
         $scope.activateItem _.findWhere($scope.data[view],
           name: item[type]
         ), type, item
-      else if $scope.data.genres.length
+      else if $scope.data[view].length
         $scope.activateItem $scope.data[view][0], type, false
     else
+      $scope.unfilterData()
       if $scope.gridOptions.selectedItems.length
         songToSelect = $scope.gridOptions.selectedItems[0]
-      $scope.unfilterData()
 
   createArtist = (track) ->
     artist =
