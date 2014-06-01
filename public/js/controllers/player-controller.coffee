@@ -134,7 +134,7 @@ class Player
 
   play: ->
     if @entity.playing
-      @scope.playerSocket.emit 'play', @entity
+      @scope.playerSocket.emit 'play', @entity, @volume
 
   previous: ->
     if @currentTime > 1000
@@ -156,13 +156,18 @@ class Player
     else
       @next()
 
+  setVolume: (percent = @volume) ->
+    @scope.playerSocket.emit 'volume', percent
+
   increaseVolume: (amount = 10) ->
     @volume += amount
     @volume = 100 if @volume > 100
+    @setVolume()
 
   decreaseVolume: (amount = 10) ->
     @volume -= amount
     @volume = 0 if @volume < 0
+    @setVolume()
 
   seekToPercent: (percent) ->
     @seek percent / 100 * @duration

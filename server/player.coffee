@@ -18,11 +18,12 @@ track = {}
 io.set 'log level', 1
 io.on 'connection', (socket) ->
 
-  socket.on 'play', (entity) ->
+  socket.on 'play', (entity, volume) ->
     track = entity
     fs.readFile '../target/' + track.filePath, (err, data) ->
       throw err if err
       player = AV.Player.fromBuffer new Uint8Array data
+      player.volume = volume
       player.play()
 
       player.on 'duration', (time) ->
@@ -33,6 +34,9 @@ io.on 'connection', (socket) ->
 
       player.on 'end', ->
         socket.emit 'end'
+
+  socket.on 'volume', (percent) ->
+    player.volume = percent
 
   socket.on 'seek', (timestamp) ->
     player.seek timestamp
