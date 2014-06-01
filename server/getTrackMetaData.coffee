@@ -53,24 +53,18 @@ processData = (track, data, callback) ->
       'coverArtURL'
     ]
 
-processDataOnce = _.once processData
-
-readStream = (track, callback) ->
-  stream = fs.createReadStream track,
-    start: 0, end: 9999
-  stream.on 'data', (data) ->
-    processDataOnce track, data, callback
-
-readEntireFile = (track, callback) ->
-  fs.readFile track, (err, data) ->
-    throw err if err
-    processData track, data, callback
-
 getTrackMetaData = (track, callback) ->
-  if path.extname(track) is '.flac'
-    readStream track, callback
-  else
-    readEntireFile track, callback
+  fileData = null
+  stream = fs.createReadStream track,
+    #read first 500KB of file
+    start: 0, end: 511999
+  stream.on 'data', (data) ->
+    unless fileData
+      fileData = data
+    else
+      fileData = Buffer.concat [fileData, data]
+  stream.on 'end', ->
+    processData track, fileData, callback
 
 async.map process.argv.slice(2), getTrackMetaData,
   (err, result) ->
