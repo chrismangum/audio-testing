@@ -157,6 +157,7 @@ class Player
       @next()
 
   setVolume: (percent = @volume) ->
+    localStorage.volume = percent
     @scope.playerSocket.emit 'volume', percent
 
   increaseVolume: (amount = 10) ->

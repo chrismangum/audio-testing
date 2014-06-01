@@ -18,7 +18,6 @@ app.directive 'volumeSlider', ->
     setVolume = ->
       $scope.volume = 100 - $(@).val()
       $scope.player?.setVolume $scope.volume
-      localStorage.volume = $scope.volume
       $scope.safeApply()
 
     slider = el
