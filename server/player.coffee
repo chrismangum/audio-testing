@@ -18,7 +18,7 @@ track = {}
 io.set 'log level', 1
 io.on 'connection', (socket) ->
 
-  socket.on 'play', (entity, volume) ->
+  socket.on 'play', (entity, volume = 100) ->
     track = entity
     fs.readFile '../target/' + track.filePath, (err, data) ->
       throw err if err
