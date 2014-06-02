@@ -161,7 +161,9 @@ class Target
       fs.symlinkSync target, '../target'
 
 io.on 'connection', (socket) ->
-  player = null
+  player =
+    exited: true
+  spawnQueue = false
 
   unless target?
     target = new Target()
@@ -170,11 +172,23 @@ io.on 'connection', (socket) ->
   else
     json.check socket
 
-  socket.on 'spawnPlayer', ->
+  spawnPlayer = ->
+    player.exited = false
     player = cp.fork './player.js'
     player.on 'message', (m) ->
       if m.ready
         socket.emit 'playerReady'
+    player.on 'exit', ->
+      player.exited = true
+      if spawnQueue
+        spawnQueue = false
+        spawnPlayer()
+
+  socket.on 'spawnPlayer', ->
+    if player.exited
+      spawnPlayer()
+    else
+      spawnQueue = true
 
   socket.on 'disconnect', ->
     socket.disconnected = true

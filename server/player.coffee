@@ -37,7 +37,7 @@ io.on 'connection', (socket) ->
     player.seek timestamp
 
   socket.on 'disconnect', ->
-    player.stop()
+    player.stop?()
     process.exit 0
 
 process.send

@@ -66,6 +66,7 @@ app.controller 'player', ['$scope', ($scope) ->
     if track isnt false
       track ?= getSelectedTrack()
       track.playing = play
+      $scope.mainSocket.emit 'spawnPlayer'
       $scope.player = new Player track, $scope
       $scope.data.nowPlaying = track
     $scope.safeApply()
@@ -123,7 +124,6 @@ class Player
   constructor: (@entity, @scope) ->
     if localStorage.volume
       @volume = parseInt localStorage.volume, 10
-    @scope.mainSocket.emit 'spawnPlayer'
 
   stop: ->
     @scope.playerSocket.disconnect()
