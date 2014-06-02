@@ -89,7 +89,7 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
         </div>'
       headerCellTemplate:
         '<div class="ngHeaderSortColumn {{col.headerClass}}" ng-style="{\'cursor\': col.cursor}" ng-class="{ \'ngSorted\': !noSortVisible }">
-          <div ng-click="col.sort($event)" ng-class="\'colt\' + col.index" class="ngHeaderText">{{col.displayName}}</div>
+          <div ng-click="customSort($event, col, columns)" ng-class="\'colt\' + col.index" class="ngHeaderText">{{col.displayName}}</div>
           <div class="ngSortButtonDown" ng-show="col.showSortButtonDown()"></div>
           <div class="ngSortButtonUp" ng-show="col.showSortButtonUp()"></div>
           <div ng-class="{ ngPinnedIcon: col.pinned, ngUnPinnedIcon: !col.pinned }" ng-click="togglePin(col)" ng-show="col.pinnable"></div>
@@ -184,7 +184,7 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
     scrollToIndex index
 
   selectOneToggle = (track) ->
-    selected = $scope.gridOptions.selectedItems.indexOf(track) isnt -1
+    selected = _.contains $scope.gridOptions.selectedItems, track
     $scope.gridOptions.selectRow getTrackPosition(track), not selected
 
   getTrackPosition = (track) ->
@@ -237,6 +237,26 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
 
   $scope.$on 'scrollToTrack', (e, track) ->
     scrollToTrack track
+
+  $scope.customSort = ($event, col, columns) ->
+    $event.shiftKey = false
+    col.sort $event
+    shiftEvent = _.clone $event
+    shiftEvent.shiftKey = true
+    switch col.field
+      when 'artist'
+        _.find(columns, field: 'album').sort shiftEvent
+        _.find(columns, field: 'trackNumber').sort shiftEvent
+      when 'album'
+        _.find(columns, field: 'trackNumber').sort shiftEvent
+      when 'genre'
+        _.find(columns, field: 'artist').sort shiftEvent
+        _.find(columns, field: 'album').sort shiftEvent
+        _.find(columns, field: 'trackNumber').sort shiftEvent
+      when 'year'
+        _.find(columns, field: 'artist').sort shiftEvent
+        _.find(columns, field: 'album').sort shiftEvent
+        _.find(columns, field: 'trackNumber').sort shiftEvent
 
   $(document).on 'keydown', (e) ->
     unless $scope.data.searchFocus

@@ -61,7 +61,7 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', ($scope, $routePar
       type = view[0...-1]
       if $scope.gridOptions.selectedItems.length
         item = $scope.gridOptions.selectedItems[0]
-        $scope.activateItem _.findWhere($scope.data[view],
+        $scope.activateItem _.find($scope.data[view],
           name: item[type]
         ), type, item
       else if $scope.data[view].length
@@ -97,7 +97,7 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', ($scope, $routePar
     genre
 
   checkAlbum = (artist, track) ->
-    unless album = _.findWhere artist.albums, {name: track.album}
+    unless album = _.find artist.albums, {name: track.album}
       artist.albums.push createAlbum track
     else
       album.songs.push track
@@ -105,14 +105,14 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', ($scope, $routePar
         album.coverArtURL = track.coverArtURL or false
 
   checkArtist = (track) ->
-    unless artist = _.findWhere $scope.data.artists, {name: track.artist}
+    unless artist = _.find $scope.data.artists, {name: track.artist}
       createArtist track
     else
       artist.songs.push track
       checkAlbum artist, track
 
   checkGenre = (track) ->
-    unless genre = _.findWhere $scope.data.genres, {name: track.genre}
+    unless genre = _.find $scope.data.genres, {name: track.genre}
       createGenre track
     else
       genre.songs.push track

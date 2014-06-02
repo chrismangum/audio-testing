@@ -40,7 +40,7 @@ class Scanner
     @ftypes[mode.toString(8).slice 0, 2]
 
   hasValidExt: (fileName) ->
-    @validExtensions.indexOf(path.extname fileName) isnt -1
+    _.contains @validExtensions, path.extname fileName
 
   getTotalSize: (tracks) ->
     totalSize = 0
