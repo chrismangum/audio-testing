@@ -89,7 +89,7 @@ app.controller 'player', ['$scope', ($scope) ->
     unless $scope.playerSocket
       $scope.playerSocket = $scope.createSocket()
     else
-      $scope.playerSocket.socket.reconnect()
+      $scope.playerSocket.connect()
 
   $(document).on 'keydown', (e) ->
     unless $scope.data.searchFocus

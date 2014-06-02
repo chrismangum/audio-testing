@@ -1,9 +1,6 @@
-app = require('express')()
-server = require('http').createServer app
-io = require('socket.io').listen server
 fs = require 'fs'
-
-server.listen 3001
+io = require('socket.io')()
+io.listen 3001
 
 AV = require '../public/js/nodeAurora.js'
 AV.require.apply null, [
@@ -15,14 +12,12 @@ AV.require.apply null, [
 player = {}
 track = {}
 
-io.set 'log level', 1
 io.on 'connection', (socket) ->
-
   socket.on 'play', (entity, volume = 100) ->
     track = entity
     fs.readFile '../target/' + track.filePath, (err, data) ->
       throw err if err
-      player = AV.Player.fromBuffer new Uint8Array data
+      player = AV.Player.fromBuffer data
       player.volume = volume
       player.play()
 

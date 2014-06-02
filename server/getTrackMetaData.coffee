@@ -32,7 +32,7 @@ stripOutNullChars = (data) ->
       data[key] = val.replace /\u0000/g, ''
 
 processData = (track, data, callback) ->
-  player = AV.Player.fromBuffer new Uint8Array data
+  player = AV.Player.fromBuffer data
   player.preload()
   player.on 'metadata', (data) ->
     stripOutNullChars data

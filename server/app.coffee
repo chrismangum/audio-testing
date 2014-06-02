@@ -6,7 +6,7 @@ app = express()
 async = require 'async'
 cp = require 'child_process'
 server = require('http').createServer app
-io = require('socket.io').listen server
+io = require('socket.io') server
 readline = require 'readline'
 
 target = null
@@ -160,8 +160,7 @@ class Target
       @exists = true
       fs.symlinkSync target, '../target'
 
-io.set 'log level', 1
-io.sockets.on 'connection', (socket) ->
+io.on 'connection', (socket) ->
   player = null
 
   unless target?
