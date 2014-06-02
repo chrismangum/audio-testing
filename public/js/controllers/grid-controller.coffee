@@ -73,6 +73,7 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
         </div>'
     artist:
       field: 'artist'
+      displayName: 'Artist (Albums A-Z)'
     album:
       field: 'album'
     genre:
@@ -240,23 +241,36 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
 
   $scope.customSort = ($event, col, columns) ->
     $event.shiftKey = false
-    col.sort $event
     shiftEvent = _.clone $event
     shiftEvent.shiftKey = true
     switch col.field
       when 'artist'
-        _.find(columns, field: 'album').sort shiftEvent
-        _.find(columns, field: 'trackNumber').sort shiftEvent
+        col.sortDirection = 'desc'
+        col.sort $event
+        if col.displayName is 'Artist (Albums A-Z)'
+          col.displayName = 'Artist (Albums by Year)'
+          _.find(columns, field: 'year').sort shiftEvent
+          _.find(columns, field: 'album').sort shiftEvent
+          _.find(columns, field: 'trackNumber').sort shiftEvent
+        else
+          col.displayName = 'Artist (Albums A-Z)'
+          _.find(columns, field: 'album').sort shiftEvent
+          _.find(columns, field: 'trackNumber').sort shiftEvent
       when 'album'
+        col.sort $event
         _.find(columns, field: 'trackNumber').sort shiftEvent
       when 'genre'
+        col.sort $event
         _.find(columns, field: 'artist').sort shiftEvent
         _.find(columns, field: 'album').sort shiftEvent
         _.find(columns, field: 'trackNumber').sort shiftEvent
       when 'year'
+        col.sort $event
         _.find(columns, field: 'artist').sort shiftEvent
         _.find(columns, field: 'album').sort shiftEvent
         _.find(columns, field: 'trackNumber').sort shiftEvent
+      else
+        col.sort $event
 
   $(document).on 'keydown', (e) ->
     unless $scope.data.searchFocus
