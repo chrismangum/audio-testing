@@ -173,8 +173,8 @@ io.on 'connection', (socket) ->
     json.check socket
 
   spawnPlayer = ->
-    player.exited = false
     player = cp.fork './player.js'
+    player.exited = false
     player.on 'message', (m) ->
       if m.ready
         socket.emit 'playerReady'
