@@ -20,18 +20,6 @@
     &::-webkit-input-placeholder { color: $color; } 
   }
 
-  // Row Machine - http://codepen.io/chriscoyier/pen/qjazu
-  @mixin rowMachine($numPerRow, $margin) {
-    width: ((100% - (($numPerRow - 1) * $margin)) / $numPerRow);
-    &:nth-child(n) {
-      margin-right: $margin;
-      margin-bottom: $margin;
-    }
-    &:nth-child(#{$numPerRow}n) {
-      margin-right: 0;
-    }
-  }
-
   // Custom Scrollbar
   @mixin scrollbar($size, $scrollbar-background, $scrollbar-thumb-background) {
     &::-webkit-scrollbar {
