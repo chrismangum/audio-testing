@@ -4,9 +4,9 @@ fs = require 'fs'
 _ = require 'lodash'
 app = express()
 async = require 'async'
-exec = require('child_process').exec
+cp = require 'child_process'
 server = require('http').createServer app
-io = require('socket.io').listen server
+io = require('socket.io') server
 readline = require 'readline'
 
 target = null
@@ -121,7 +121,7 @@ class Json
     else if @json.tracks[track].scanned
       callback()
     else
-      exec 'node ./getTrackMetaData.js "' + track + '"',
+      cp.exec 'node ./getTrackMetaData.js "' + track + '"',
         (err, stdout, stderr) =>
           if err
             console.log stderr
@@ -160,9 +160,9 @@ class Target
       @exists = true
       fs.symlinkSync target, '../target'
 
+io.on 'connection', (socket) ->
+  player = null
 
-io.set 'log level', 1
-io.sockets.on 'connection', (socket) ->
   unless target?
     target = new Target()
   unless json?
@@ -170,6 +170,13 @@ io.sockets.on 'connection', (socket) ->
   else
     json.check socket
 
+  socket.on 'spawnPlayer', ->
+    player = cp.fork './player.js'
+    player.on 'message', (m) ->
+      if m.ready
+        socket.emit 'playerReady'
+
   socket.on 'disconnect', ->
     socket.disconnected = true
+
 

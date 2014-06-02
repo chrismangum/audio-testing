@@ -1,5 +1,5 @@
 
-app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
+app.controller 'main', ['$scope', '$routeParams', '$timeout', ($scope, $routeParams, $timeout) ->
   songToSelect = false
   $scope.params = $routeParams
   $scope.activeItems = {}
@@ -22,14 +22,20 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
     $scope.activeItems[type] = item
     $scope.filterData item.songs
 
-  $scope.$on 'ngGridEventSorted', (e, sortInfo) ->
-    if songToSelect
-      if _.isObject songToSelect
-        $scope.selectTrack songToSelect
-      else
-        $scope.gridOptions.selectAll false
-        $scope.gridOptions.selectRow 0, true
-      songToSelect = false
+  $scope.$on 'ngGridEventSorted', do ->
+    throttle = null
+    (e, sortInfo) ->
+      if throttle
+        $timeout.cancel throttle
+      throttle = $timeout (->
+        if songToSelect
+          if _.isObject songToSelect
+            $scope.selectTrack songToSelect
+          else
+            $scope.gridOptions.selectAll false
+            $scope.gridOptions.selectRow 0, true
+          songToSelect = false
+      ), 250
 
   $scope.filterData = (songs) ->
     $scope.gridOptions.gridData = songs
@@ -58,12 +64,12 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
         $scope.activateItem _.findWhere($scope.data[view],
           name: item[type]
         ), type, item
-      else if $scope.data.genres.length
+      else if $scope.data[view].length
         $scope.activateItem $scope.data[view][0], type, false
     else
+      $scope.unfilterData()
       if $scope.gridOptions.selectedItems.length
         songToSelect = $scope.gridOptions.selectedItems[0]
-      $scope.unfilterData()
 
   createArtist = (track) ->
     artist =
@@ -137,17 +143,16 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
         name: genreName
         songs: songs
 
-  socket = io.connect location.origin
+  $scope.mainSocket = io.connect location.origin
 
-  socket.on 'metadata', (data) ->
+  $scope.mainSocket.on 'metadata', (data) ->
     track = $scope.data.tracks[data.filePath]
     _.extend track, _.omit data, 'filePath'
     checkArtist track
     checkGenre track
-    $scope.checkRoute()
     $scope.safeApply()
 
-  socket.on 'json', (data) ->
+  $scope.mainSocket.on 'json', (data) ->
     _.extend $scope.data, data
     parseData data
     $scope.checkRoute()

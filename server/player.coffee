@@ -1,4 +1,6 @@
 fs = require 'fs'
+io = require('socket.io')()
+io.listen 3001
 
 AV = require '../public/js/nodeAurora.js'
 AV.require.apply null, [
@@ -8,13 +10,35 @@ AV.require.apply null, [
 ]
 
 player = {}
-fs.readFile process.argv[2], (err, data) ->
-  throw err if err
-  player = AV.Player.fromBuffer new Uint8Array data
-  player.play()
-  #setTimeout (->
-    #player.pause()
-  #), 5000
+track = {}
 
-process.on 'message', (m) ->
-  player?[m.action]()
+io.on 'connection', (socket) ->
+  socket.on 'play', (entity, volume = 100) ->
+    track = entity
+    fs.readFile '../target/' + track.filePath, (err, data) ->
+      throw err if err
+      player = AV.Player.fromBuffer data
+      player.volume = volume
+      player.play()
+
+      player.on 'duration', (time) ->
+        socket.emit 'duration', time
+
+      player.on 'progress', (currentTime) ->
+        socket.emit 'progress', currentTime
+
+      player.on 'end', ->
+        socket.emit 'end'
+
+  socket.on 'volume', (percent) ->
+    player.volume = percent
+
+  socket.on 'seek', (timestamp) ->
+    player.seek timestamp
+
+  socket.on 'disconnect', ->
+    player.stop()
+    process.exit 0
+
+process.send
+  ready: true

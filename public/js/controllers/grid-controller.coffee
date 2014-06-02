@@ -1,5 +1,19 @@
 
-app.controller 'grid', ['$scope', ($scope) ->
+app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
+  $scope.search = {}
+
+  $scope.setAlbumSort = (sort) ->
+    if sort is 'Artist'
+      $scope.albumSort =
+        name: 'Artist'
+        value: ['artist', 'name']
+    else if sort is 'Title'
+      $scope.albumSort =
+        name: 'Title'
+        value: 'name'
+
+  #default value:
+  $scope.setAlbumSort 'Artist'
 
   updateLocalStorage = (prefs) ->
     localStorage.columnPrefs = JSON.stringify prefs or $scope.columnPrefs
@@ -30,16 +44,21 @@ app.controller 'grid', ['$scope', ($scope) ->
 
   $scope.columnPrefs = JSON.parse localStorage.columnPrefs
 
-  $scope.search = {}
-  $scope.$watch 'search.searchText', (n, o) ->
+  $scope.$watch 'search.grid', (n, o) ->
     if n isnt o
       $scope.gridOptions.filterOptions.filterText = n
 
   #put a throttle around this:
-  $scope.$on 'ngGridEventSorted', (e, sortInfo) ->
-    $scope.columnPrefs.sortInfo =  _.pick sortInfo, 'fields', 'directions'
-    updateLocalStorage()
-    $scope.data.sortedData = $scope.gridOptions.sortedData
+  $scope.$on 'ngGridEventSorted', do ->
+    throttle = null
+    (e, sortInfo) ->
+      if throttle
+        $timeout.cancel throttle
+      throttle = $timeout (->
+        $scope.columnPrefs.sortInfo =  _.pick sortInfo, 'fields', 'directions'
+        updateLocalStorage()
+        $scope.data.sortedData = $scope.gridOptions.sortedData
+      ), 250
 
   availableColumns =
     trackNumber:

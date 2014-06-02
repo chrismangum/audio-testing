@@ -1,6 +1,6 @@
 .view-sidebar
   ul.view-sidebar-list
-    li.item(ng-repeat="genre in data.genres", ng-click="activateItem(genre, 'genre')", ng-class="{active: genre.active}")
+    li.item(ng-repeat="genre in data.genres | orderBy:name", ng-click="activateItem(genre, 'genre')", ng-class="{active: genre.active}")
       a
         .item-info
           .item-info-name {{genre.name}}

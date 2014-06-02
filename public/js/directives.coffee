@@ -17,8 +17,7 @@ app.directive 'volumeSlider', ->
 
     setVolume = ->
       $scope.volume = 100 - $(@).val()
-      $scope.player?.volume = $scope.volume
-      localStorage.volume = $scope.volume
+      $scope.player?.setVolume $scope.volume
       $scope.safeApply()
 
     slider = el
@@ -65,4 +64,4 @@ app.directive 'slider', ->
 
     $scope.$watch 'player.currentTime', (n, o) ->
       if n isnt o and not sliding
-        el.val n
+        el.val n or 0
