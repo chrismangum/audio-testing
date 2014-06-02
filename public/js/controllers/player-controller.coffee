@@ -1,5 +1,5 @@
 
-app.controller 'player', ['$scope', ($scope) ->
+app.controller 'player', ['$scope', '$timeout', ($scope, $timeout) ->
   $scope.progress = 0
   $scope.player = null
   $scope.repeat = false
@@ -60,16 +60,27 @@ app.controller 'player', ['$scope', ($scope) ->
     $scope.scrollToTrack track
     track
 
+  spawnPlayer = do ->
+    throttle = null
+    ->
+      if throttle
+        $timeout.cancel throttle
+      throttle = $timeout (->
+        $scope.mainSocket.emit 'spawnPlayer'
+        throttle = null
+      ), 500
+
   $scope.play = (track, play = true) ->
-    if $scope.player?.entity.playing
-      $scope.player.stop()
-    if track isnt false
-      track ?= getSelectedTrack()
-      track.playing = play
-      $scope.mainSocket.emit 'spawnPlayer'
-      $scope.player = new Player track, $scope
-      $scope.data.nowPlaying = track
-    $scope.safeApply()
+    unless $scope.preventPlay
+      if $scope.player?.entity.playing
+        $scope.player.stop()
+      if track isnt false
+        track ?= getSelectedTrack()
+        track.playing = play
+        spawnPlayer()
+        $scope.player = new Player track, $scope
+        $scope.data.nowPlaying = track
+      $scope.safeApply()
 
   $scope.$on 'play', (e, track) ->
     $scope.play track
@@ -79,6 +90,7 @@ app.controller 'player', ['$scope', ($scope) ->
     socket.on 'connect', ->
       $scope.player.play socket
     socket.on 'duration', (duration) ->
+      $scope.preventPlay = false
       $scope.player.duration = duration
     socket.on 'progress', (currentTime) ->
       $scope.player.setProgress currentTime
@@ -87,6 +99,7 @@ app.controller 'player', ['$scope', ($scope) ->
     socket
 
   $scope.mainSocket.on 'playerReady', ->
+    $scope.preventPlay = true
     unless $scope.playerSocket
       $scope.playerSocket = $scope.createSocket()
     else
