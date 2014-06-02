@@ -1,5 +1,5 @@
 
-app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
+app.controller 'main', ['$scope', '$routeParams', '$timeout', ($scope, $routeParams, $timeout) ->
   songToSelect = false
   $scope.params = $routeParams
   $scope.activeItems = {}
@@ -22,14 +22,20 @@ app.controller 'main', ['$scope', '$routeParams', ($scope, $routeParams) ->
     $scope.activeItems[type] = item
     $scope.filterData item.songs
 
-  $scope.$on 'ngGridEventSorted', (e, sortInfo) ->
-    if songToSelect
-      if _.isObject songToSelect
-        $scope.selectTrack songToSelect
-      else
-        $scope.gridOptions.selectAll false
-        $scope.gridOptions.selectRow 0, true
-      songToSelect = false
+  $scope.$on 'ngGridEventSorted', do ->
+    throttle = null
+    (e, sortInfo) ->
+      if throttle
+        $timeout.cancel throttle
+      throttle = $timeout (->
+        if songToSelect
+          if _.isObject songToSelect
+            $scope.selectTrack songToSelect
+          else
+            $scope.gridOptions.selectAll false
+            $scope.gridOptions.selectRow 0, true
+          songToSelect = false
+      ), 250
 
   $scope.filterData = (songs) ->
     $scope.gridOptions.gridData = songs
