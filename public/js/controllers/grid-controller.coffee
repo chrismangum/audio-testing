@@ -239,38 +239,38 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
   $scope.$on 'scrollToTrack', (e, track) ->
     scrollToTrack track
 
-  $scope.customSort = ($event, col, columns) ->
-    $event.shiftKey = false
-    shiftEvent = _.clone $event
-    shiftEvent.shiftKey = true
+  sortColumns = (e, fields) ->
+    e = _.clone e
+    e.shiftKey = true
+    _.forEach $scope.columns, (col) ->
+      if _.contains fields, col.field
+        col.sort e
+        true
+
+  $scope.customSort = (e, col, columns) ->
+    $scope.columns = columns
+    e.shiftKey = false
     switch col.field
       when 'artist'
         col.sortDirection = 'desc'
-        col.sort $event
+        col.sort e
         if col.displayName is 'Artist (Albums A-Z)'
           col.displayName = 'Artist (Albums by Year)'
-          _.find(columns, field: 'year').sort shiftEvent
-          _.find(columns, field: 'album').sort shiftEvent
-          _.find(columns, field: 'trackNumber').sort shiftEvent
+          sortColumns e, ['year', 'album', 'trackNumber']
         else
           col.displayName = 'Artist (Albums A-Z)'
-          _.find(columns, field: 'album').sort shiftEvent
-          _.find(columns, field: 'trackNumber').sort shiftEvent
+          sortColumns e, ['album', 'trackNumber']
       when 'album'
-        col.sort $event
-        _.find(columns, field: 'trackNumber').sort shiftEvent
+        col.sort e
+        sortColumns e, ['trackNumber']
       when 'genre'
-        col.sort $event
-        _.find(columns, field: 'artist').sort shiftEvent
-        _.find(columns, field: 'album').sort shiftEvent
-        _.find(columns, field: 'trackNumber').sort shiftEvent
+        col.sort e
+        sortColumns e, ['artist', 'album', 'trackNumber']
       when 'year'
-        col.sort $event
-        _.find(columns, field: 'artist').sort shiftEvent
-        _.find(columns, field: 'album').sort shiftEvent
-        _.find(columns, field: 'trackNumber').sort shiftEvent
+        col.sort e
+        sortColumns e, ['artist', 'album', 'trackNumber']
       else
-        col.sort $event
+        col.sort e
 
   $(document).on 'keydown', (e) ->
     unless $scope.data.searchFocus
