@@ -2,19 +2,6 @@
 app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
   $scope.search = {}
 
-  $scope.setAlbumSort = (sort) ->
-    if sort is 'Artist'
-      $scope.albumSort =
-        name: 'Artist'
-        value: ['artist', 'name']
-    else if sort is 'Title'
-      $scope.albumSort =
-        name: 'Title'
-        value: 'name'
-
-  #default value:
-  $scope.setAlbumSort 'Artist'
-
   updateLocalStorage = (prefs) ->
     localStorage.columnPrefs = JSON.stringify prefs or $scope.columnPrefs
 
