@@ -60,26 +60,14 @@ app.controller 'player', ['$scope', '$timeout', ($scope, $timeout) ->
     $scope.scrollToTrack track
     track
 
-  spawnPlayer = do ->
-    throttle = null
-    ->
-      if throttle
-        $timeout.cancel throttle
-      throttle = $timeout (->
-        $scope.mainSocket.emit 'spawnPlayer'
-        throttle = null
-      ), 500
-
   $scope.play = (track, play = true) ->
-    unless $scope.preventPlay
       if $scope.player?.entity.playing
         $scope.player.stop()
       if track isnt false
         track ?= getSelectedTrack()
         track.playing = play
-        spawnPlayer()
+        $scope.mainSocket.emit 'spawnPlayer'
         $scope.player = new Player track, $scope
-        $scope.data.nowPlaying = track
       $scope.safeApply()
 
   $scope.$on 'play', (e, track) ->
@@ -89,9 +77,10 @@ app.controller 'player', ['$scope', '$timeout', ($scope, $timeout) ->
     socket = io.connect 'http://localhost:3001'
     socket.on 'connect', ->
       $scope.player.play socket
-    socket.on 'duration', (duration) ->
+    socket.on 'duration', (duration, filePath) ->
       $scope.preventPlay = false
       $scope.player.duration = duration
+      $scope.player.checkSong filePath
     socket.on 'progress', (currentTime) ->
       $scope.player.setProgress currentTime
     socket.on 'end', ->
@@ -137,9 +126,11 @@ class Player
   constructor: (@entity, @scope) ->
     if localStorage.volume
       @volume = parseInt localStorage.volume, 10
+    @scope.data.nowPlaying = @entity
 
   stop: ->
-    @scope.playerSocket.disconnect()
+    unless @scope.preventPlay
+      @scope.playerSocket.disconnect()
     delete @entity.playing
 
   seek: (timestamp) ->
@@ -159,6 +150,10 @@ class Player
     @currentTime = currentTime
     @progress = currentTime / @duration * 100
     @scope.safeApply()
+
+  checkSong: (filePath) ->
+    if filePath isnt @entity.filePath
+      @play @entity
 
   next: ->
     @scope.play @scope.getAdjacentTrack(1), @playing

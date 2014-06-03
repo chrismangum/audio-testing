@@ -17,12 +17,13 @@ io.on 'connection', (socket) ->
     track = entity
     fs.readFile '../target/' + track.filePath, (err, data) ->
       throw err if err
+      player.stop?()
       player = AV.Player.fromBuffer data
       player.volume = volume
       player.play()
 
       player.on 'duration', (time) ->
-        socket.emit 'duration', time
+        socket.emit 'duration', time, track.filePath
 
       player.on 'progress', (currentTime) ->
         socket.emit 'progress', currentTime
