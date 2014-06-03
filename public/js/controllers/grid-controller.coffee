@@ -82,7 +82,7 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
       field: 'year'
 
   #set cellTemplate default for all columns:
-  _.each availableColumns, (col) ->
+  _.forEach availableColumns, (col) ->
     _.defaults col,
       cellTemplate:
         '<div class="ngCellText" ng-class="col.colIndex()" ng-dblclick="play(row.entity)">
@@ -98,7 +98,7 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
         <div ng-show="col.resizable" class="ngHeaderGrip" ng-click="col.gripClick($event)" ng-mousedown="col.gripOnMouseDown($event)"></div>'
 
 
-  _.extend $scope.gridOptions,
+  _.assign $scope.gridOptions,
     columnDefs: []
     data: 'gridOptions.gridData'
     filterOptions: {}
@@ -117,12 +117,12 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
     sortInfo: $scope.columnPrefs.sortInfo
 
   #set saved column order / visibility
-  _.each $scope.columnPrefs.order, (val, i) ->
+  _.forEach $scope.columnPrefs.order, (val, i) ->
     availableColumns[val].visible = $scope.columnPrefs.visibility[val]
     $scope.gridOptions.columnDefs[i] = availableColumns[val]
 
   #set saved column widths
-  _.each $scope.columnPrefs.widths, (val, key) ->
+  _.forEach $scope.columnPrefs.widths, (val, key) ->
     availableColumns[key].width = val
 
   $scope.$on 'newColumnWidth', (e, col) ->
@@ -132,7 +132,7 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
 
   $scope.$on 'newColumnOrder', (e, columns) ->
     order = _.compact _.pluck columns, 'field'
-    _.each order, (val, i) ->
+    _.forEach order, (val, i) ->
       $scope.gridOptions.columnDefs[i] = availableColumns[val]
     $scope.columnPrefs.order = order
     updateLocalStorage()
@@ -204,7 +204,7 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
     else
       range = _.range startIndex, endIndex - 1, -1
     $scope.gridOptions.selectAll false
-    _.each range, (n) ->
+    _.forEach range, (n) ->
       $scope.gridOptions.selectRow n, true
 
   $scope.selectRow = (e, track) ->

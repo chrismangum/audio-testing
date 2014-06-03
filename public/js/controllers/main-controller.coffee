@@ -147,13 +147,13 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', ($scope, $routePar
 
   $scope.mainSocket.on 'metadata', (data) ->
     track = $scope.data.tracks[data.filePath]
-    _.extend track, _.omit data, 'filePath'
+    _.assign track, _.omit data, 'filePath'
     checkArtist track
     checkGenre track
     $scope.safeApply()
 
   $scope.mainSocket.on 'json', (data) ->
-    _.extend $scope.data, data
+    _.assign $scope.data, data
     parseData data
     $scope.checkRoute()
     $scope.safeApply()
