@@ -5,8 +5,8 @@
   .view-sidebar {
     @extend %flex-column;
     position: relative;
+    width: $view-sidebar-width;
     line-height: 1;
-    width: 280px;
   }
     
 //==========================================================================
@@ -15,24 +15,34 @@
   
   .view-sidebar-header {
     @extend %flex-row;
+    position: absolute;
+    z-index: 2;
     padding: 10px;
-    background: $primary;
-    color: $secondary;
+    width: 100%;
+    height: $view-sidebar-header-height;
+    background: $view-sidebar-header-background;
+    color: $view-sidebar-header-color;
     line-height: 20px;
+    
+    .search {
+      flex: 1;
+
+      &:before {
+        color: $view-sidebar-header-search-color;
+        line-height: 20px;
+      }
+
+      input {
+        @include placeholder($view-sidebar-header-search-color);
+        color: $view-sidebar-header-search-input-color;
+        line-height: 20px;
+      }
+    }
 
     .dropdown-toggle {
       &:after {
         @extend %icon-arrow;
         margin-left: 4px;
-      }
-    }
-
-    .search {
-      line-height: 20px;
-      flex: 1;
-
-      &:before {
-        line-height: 20px;
       }
     }
   }
@@ -44,19 +54,25 @@
   .view-sidebar-list {
     overflow-y: scroll;
     margin: 0;
-    padding: 0;
+    padding: $view-sidebar-header-height 0 0 0;
+    background: $view-sidebar-list-background;
     list-style: none;
     flex: 1;
 
     .item {
       position: relative;
+      background: $view-sidebar-item-background;
 
       &:hover {
-        background: tint($primary-lighter, 60%);
+        background: $view-sidebar-item-background-hover;
       }
 
       &.active {
-        background: tint($primary-lighter, 70%);
+        background: $view-sidebar-item-background-active;
+      }
+
+      &.selected {
+        background: $view-sidebar-item-background-selected;
       }
 
       &:after {
@@ -66,7 +82,7 @@
         right: 10px;
         display: flex;
         height: 100%;
-        color: $primary-lighter;
+        color: $view-sidebar-item-arrow-color;
         font-size: 22px;
         align-items: center;
       }
@@ -93,16 +109,14 @@
     
     .item-info-name {
       @extend %no-wrap;
-      color: $primary;
-      font-weight: bold;
-      font-size: 13px;
-      padding: 1px 0 3px 0;
+      padding-bottom: 4px;
+      color: $view-sidebar-item-info-name-color;
+      font-size: 12px;
     }
 
     .item-info-details {
       @extend %no-wrap;
-      color: $primary-lighter;
-      font-size: 12px;
-      padding-bottom: 2px;
+      color: $view-sidebar-item-info-details-color;
+      font-size: 11px;
     }
   }

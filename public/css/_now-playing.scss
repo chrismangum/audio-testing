@@ -98,8 +98,9 @@
     .track-name {
       @extend %no-wrap;
       color: $now-playing-info-track-name;
-      font-weight: bold;
       font-size: 12px;
+      margin-top: -2px;
+      margin-bottom: 2px;
     }
 
     .track-info {

@@ -18,6 +18,7 @@
   }
 
   body {
+    @extend %font-primary;
     @extend %flex-column;
     position: relative;
     overflow: hidden;
@@ -25,23 +26,17 @@
     min-width: $app-min-width;
     height: 100%;
     font-size: 13px;
-    font-family: "Cabin Condensed", sans-serif;
   }
 
   .container {
     @extend %flex-row;
     flex: 1;
   }
-
-  .main {
-    display: flex;
-    background: tint($primary-lighter, 50%);
-    flex: 1;
-  }
-
+  
   .view {
     @extend %flex-row;
     flex: 1;
+    background: $view-background;
   }
   
   a {
@@ -55,6 +50,7 @@
   }
   
   .button {
+    @extend %font-primary;
     padding: 0;
     border: 0;
     background: none;
@@ -69,15 +65,6 @@
   .hidden {
     display: none !important;
   }
-  
-  %label,
-  .label {
-    position: relative;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 12px;
-    line-height: 14px;
-  }
 
   .search {
     position: relative;
@@ -87,20 +74,17 @@
       position: absolute;
       top: 0;
       left: 0;
-      color: $search-icon-color;
-      font-size: 12px;
+      font-size: 15px;
       line-height: 16px;
     }
 
     input {
-      @include placeholder($search-placeholder-color);
+      @extend %font-primary;
       margin: 0;
-      padding: 0 0 0 18px;
+      padding: 0 0 0 20px;
       width: 100%;
       border: 0;
       background: transparent;
-      color: $search-input-color;
       font-size: 13px;
-      font-family: "Cabin Condensed", sans-serif;
     }
   }

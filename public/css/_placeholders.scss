@@ -2,6 +2,10 @@
 // Placeholders
 //==========================================================================
 
+  %font-primary {
+    font-family: "Helvetica Neue", "Open Sans", sans-serif;
+  }
+
   %flex-row {
     display: flex;
     flex-direction: row;
@@ -50,7 +54,7 @@
 
   %item-image {
     position: relative;
-    background: $primary-dark;
+    background: $missing-artwork-background;
 
     img {
       display: block;

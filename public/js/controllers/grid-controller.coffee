@@ -105,7 +105,7 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
     gridData: []
     enableColumnReordering: true
     enableColumnResize: true
-    headerRowHeight: 32
+    headerRowHeight: 28
     rowHeight: 24
     rowTemplate:
       '<div ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}">

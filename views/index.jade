@@ -51,8 +51,7 @@ html
             .now-playing-info
               .track-name {{ data.nowPlaying.title }}
               .track-info {{ data.nowPlaying.artist }} - {{ data.nowPlaying.album }}
-      .main(ng-controller="grid")
-        ng-view.view
+      ng-view.view(ng-controller="grid")
     .player-bar(ng-controller="player")
       .player-buttons
         button.button(ng-click="player.previous()")

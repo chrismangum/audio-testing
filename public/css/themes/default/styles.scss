@@ -45,7 +45,7 @@
   $secondary-darker: shade($secondary, 40%);
   $secondary-darkest: shade($secondary, 60%);
 
-  $tertiary: $dark-navy;
+  $tertiary: $dark-royal;
   $tertiary-light: tint($tertiary, 60%);
   $tertiary-lighter: tint($tertiary, 80%);
   $tertiary-lightest: tint($tertiary, 100%);
@@ -57,39 +57,48 @@
 //==========================================================================
 // Theme Variables
 //==========================================================================
-  
-  // Toolbar
-  //========================================================================
-  $toolbar-height: 36px;
-  $toolbar-padding: 6px;
-  $toolbar-background: $tertiary;
-
-    // Nav
-    $toolbar-nav-hover: $primary-dark;
-    $toolbar-nav-active: $primary-light;
-    $toolbar-nav-color: $secondary;
-
-    $search-placeholder-color: $primary-lightest;
-    $search-icon-color: $primary-lightest;
-    $search-input-color: $secondary;
-  
 
   // Views
   //========================================================================
-  $view-header-padding: 12px;
+  $view-background: $primary-lightest;
+  
+    // View Sidebar
+    $view-sidebar-width: 280px;
+    
+      // View Sidebar Header
+      $view-sidebar-header-height: 40px;
+      $view-sidebar-header-background: rgba($primary, 0.9);
+      $view-sidebar-header-color: $secondary;
+      $view-sidebar-header-search-color: $primary-lightest;
+      $view-sidebar-header-search-color: $primary-lightest;
+      $view-sidebar-header-search-input-color: $secondary;
 
-  $view-toolbar-color: $primary-light;
-  $view-toolbar-play-button-background: $dark-green;
-  $view-toolbar-padding: 4px;
-  $view-toolbar-height: 24px; // $label-height - $view-toolbar-padding;
+      // View Sidebar List
+      $view-sidebar-list-background: $primary-lightest;
+      $view-sidebar-item-background: $view-sidebar-list-background;
+      $view-sidebar-item-background-hover: tint($primary-lighter, 60%);
+      $view-sidebar-item-background-active: tint($primary-lighter, 70%);
+      $view-sidebar-item-background-selected: tint($primary-lighter, 80%);
+      $view-sidebar-item-arrow-color: $primary-lighter;
+      $view-sidebar-item-info-name-color: $primary;
+      $view-sidebar-item-info-details-color: $primary-lighter;
 
+    // View Main
+    $view-main-header-padding: 12px 12px 6px 12px;
+    $view-main-header-background: tint($view-background, 50%);
+    $view-main-header-color: $primary-light;
+
+    $view-main-header-play-button-background: $dark-green;
+    $view-main-header-search-color: $primary-lighter;
+    $view-main-header-search-color: $primary-lighter;
+    $view-main-header-search-input-color: $primary;
   
   // Grid
   //========================================================================
   $media-list-color: $primary-dark;
   
     // Column Labels
-    $label-height: 32px; // Set equal to "rowHeight" in controllers/grid-controller.coffee
+    $label-height: 28px; // Set equal to "rowHeight" in controllers/grid-controller.coffee
     $label-background: tint($primary-lightest, 50%);
     $label-color: $primary-light;
     $label-color-hover: $primary;
@@ -103,32 +112,24 @@
     $row-selected-background-color: $primary;
     $row-selected-color: $secondary;
     $row-padding: 8px; // Left & right value only (e.g. "12px")
-    $row-font-size: 12px;
-    $row-font-weight: bold;
+    $row-font-size: 11px;
+    $row-font-weight: normal;
 
   
   // Player
   //========================================================================
-  $player-background: $tertiary;
-  $player-color: $tertiary-light;
-  $player-button-color: $tertiary-light;
-  $player-button-color-hover: $tertiary-lighter;
-  $player-button-color-active: $tertiary-lightest;
-  $player-button-text-shadow-active: 0 0 2px rgba(tint($tertiary, 50%), .5), 0 0 6px rgba(tint($tertiary, 50%), .3), 0 0 10px rgba($secondary, .1);
-  
-    // Progress Bar
-    $progress-bar-filled-background: $tertiary-lighter;
-    $progress-bar-empty-background: $tertiary-dark;
-    $progress-bar-handle-background: $tertiary-lighter;
-    $progress-bar-handle-background-hover: $tertiary-lightest;
-    $progress-bar-handle-border-color: $tertiary;
+  $player-background: $primary;
+  $player-color: $primary-light;
+  $player-button-color: $primary-light;
+  $player-button-color-hover: $primary-lighter;
+  $player-button-color-active: $primary-lightest;
+  $player-button-text-shadow-active: 0 0 2px rgba(tint($primary, 50%), .5), 0 0 6px rgba(tint($primary, 50%), .3), 0 0 10px rgba($secondary, .1);
 
-    // Volume Slider
-    $volume-background: $primary-lighter;
-    $volume-filled-background: $primary-dark;
-    $volume-empty-background: shade($primary-lighter, 20%);
-    $volume-handle-background: tint($primary-lighter, 50%);
-    $volume-handle-background-hover: $secondary;
+    // Progress Bar
+    $player-slider-filled-background: $primary-lighter;
+    $player-slider-empty-background: $primary-dark;
+    $player-slider-handle-background: $primary-lighter;
+    $player-slider-handle-background-hover: $primary-lightest;
 
 
   // Sidebar
@@ -153,8 +154,20 @@
     $now-playing-background-color: $primary-darker;
     $now-playing-info-height: 45px;
     $now-playing-info-background: $sidebar-background;
-    $now-playing-info-track-name: $secondary;
-    $now-playing-info-track-info: $secondary;
+    $now-playing-info-track-name: $primary-lightest;
+    $now-playing-info-track-info: $primary-light;
+
+
+  // Dropdowns
+  //========================================================================
+  $dropdown-menu-background: tint($primary-lightest, 75%);
+  $dropdown-menu-link-padding: 8px 10px;
+  $dropdown-menu-link-color: $primary-light;
+  $dropdown-menu-link-background-hover: tint($primary-lightest, 80%);
+
+  // Misc
+  //========================================================================
+  $missing-artwork-background: $primary-dark;
 
 
 //==========================================================================

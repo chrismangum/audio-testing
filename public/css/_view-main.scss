@@ -14,60 +14,69 @@
   
   .view-main-header {
     @extend %flex-row;
-    padding: $view-header-padding;
-    color: $primary-light;
+    padding: $view-main-header-padding;
+    background: $view-main-header-background;
+    color: $view-main-header-color;
     justify-content: space-between;
     align-items: flex-start;
     
+    .view-details {
+      @extend %flex-row;
+      flex: 1;
+    }
+
     .item-image {
       @extend %item-image;
-      float: left;
       margin-right: 10px;
       width: 68px;
       height: 68px;
     }
 
     .item-info {
-      float: left;
       padding-left: 2px;
+      flex: 1;
     }
 
     .item-info-name {
-      margin: 0 0 2px 0;
-      font-weight: bold;
+      @extend %no-wrap;
+      padding: 0 0 4px 0;
       font-size: 20px;
       line-height: 1;
     }
 
     .item-info-details {
-      margin: 0 0 6px 0;
-      font-weight: normal;
-      font-size: 13px;
+      @extend %no-wrap;
+      font-size: 14px;
     }
 
     .button {
-      margin: 0;
-      padding: 0 12px 0 8px;
-      height: $view-toolbar-height;
-      background: $view-toolbar-play-button-background;
+      margin: 0 0 0 4px;
+      padding: 2px 8px 2px 4px;
+      border-radius: 10px;
+      background: $view-main-header-play-button-background;
       color: #fff;
-      line-height: $view-toolbar-height;
+      vertical-align: top;
+      font-size: 11px;
 
       &:before {
         @extend %icon-play-fill;
-        margin-right: 4px;
-        line-height: 0;
+        top: -1px;
+        margin-right: 2px;
       }
     }
 
     .search {
+      margin-right: 24px;
+
       &:before {
-        color: $primary-light;
+        color: $view-main-header-search-color;
+        line-height: 20px;
       }
 
       input {
-        @include placeholder($primary-light);
-        color: $primary-dark;
+        @include placeholder($view-main-header-search-color);
+        color: $view-main-header-search-input-color;
+        line-height: 20px;
       }
     }
   }
@@ -78,272 +87,7 @@
 
   .view-main-list {
     width: 100%;
-    border-top: 1px solid $label-column-border;
     color: $media-list-color;
     line-height: 1;
     flex: 1;
-  }
-
-  .ngGrid {
-    input {
-      vertical-align: top;
-    
-      &[type="checkbox"] {
-        margin: 0;
-        padding: 0;
-      }
-    }
-    
-    &.unselectable {
-      user-select: none;
-    }
-  }
-
-  .ngViewport {
-    overflow: auto;
-    min-height: 20px;
-
-    &:focus {
-      outline: none;
-    }
-  }
-
-  .ngCanvas {
-    position: relative;
-    min-width: 100%;
-  }
-
-  .ngVerticalBar {
-    position: absolute;
-    top: 25%;
-    right: 0;
-    z-index: 1;
-    width: 1px;
-    height: 50% !important; // Overrides inline style set to "rowHeight"
-  }
-
-  #testDataLength {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: -100000;
-  }
-
-  .ngHeaderContainer {
-    position: relative;
-    overflow: hidden;
-    background: $label-background;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-  }
-
-  .ngHeaderCell {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    background-color: inherit;
-
-    &.pinned {
-      z-index: 1;
-    }
-
-    .ngVerticalBar {
-      background-color: $label-column-border;
-    }
-  }
-
-  .ngHeaderSortColumn {
-    position: absolute;
-    overflow: hidden;
-  }
-
-  .ngTopPanel {
-    position: relative;
-    z-index: 1;
-  }
-
-  .ngSortButtonUp,
-  .ngSortButtonDown {
-    @extend %icon;
-    @extend .icon-arrow;
-    position: absolute;
-    top: 0;
-    right: $row-padding;
-    line-height: $label-height;
-  }
-
-  .ngSortButtonUp {
-    transform: rotateX(180deg);
-  }
-
-  .ngNoSort {
-    cursor: default;
-  }
-
-  .ngHeaderButton {
-    position: absolute;
-    top: 0;
-    top: -36px;
-    right: 12px;
-    z-index: 1;
-    padding: 4px;
-    color: $view-toolbar-color;
-    font-size: 16px;
-    line-height: 0;
-    cursor: pointer;
-  }
-
-  .ngHeaderButtonArrow {
-    @extend %icon;
-    @extend .icon-columns;
-  }
-
-  .ngHeaderGrip {
-    position: absolute;
-    top: 0;
-    right: -5px;
-    z-index: 1;
-    width: 11px;
-    height: 100%;
-    cursor: col-resize;
-  }
-
-  .ngHeaderText {
-    @extend %label;
-    @extend %no-wrap;
-    padding: 0 $row-padding;
-    color: $label-color;
-    line-height: $label-height;
-
-    &:hover {
-      color: $label-color-hover;
-    }
-  }
-
-  .ngColMenu {
-    position: absolute;
-    top: -10px;
-    right: 2px;
-    z-index: 1;
-  }
-
-  .ngColListCheckbox {
-    position: absolute;
-    left: 10px;
-  }
-
-  .ngColList {
-    margin: 0;
-    padding: 0;
-  }
-
-  .ngColListItem {
-    position: relative;
-    overflow: hidden;
-
-    label {
-      display: block;
-      padding: 10px 10px 10px 30px;
-      color: $primary-light;
-      text-transform: capitalize;
-      white-space: nowrap;
-      font-size: 12px;
-      cursor: pointer;
-      border-radius: 4px;
-
-      &:hover {
-        background: tint($primary-lightest, 80%);
-      }
-    }
-
-    a {
-      padding: 0;
-    }
-
-    input[type="checkbox"] {
-      position: absolute;
-      left: -60px;
-
-      &:before {
-        @extend %icon-check;
-        position: absolute;
-        top: 0;
-        left: 70px;
-        display: none;
-        color: $primary-light;
-      }
-    }
-
-    input[type="checkbox"]:checked {
-      &:before {
-        display: block;
-      }
-    }
-  }
-
-  .ngMenuText {
-    display: none;
-  }
-
-  .ngRow {
-    position: absolute;
-    min-width: 100%;
-    color: $row-color;
-
-    &:hover {
-      background-color: $row-background-color-hover;
-    }
-
-    &.selected {
-      background-color: $row-selected-background-color;
-      color: $row-selected-color;
-
-      &:hover {
-        background-color: $row-selected-background-color;
-      }
-    }
-  }
-
-  .ngCell {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    overflow: hidden;
-    background-color: inherit;
-
-    &.pinned {
-      z-index: 1;
-    }
-  }
-
-  .ngCellText {
-    @extend %no-wrap;
-    padding: 0 $row-padding;
-    font-weight: $row-font-weight;
-    font-size: $row-font-size;
-    line-height: $row-height;
-
-    &.now-playing-indicator,
-    &.now-paused-indicator {
-      padding-right: 25px;
-
-      &:before {
-        position: absolute;
-        right: 4px;
-        display: block;
-        font-size: 18px;
-        line-height: $row-height;
-      }
-    }
-
-    &.now-playing-indicator {
-      &:before {
-        @extend .icon-volume-high;
-      }
-    }
-
-    &.now-paused-indicator {
-      &:before {
-        @extend .icon-volume-off;
-      }
-    }
   }

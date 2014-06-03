@@ -61,8 +61,7 @@
 
     .time {
       width: 30px;
-      font-weight: bold;
-      font-size: 12px;
+      font-size: 11px;
       line-height: 1;
 
       &.time-passed {
@@ -82,22 +81,22 @@
 
     .noUi-base {
       &:before {
-        background: $progress-bar-filled-background;
+        background: $player-slider-filled-background;
       }
     }
 
     .noUi-origin {
       &:before {
-        background: $progress-bar-empty-background;
+        background: $player-slider-empty-background;
       }
     }
 
     .noUi-handle {
-      border-color: $progress-bar-handle-border-color;
-      background: $progress-bar-handle-background;
+      border-color: $player-background;
+      background: $player-slider-handle-background;
 
       &:hover {
-        background: $progress-bar-handle-background-hover;
+        background: $player-slider-handle-background-hover;
       }
     }
   }
@@ -105,10 +104,11 @@
   .volume-dropdown {
     .dropdown {
       bottom: 45px;
-      left: 8px;
+      left: 6px;
       padding: 15px 5px;
       border-radius: 20px;
-      background: $volume-background;
+      background: $player-background;
+      border: 1px solid $player-color;
     }
   }
 
@@ -118,22 +118,22 @@
 
     .noUi-base {
       &:before {
-        background: $volume-empty-background;
+        background: $player-slider-empty-background;
       }
     }
 
     .noUi-origin {
       &:before {
-        background: $volume-filled-background;
+        background: $player-slider-filled-background;
       }
     }
 
     .noUi-handle {
-      border-color: $volume-background;
-      background: $volume-handle-background;
+      border-color: $player-background;
+      background: $player-slider-handle-background;
 
       &:hover {
-        background: $volume-handle-background-hover;
+        background: $player-slider-handle-background-hover;
       }
     }
   }

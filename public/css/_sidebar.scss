@@ -25,10 +25,9 @@
         position: relative;
         display: block;
         padding: 6px 10px;
-        font-weight: bold;
-        font-size: 13px;
-        line-height: 22px;
         color: $sidebar-link-color;
+        font-size: 12px;
+        line-height: 22px;
 
         &:hover {
           background: $sidebar-link-background-hover;
@@ -49,10 +48,13 @@
   }
 
   .sidebar-title {
-    @extend %label;
+    position: relative;
     padding: 0 12px;
     height: $sidebar-title-height;
     color: $sidebar-title-color;
+    text-transform: uppercase;
+    font-size: 12px;
+    line-height: 14px;
     line-height: $sidebar-title-height;
 
     .button {

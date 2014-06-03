@@ -1,0 +1,265 @@
+//==========================================================================
+// Grid
+//==========================================================================
+
+  .ngGrid {
+    input {
+      vertical-align: top;
+    
+      &[type="checkbox"] {
+        margin: 0;
+        padding: 0;
+      }
+    }
+    
+    &.unselectable {
+      user-select: none;
+    }
+  }
+
+  .ngViewport {
+    overflow: auto;
+    min-height: 20px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .ngCanvas {
+    position: relative;
+    min-width: 100%;
+  }
+
+  .ngVerticalBar {
+    position: absolute;
+    top: 25%;
+    right: 0;
+    z-index: 1;
+    width: 1px;
+    height: 50% !important; // Overrides inline style set to "rowHeight"
+  }
+
+  #testDataLength {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -100000;
+  }
+
+  .ngHeaderContainer {
+    position: relative;
+    overflow: hidden;
+    background: $label-background;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    z-index: 1;
+  }
+
+  .ngHeaderCell {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-color: inherit;
+
+    &.pinned {
+      z-index: 1;
+    }
+
+    .ngVerticalBar {
+      background-color: $label-column-border;
+    }
+  }
+
+  .ngHeaderSortColumn {
+    position: absolute;
+    overflow: hidden;
+  }
+
+  .ngSortButtonUp,
+  .ngSortButtonDown {
+    @extend %icon;
+    @extend .icon-arrow;
+    position: absolute;
+    top: 0;
+    right: $row-padding;
+    line-height: $label-height;
+  }
+
+  .ngSortButtonUp {
+    transform: rotateX(180deg);
+  }
+
+  .ngNoSort {
+    cursor: default;
+  }
+
+  .ngHeaderButton {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 1;
+    color: $view-main-header-color;
+    font-size: 16px;
+    line-height: 0;
+    cursor: pointer;
+  }
+
+  .ngHeaderButtonArrow {
+    @extend %icon;
+    @extend .icon-columns;
+  }
+
+  .ngHeaderGrip {
+    position: absolute;
+    top: 0;
+    right: -5px;
+    z-index: 1;
+    width: 11px;
+    height: 100%;
+    cursor: col-resize;
+  }
+
+  .ngHeaderText {
+    @extend %no-wrap;
+    padding: 0 $row-padding;
+    color: $label-color;
+    text-transform: capitalize;
+    font-weight: bold;
+    font-size: 11px;
+    line-height: $label-height;
+
+    &:hover {
+      color: $label-color-hover;
+    }
+  }
+
+  .ngColMenu {
+    position: absolute;
+    top: 34px;
+    right: 1px;
+    z-index: 1;
+  }
+
+  .ngColListCheckbox {
+    position: absolute;
+    left: 10px;
+  }
+
+  .ngColList {
+    margin: 0;
+    padding: 0;
+  }
+
+  .ngColListItem {
+    position: relative;
+    overflow: hidden;
+
+    label {
+      display: block;
+      padding: $dropdown-menu-link-padding;
+      padding-left: 25px;
+      border-radius: 4px;
+      color: $dropdown-menu-link-color;
+      text-transform: capitalize;
+      white-space: nowrap;
+      font-size: 12px;
+      cursor: pointer;
+
+      &:hover {
+        background: $dropdown-menu-link-background-hover;
+      }
+    }
+
+    a {
+      padding: 0;
+    }
+
+    input[type="checkbox"] {
+      position: absolute;
+      left: -60px;
+
+      &:before {
+        @extend %icon-check;
+        position: absolute;
+        top: 0;
+        left: 67px;
+        display: none;
+        color: $dropdown-menu-link-color;
+      }
+    }
+
+    input[type="checkbox"]:checked {
+      &:before {
+        display: block;
+      }
+    }
+  }
+
+  .ngMenuText {
+    display: none;
+  }
+
+  .ngRow {
+    position: absolute;
+    min-width: 100%;
+    color: $row-color;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $row-background-color-hover;
+    }
+
+    &.selected {
+      background-color: $row-selected-background-color;
+      color: $row-selected-color;
+
+      &:hover {
+        background-color: $row-selected-background-color;
+      }
+    }
+  }
+
+  .ngCell {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+    background-color: inherit;
+
+    &.pinned {
+      z-index: 1;
+    }
+  }
+
+  .ngCellText {
+    @extend %no-wrap;
+    padding: 0 $row-padding;
+    font-weight: $row-font-weight;
+    font-size: $row-font-size;
+    line-height: $row-height;
+
+    &.now-playing-indicator,
+    &.now-paused-indicator {
+      padding-right: 25px;
+
+      &:before {
+        position: absolute;
+        right: 4px;
+        display: block;
+        font-size: 18px;
+        line-height: $row-height;
+      }
+    }
+
+    &.now-playing-indicator {
+      &:before {
+        @extend .icon-volume-high;
+      }
+    }
+
+    &.now-paused-indicator {
+      &:before {
+        @extend .icon-volume-off;
+      }
+    }
+  }
