@@ -129,18 +129,32 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
     $scope.columnPrefs.visibility[col.field] = !col.visible
     updateLocalStorage()
 
+  $scope.$on 'selectIndex', (e, index, focus) ->
+    selectOne index, focus
+    setTimeout (->
+      scrollToIndex index
+    ), 1
+
   $scope.$on 'selectTrack', (e, track) ->
     selectOne track
     setTimeout (->
       scrollToTrack track
     ), 1
 
-  selectOne = (track) ->
+  selectOne = (track, focus = false) ->
     if track?
       if _.isObject track
-        track = getTrackPosition track
+        index = getTrackPosition track
+      else
+        index = track
+        track = getTrackAtPosition index
+      track.focused = focus
       $scope.gridOptions.selectAll false
-      $scope.gridOptions.selectRow track, true
+      $scope.gridOptions.selectRow index, true
+      if focus
+        $scope.data.focusedItems =
+          type: 'songs'
+          items: [track]
 
   selectAdjacentTrack = (e, direction) ->
     if $scope.gridOptions.selectedItems.length
@@ -174,6 +188,12 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
   selectOneToggle = (track) ->
     selected = _.contains $scope.gridOptions.selectedItems, track
     $scope.gridOptions.selectRow getTrackPosition(track), not selected
+
+  getTrackAtPosition = (index) ->
+    if $scope.data.sortedData.length
+      $scope.data.sortedData[0]
+    else
+      $scope.gridOptions.gridData[0]
 
   getTrackPosition = (track) ->
     if $scope.data.sortedData.length
@@ -263,11 +283,19 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
     unless $scope.data.searchFocus
       switch e.keyCode
         when 38
-          selectAdjacentTrack e, -1
-          $scope.safeApply()
+          if $scope.data.focusedItems.type is 'songs'
+            selectAdjacentTrack e, -1
+            $scope.safeApply()
+          else
+            $scope.selectAdjacentListItem -1
+            $scope.safeApply()
           false
         when 40
-          selectAdjacentTrack e, 1
-          $scope.safeApply()
+          if $scope.data.focusedItems.type is 'songs'
+            selectAdjacentTrack e, 1
+            $scope.safeApply()
+          else
+            $scope.selectAdjacentListItem 1
+            $scope.safeApply()
           false
 ]

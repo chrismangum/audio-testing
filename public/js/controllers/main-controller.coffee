@@ -14,11 +14,54 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
       genres: []
       nowPlaying: false
       searchFocus: false
+      focusedItems: {}
 
-    $scope.selectItem = (item, type, song = true) ->
+    $scope.toggleFocus = ->
+      if $scope.params.group
+        type = $scope.params.group[0...-1]
+        _.forEach $scope.data.focusedItems.items, (item) ->
+          item.focused = false
+          true
+        switch $scope.data.focusedItems.type
+          when 'artist', 'album', 'genre'
+            $scope.data.focusedItems.type = 'songs'
+            if $scope.gridOptions.selectedItems.length
+              $scope.data.focusedItems.items = $scope.gridOptions.selectedItems
+            else
+              $scope.selectIndex 0, true
+          else
+            $scope.data.focusedItems =
+              type: type
+              items: [$scope.selectedItems[type]]
+        _.forEach $scope.data.focusedItems.items, (item) ->
+          item.focused = true
+        console.log $scope.data.focusedItems
+
+    $scope.selectAdjacentListItem = (direction) ->
+      if $scope.params.group
+        type = $scope.params.group[0...-1]
+        index = $scope.data[$scope.params.group].indexOf $scope.selectedItems[type]
+        selectListItemIndex index + direction
+
+    selectListItemIndex = (index) ->
+      view = $scope.params.group
+      if index < 0
+        index = 0
+      else if index >= $scope.data[view].length
+        index = $scope.data[view].length - 1
+      $scope.selectItem $scope.data[view][index]
+      #scrollListToIndex index
+
+    $scope.selectItem = (item, song = true, focus = true) ->
+      type = $scope.params.group[0...-1]
       songToSelect = song
       if $scope.selectedItems[type]
         $scope.selectedItems[type].selected = false
+      if focus
+        item.focused = true
+        $scope.data.focusedItems =
+          type: type
+          items: [item]
       item.selected = true
       $scope.selectedItems[type] = item
       $scope.filterData item.songs
@@ -48,8 +91,7 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
             if _.isObject songToSelect
               $scope.selectTrack songToSelect
             else
-              $scope.gridOptions.selectAll false
-              $scope.gridOptions.selectRow 0, true
+              $scope.selectIndex 0
             songToSelect = false
         ), 250
 
@@ -65,6 +107,9 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
     $scope.selectTrack = (track) ->
       $scope.$broadcast 'selectTrack', track
 
+    $scope.selectIndex = (index, focus) ->
+      $scope.$broadcast 'selectIndex', index, focus
+
     $scope.scrollToTrack = (track) ->
       $scope.$broadcast 'scrollToTrack', track
 
@@ -79,9 +124,9 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
           item = $scope.gridOptions.selectedItems[0]
           $scope.selectItem _.find($scope.data[view],
             name: item[type]
-          ), type, item
+          ), item
         else if $scope.data[view].length
-          $scope.selectItem $scope.data[view][0], type, false
+          $scope.selectItem $scope.data[view][0], false
       else
         $scope.unfilterData()
         if $scope.gridOptions.selectedItems.length
@@ -182,4 +227,12 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
       $scope.sortViewData()
       $scope.checkRoute()
       $scope.safeApply()
+
+    $(document).on 'keydown', (e) ->
+      unless $scope.data.searchFocus
+        switch e.keyCode
+          when 9
+            $scope.toggleFocus()
+            $scope.safeApply()
+            false
 ]
