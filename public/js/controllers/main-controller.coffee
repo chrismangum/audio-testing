@@ -3,7 +3,7 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
   ($scope, $routeParams, $timeout, $filter) ->
     songToSelect = false
     $scope.params = $routeParams
-    $scope.activeItems = {}
+    $scope.selectedItems = {}
     $scope.gridOptions = {}
     $scope.data =
       shuffledData: []
@@ -15,12 +15,12 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
       nowPlaying: false
       searchFocus: false
 
-    $scope.activateItem = (item, type, song = true) ->
+    $scope.selectItem = (item, type, song = true) ->
       songToSelect = song
-      if $scope.activeItems[type]
-        $scope.activeItems[type].active = false
-      item.active = true
-      $scope.activeItems[type] = item
+      if $scope.selectedItems[type]
+        $scope.selectedItems[type].selected = false
+      item.selected = true
+      $scope.selectedItems[type] = item
       $scope.filterData item.songs
 
     $scope.setAlbumSort = (sort, preventSort) ->
@@ -77,11 +77,11 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
         type = view[0...-1]
         if $scope.gridOptions.selectedItems.length
           item = $scope.gridOptions.selectedItems[0]
-          $scope.activateItem _.find($scope.data[view],
+          $scope.selectItem _.find($scope.data[view],
             name: item[type]
           ), type, item
         else if $scope.data[view].length
-          $scope.activateItem $scope.data[view][0], type, false
+          $scope.selectItem $scope.data[view][0], type, false
       else
         $scope.unfilterData()
         if $scope.gridOptions.selectedItems.length
