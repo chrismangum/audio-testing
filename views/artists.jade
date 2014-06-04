@@ -1,9 +1,9 @@
-.view-sidebar
+.view-sidebar(ng-class="{focused: data.focusedPane == 'list'}")
   .view-sidebar-header
     .search
       input(type="text", placeholder="Search", ng-model="search.list", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
   ul.view-sidebar-list
-    li.item(ng-repeat="artist in data.artists | filter:{name: search.list}", ng-click="selectItem(artist)", ng-class="{selected: artist.selected, focused: artist.focused}")
+    li.item(ng-repeat="artist in data.artists | filter:{name: search.list}", ng-click="selectItem(artist)", ng-class="{selected: artist.selected}")
       a
         .item-image
           img(ng-src="{{artist.coverArtURL || '/static/img/missing-artwork.png'}}")
@@ -13,7 +13,7 @@
             ng-pluralize(count="artist.albums.length", when="{'1': '1 Album', 'other': '{} Albums'}")
             | ,
             ng-pluralize(count="artist.songs.length", when="{'1': '1 Song', 'other': '{} Songs'}")
-.view-main
+.view-main(ng-class="{focused: data.focusedPane == 'grid'}")
   .view-main-header
     .view-details
       .item-image

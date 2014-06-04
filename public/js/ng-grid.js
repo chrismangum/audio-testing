@@ -3506,7 +3506,7 @@ angular.module('ngGrid').run(['$templateCache', function($templateCache) {
     "\n" +
     "    <div class=\"ngCanvas\" ng-style=\"canvasStyle()\">\r" +
     "\n" +
-    "        <div ng-style=\"rowStyle(row)\" ng-repeat=\"row in renderedRows\" ng-click=\"selectRow($event, row.entity)\" class=\"{{row.entity.focused ? 'focused' : ''}}\" ng-class=\"row.alternatingRowClass()\" ng-row></div>\r" +
+    "        <div ng-style=\"rowStyle(row)\" ng-repeat=\"row in renderedRows\" ng-click=\"selectRow($event, row.entity)\" ng-class=\"row.alternatingRowClass()\" ng-row></div>\r" +
     "\n" +
     "    </div>\r" +
     "\n" +

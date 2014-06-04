@@ -94,6 +94,7 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
     enableColumnResize: true
     headerRowHeight: 28
     rowHeight: 24
+    noTabInterference: true
     rowTemplate:
       '<div ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}">
         <div class="ngVerticalBar ngVerticalBarVisible" ng-style="{height: rowHeight}">&nbsp;</div>
@@ -141,20 +142,15 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
       scrollToTrack track
     ), 1
 
-  selectOne = (track, focus = false) ->
+  selectOne = (track) ->
     if track?
       if _.isObject track
         index = getTrackPosition track
       else
         index = track
         track = getTrackAtPosition index
-      track.focused = focus
       $scope.gridOptions.selectAll false
       $scope.gridOptions.selectRow index, true
-      if focus
-        $scope.data.focusedItems =
-          type: 'songs'
-          items: [track]
 
   selectAdjacentTrack = (e, direction) ->
     if $scope.gridOptions.selectedItems.length
@@ -215,6 +211,7 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
       $scope.gridOptions.selectRow n, true
 
   $scope.selectRow = (e, track) ->
+    $scope.data.focusedPane = 'grid'
     if $scope.gridOptions.selectedItems.length
       if e.shiftKey
         return selectRange $scope.gridOptions.selectedItems[0], track
@@ -283,7 +280,7 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
     unless $scope.data.searchFocus
       switch e.keyCode
         when 38
-          if $scope.data.focusedItems.type is 'songs'
+          if $scope.data.focusedPane is 'grid'
             selectAdjacentTrack e, -1
             $scope.safeApply()
           else
@@ -291,7 +288,7 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
             $scope.safeApply()
           false
         when 40
-          if $scope.data.focusedItems.type is 'songs'
+          if $scope.data.focusedPane is 'grid'
             selectAdjacentTrack e, 1
             $scope.safeApply()
           else

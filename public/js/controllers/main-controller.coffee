@@ -14,27 +14,12 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
       genres: []
       nowPlaying: false
       searchFocus: false
-      focusedItems: {}
+      focusedPane: 'list'
 
-    $scope.toggleFocus = ->
-      if $scope.params.group
-        type = $scope.params.group[0...-1]
-        _.forEach $scope.data.focusedItems.items, (item) ->
-          item.focused = false
-          true
-        switch $scope.data.focusedItems.type
-          when 'artist', 'album', 'genre'
-            $scope.data.focusedItems.type = 'songs'
-            if $scope.gridOptions.selectedItems.length
-              $scope.data.focusedItems.items = $scope.gridOptions.selectedItems
-            else
-              $scope.selectIndex 0, true
-          else
-            $scope.data.focusedItems =
-              type: type
-              items: [$scope.selectedItems[type]]
-        _.forEach $scope.data.focusedItems.items, (item) ->
-          item.focused = true
+    $scope.toggleFocusedPane = ->
+      $scope.data.focusedPane = switch $scope.data.focusedPane
+        when 'list' then 'grid'
+        else 'list'
 
     $scope.selectAdjacentListItem = (direction) ->
       if $scope.params.group
@@ -51,17 +36,12 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
       $scope.selectItem $scope.data[view][index]
       #scrollListToIndex index
 
-    $scope.selectItem = (item, song = true, focus = true) ->
+    $scope.selectItem = (item, song = true) ->
+      $scope.data.focusedPane = 'list'
       type = $scope.params.group[0...-1]
       songToSelect = song
       if $scope.selectedItems[type]
         $scope.selectedItems[type].selected = false
-      if focus
-        $scope.data.focusedItems.items?[0]?.focused = false
-        item.focused = true
-        $scope.data.focusedItems =
-          type: type
-          items: [item]
       item.selected = true
       $scope.selectedItems[type] = item
       $scope.filterData item.songs
@@ -107,8 +87,8 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
     $scope.selectTrack = (track) ->
       $scope.$broadcast 'selectTrack', track
 
-    $scope.selectIndex = (index, focus) ->
-      $scope.$broadcast 'selectIndex', index, focus
+    $scope.selectIndex = (index) ->
+      $scope.$broadcast 'selectIndex', index
 
     $scope.scrollToTrack = (track) ->
       $scope.$broadcast 'scrollToTrack', track
@@ -232,7 +212,7 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
       unless $scope.data.searchFocus
         switch e.keyCode
           when 9
-            $scope.toggleFocus()
+            $scope.toggleFocusedPane()
             $scope.safeApply()
             false
 ]

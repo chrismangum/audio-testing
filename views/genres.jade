@@ -3,7 +3,7 @@
     .search
       input(type="text", placeholder="Search", ng-model="search.list", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
   ul.view-sidebar-list
-    li.item(ng-repeat="genre in data.genres | filter:{name: search.list}", ng-click="selectItem(genre, 'genre')", ng-class="{selected: genre.selected, focused: genre.focused}")
+    li.item(ng-repeat="genre in data.genres | filter:{name: search.list}", ng-click="selectItem(genre, 'genre')", ng-class="{selected: genre.selected}")
       a
         .item-info
           .item-info-name {{genre.name}}
