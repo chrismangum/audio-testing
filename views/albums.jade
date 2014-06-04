@@ -12,7 +12,7 @@
           li
             a(ng-click="setAlbumSort('Title'); showDropdown = false") Title
   ul.view-sidebar-list
-    li.item(ng-repeat="album in data.albums | filter:{name: search.list}", ng-click="selectItem(album, 'album')", ng-class="{selected: album.selected}")
+    li.item(ng-repeat="album in data.albums | filter:{name: search.list}", ng-click="selectItem(album, 'album')", ng-class="{selected: album.selected, focused: album.focused}")
       a
         .item-image
           img(ng-src="{{album.coverArtURL || '/static/img/missing-artwork.png'}}")

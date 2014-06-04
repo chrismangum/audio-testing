@@ -35,7 +35,6 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
               items: [$scope.selectedItems[type]]
         _.forEach $scope.data.focusedItems.items, (item) ->
           item.focused = true
-        console.log $scope.data.focusedItems
 
     $scope.selectAdjacentListItem = (direction) ->
       if $scope.params.group
