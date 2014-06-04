@@ -57,6 +57,7 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
       if $scope.selectedItems[type]
         $scope.selectedItems[type].selected = false
       if focus
+        $scope.data.focusedItems.items?[0]?.focused = false
         item.focused = true
         $scope.data.focusedItems =
           type: type
