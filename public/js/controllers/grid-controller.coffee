@@ -301,10 +301,9 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
   sortColumns = (e, fields) ->
     e = _.clone e
     e.shiftKey = true
-    _.forEach $scope.columns, (col) ->
-      if _.contains fields, col.field
-        col.sort e
-        true
+    _.forEach fields, (field) ->
+      _.find($scope.columns, field: field).sort e
+      true
 
   $scope.customSort = (e, col, columns) ->
     $scope.columns = columns
