@@ -11,14 +11,13 @@
             a(ng-click="setAlbumSort('Artist'); showDropdown = false") Artist
           li
             a(ng-click="setAlbumSort('Title'); showDropdown = false") Title
-  ul.view-sidebar-list
-    li.item(ng-repeat="album in data.albums | filter:{name: search.list}", ng-click="selectListItem(album, 'album')", ng-class="{selected: album.selected}")
-      a
-        .item-image
-          img(ng-src="{{album.coverArtURL || '/static/img/missing-artwork.png'}}")
-        .item-info
-          .item-info-name {{album.name}}
-          .item-info-details {{album.artist}}
+  list(options="listOptions")
+    a
+      .item-image
+        img(ng-src="{{row.entity.coverArtURL || '/static/img/missing-artwork.png'}}")
+      .item-info
+        .item-info-name {{row.entity.name}}
+        .item-info-details {{row.entity.artist}}
 .view-main(ng-class="{focused: data.focusedPane == 'grid'}")
   .view-main-header
     .view-details
