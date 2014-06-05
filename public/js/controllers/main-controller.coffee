@@ -33,10 +33,10 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
         index = 0
       else if index >= $scope.data[view].length
         index = $scope.data[view].length - 1
-      $scope.selectItem $scope.data[view][index]
+      $scope.selectListItem $scope.data[view][index]
       #scrollListToIndex index
 
-    $scope.selectItem = (item, song = true) ->
+    $scope.selectListItem = (item, song = true) ->
       $scope.data.focusedPane = 'list'
       type = $scope.params.group[0...-1]
       songToSelect = song
@@ -102,11 +102,11 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
         type = view[0...-1]
         if $scope.gridOptions.selectedItems.length
           item = $scope.gridOptions.selectedItems[0]
-          $scope.selectItem _.find($scope.data[view],
+          $scope.selectListItem _.find($scope.data[view],
             name: item[type]
           ), item
         else if $scope.data[view].length
-          $scope.selectItem $scope.data[view][0], false
+          $scope.selectListItem $scope.data[view][0], false
       else
         $scope.unfilterData()
         if $scope.gridOptions.selectedItems.length
