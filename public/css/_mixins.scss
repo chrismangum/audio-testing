@@ -21,14 +21,14 @@
   }
 
   // Custom Scrollbar
-  @mixin scrollbar($size, $scrollbar-background, $scrollbar-thumb-background) {
+  @mixin scrollbar($size, $scrollbar-background, $scrollbar) {
     &::-webkit-scrollbar {
       width: $size;
       height: $size;
       background: $scrollbar-background;
-      box-shadow: 0 0 5px shade($scrollbar-background, 30%) inset;
+      box-shadow: $scrollbar-box-shadow;
     }
     &::-webkit-scrollbar-thumb {
-      background: $scrollbar-thumb-background;
+      background: $scrollbar;
     }
   }

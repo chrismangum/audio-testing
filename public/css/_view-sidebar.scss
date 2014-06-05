@@ -16,23 +16,21 @@
   .view-sidebar-header {
     @extend %flex-row;
     z-index: 2;
-    padding: 0 10px;
+    padding: 8px 10px;
     width: 100%;
-    height: $view-sidebar-header-height;
     background: $view-sidebar-header-background;
     color: $view-sidebar-header-color;
-    line-height: $view-sidebar-header-height;
     
     .search {
       flex: 1;
 
       &:before {
         color: $view-sidebar-header-search-color;
-        line-height: $view-sidebar-header-height;
       }
 
       input {
         @include placeholder($view-sidebar-header-search-color);
+        padding-right: 8px;
         color: $view-sidebar-header-search-input-color;
       }
     }
@@ -41,6 +39,7 @@
       text-transform: uppercase;
       font-weight: bold;
       font-size: 11px;
+      line-height: 1.5;
 
       &:after {
         @extend %icon-arrow;
@@ -64,7 +63,6 @@
     .item {
       position: relative;
       background: $view-sidebar-item-background;
-      height: 57px;
 
       &.hover {
         background: $view-sidebar-item-background-hover;
@@ -96,20 +94,20 @@
 
       a {
         @extend %flex-row;
-        padding: 8px;
+        height: $view-sidebar-item-height;
         align-items: center;
       }
     }
 
     .item-image {
       @extend %item-image;
-      margin-right: 6px;
-      width: 40px;
-      height: 40px;
+      width: $view-sidebar-item-height;
+      height: $view-sidebar-item-height;
     }
 
     .item-info {
       margin-left: 4px;
+      padding: 0 8px;
       flex: 1;
     }
     

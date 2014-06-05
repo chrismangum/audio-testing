@@ -5,7 +5,7 @@
         .item-info-name All Songs
         .item-info-details
           ng-pluralize(count="data.songs.length", when="{'1': '1 Song', 'other': '{} Songs'}")
-          button.button(ng-click="play()") Play All
+        button.button(ng-click="play()") Play All
     .search
       input(type="text", placeholder="Search", ng-model="search.grid", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
   .view-main-list(ng-grid="gridOptions")

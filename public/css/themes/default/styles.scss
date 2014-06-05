@@ -31,7 +31,7 @@
   $purple: #8e44ad;
 
   // Theme
-  $primary: $dark-royal;
+  $primary: $dark-navy;
   $primary-light: tint($primary, 20%);
   $primary-lighter: tint($primary, 40%);
   $primary-lightest: tint($primary, 60%);
@@ -63,7 +63,7 @@
   // Sidebar
   //========================================================================
   $sidebar-background: $secondary;
-  $sidebar-title-height: 35px;
+  $sidebar-title-height: 34px;
   $sidebar-title-color: darken($sidebar-background, 20%);
   $sidebar-link-color: darken($sidebar-background, 40%);
   $sidebar-link-background-hover: inherit;
@@ -88,7 +88,6 @@
     $view-sidebar-width: 240px;
     
       // View Sidebar Header
-      $view-sidebar-header-height: 35px;
       $view-sidebar-header-background: $secondary;
       $view-sidebar-header-color: darken($secondary, 20%);
       $view-sidebar-header-search-color: darken($secondary, 20%);
@@ -96,6 +95,7 @@
 
       // View Sidebar List
       $view-sidebar-list-background: $view-background;
+      $view-sidebar-item-height: 54px;
       $view-sidebar-item-background: $view-sidebar-list-background;
       $view-sidebar-item-info-name-color: darken($view-sidebar-list-background, 40%);
       $view-sidebar-item-info-details-color: darken($view-sidebar-list-background, 20%);
@@ -114,7 +114,6 @@
     $view-main-background: $view-background;
     
       // View Main Header
-      $view-main-header-padding: 12px 12px 6px 12px;
       $view-main-header-background: $secondary;
       $view-main-header-color: darken($secondary, 40%);
       $view-main-header-play-button-background: $dark-green;
@@ -143,7 +142,7 @@
   
   // Player
   //========================================================================
-  $player-background: $primary;
+  $player-background: $tertiary;
   $player-color: tint($player-background, 80%);
   $player-button-color: tint($player-background, 60%);
   $player-button-color-hover: tint($player-background, 80%);
@@ -159,6 +158,12 @@
   // Misc
   //========================================================================
     
+    // Scrollbar
+    $scrollbar-size: 8px;
+    $scrollbar: darken($secondary, 20%);
+    $scrollbar-background: $secondary;
+    $scrollbar-box-shadow: 0 0 8px shade($scrollbar-background, 10%) inset;
+
     // Artwork
     $missing-artwork-background: #000;
 

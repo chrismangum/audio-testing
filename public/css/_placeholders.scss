@@ -55,6 +55,7 @@
   %item-image {
     position: relative;
     background: $missing-artwork-background;
+    overflow: hidden;
 
     img {
       display: block;
@@ -70,7 +71,7 @@
       left: 0;
       z-index: 1;
       display: block;
-      box-shadow: 0 0 0 1px rgba(0,0,0,.3) inset, 0 1px 0 1px rgba(255,255,255,0.2) inset, 0 1px 4px rgba(0,0,0,0.3);
+      box-shadow: 0 0 0 1px rgba(0,0,0,.3) inset, 0 1px 0 1px rgba(255,255,255,0.2) inset;
       content: '';
     }
   }
