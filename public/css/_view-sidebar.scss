@@ -15,31 +15,33 @@
   
   .view-sidebar-header {
     @extend %flex-row;
-    position: absolute;
     z-index: 2;
-    padding: 10px;
+    padding: 0 10px;
     width: 100%;
     height: $view-sidebar-header-height;
     background: $view-sidebar-header-background;
     color: $view-sidebar-header-color;
-    line-height: 20px;
+    line-height: $view-sidebar-header-height;
     
     .search {
       flex: 1;
 
       &:before {
         color: $view-sidebar-header-search-color;
-        line-height: 20px;
+        line-height: $view-sidebar-header-height;
       }
 
       input {
         @include placeholder($view-sidebar-header-search-color);
         color: $view-sidebar-header-search-input-color;
-        line-height: 20px;
       }
     }
 
     .dropdown-toggle {
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 11px;
+
       &:after {
         @extend %icon-arrow;
         margin-left: 4px;
@@ -54,7 +56,7 @@
   .view-sidebar-list {
     overflow-y: scroll;
     margin: 0;
-    padding: $view-sidebar-header-height 0 0 0;
+    padding: 0;
     background: $view-sidebar-list-background;
     list-style: none;
     flex: 1;
@@ -63,28 +65,32 @@
       position: relative;
       background: $view-sidebar-item-background;
 
-      &:hover {
+      &.hover {
         background: $view-sidebar-item-background-hover;
-      }
 
-      &.active {
-        background: $view-sidebar-item-background-active;
+        .item-info-name {
+          color: $view-sidebar-item-info-name-color-hover;
+        }
+
+        .item-info-details {
+          color: $view-sidebar-item-info-details-color-hover;
+        }
       }
 
       &.selected {
         background: $view-sidebar-item-background-selected;
-      }
+        
+        .focused & {
+          background: $view-sidebar-item-background-focused;
+        }
+        
+        .item-info-name {
+          color: $view-sidebar-item-info-name-color-selected;
+        }
 
-      &:after {
-        @extend %icon-arrow-right;
-        position: absolute;
-        top: 0;
-        right: 10px;
-        display: flex;
-        height: 100%;
-        color: $view-sidebar-item-arrow-color;
-        font-size: 22px;
-        align-items: center;
+        .item-info-details {
+          color: $view-sidebar-item-info-details-color-selected;
+        }
       }
 
       a {
@@ -103,7 +109,6 @@
 
     .item-info {
       margin-left: 4px;
-      padding-right: 25px;
       flex: 1;
     }
     
@@ -111,6 +116,7 @@
       @extend %no-wrap;
       padding-bottom: 4px;
       color: $view-sidebar-item-info-name-color;
+      font-weight: bold;
       font-size: 12px;
     }
 

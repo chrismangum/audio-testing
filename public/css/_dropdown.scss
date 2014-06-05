@@ -29,8 +29,8 @@
     margin: 8px 2px;
     padding: 4px;
     min-width: 120px;
-    background: $dropdown-menu-background;
     border-radius: 5px;
+    background: $dropdown-menu-background;
     box-shadow: 0 1px 2px rgba(0,0,0,0.3);
     list-style: none;
     
@@ -38,13 +38,13 @@
       position: absolute;
       top: -6px;
       right: 13px;
+      z-index: -1;
       display: block;
       width: 12px;
       height: 12px;
-      transform: rotate(45deg);
       background: $dropdown-menu-background;
       content: '';
-      z-index: -1;
+      transform: rotate(45deg);
     }
 
     li {
@@ -54,10 +54,12 @@
     a {
       display: block;
       padding: $dropdown-menu-link-padding;
-      color: $dropdown-menu-link-color;
-      font-size: 13px;
-      line-height: 1;
       border-radius: 4px;
+      color: $dropdown-menu-link-color;
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 11px;
+      line-height: 1;
 
       &:hover {
         background: $dropdown-menu-link-background-hover;

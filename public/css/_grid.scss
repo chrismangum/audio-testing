@@ -49,10 +49,10 @@
 
   .ngHeaderContainer {
     position: relative;
+    z-index: 1;
     overflow: hidden;
     background: $label-background;
     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-    z-index: 1;
   }
 
   .ngHeaderCell {
@@ -82,6 +82,7 @@
     position: absolute;
     top: 0;
     right: $row-padding;
+    color: $label-sort-arrow-color;
     line-height: $label-height;
   }
 
@@ -123,7 +124,7 @@
     @extend %no-wrap;
     padding: 0 $row-padding;
     color: $label-color;
-    text-transform: capitalize;
+    text-transform: uppercase;
     font-weight: bold;
     font-size: 11px;
     line-height: $label-height;
@@ -160,9 +161,10 @@
       padding-left: 25px;
       border-radius: 4px;
       color: $dropdown-menu-link-color;
-      text-transform: capitalize;
+      text-transform: uppercase;
       white-space: nowrap;
-      font-size: 12px;
+      font-weight: bold;
+      font-size: 11px;
       cursor: pointer;
 
       &:hover {
@@ -206,15 +208,15 @@
     cursor: pointer;
 
     &:hover {
-      background-color: $row-background-color-hover;
+      color: $row-color-hover;
     }
 
     &.selected {
-      background-color: $row-selected-background-color;
-      color: $row-selected-color;
+      background-color: $row-background-color-selected;
+      color: $row-color-selected;
 
-      &:hover {
-        background-color: $row-selected-background-color;
+      .focused & {
+        background-color: $row-background-color-focused;
       }
     }
   }

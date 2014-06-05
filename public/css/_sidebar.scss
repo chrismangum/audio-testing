@@ -6,7 +6,6 @@
     @extend %flex-column;
     width: $sidebar-width;
     background: $sidebar-background;
-    color: $sidebar-color;
 
     .nav {
       overflow-x: hidden;
@@ -26,6 +25,7 @@
         display: block;
         padding: 6px 10px;
         color: $sidebar-link-color;
+        font-weight: bold;
         font-size: 12px;
         line-height: 22px;
 
@@ -53,7 +53,8 @@
     height: $sidebar-title-height;
     color: $sidebar-title-color;
     text-transform: uppercase;
-    font-size: 12px;
+    font-weight: bold;
+    font-size: 11px;
     line-height: 14px;
     line-height: $sidebar-title-height;
 
@@ -63,10 +64,6 @@
       margin: 0;
       height: $sidebar-title-height;
       color: inherit;
-
-      &:hover {
-        color: $sidebar-title-button-color;
-      }
 
       span {
         &:before {  

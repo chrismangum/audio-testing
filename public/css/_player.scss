@@ -19,7 +19,7 @@
       > span {
         width: 40px;
         height: 40px;
-        font-size: 30px;
+        font-size: 26px;
         line-height: 40px;
       }
 
@@ -29,7 +29,6 @@
 
       &.active {
         color: $player-button-color-active;
-        text-shadow: $player-button-text-shadow-active;
       }
     }
   }

@@ -40,6 +40,7 @@
     .item-info-name {
       @extend %no-wrap;
       padding: 0 0 4px 0;
+      font-weight: bold;
       font-size: 20px;
       line-height: 1;
     }
@@ -87,7 +88,7 @@
 
   .view-main-list {
     width: 100%;
-    color: $media-list-color;
+    background: $view-main-background;
     line-height: 1;
     flex: 1;
   }

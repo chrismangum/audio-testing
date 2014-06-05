@@ -14,6 +14,7 @@
 
   html {
     position: relative;
+    overflow: hidden;
     height: 100%;
   }
 
@@ -35,8 +36,8 @@
   
   .view {
     @extend %flex-row;
+    box-shadow: $view-box-shadow;
     flex: 1;
-    background: $view-background;
   }
   
   a {
@@ -74,17 +75,23 @@
       position: absolute;
       top: 0;
       left: 0;
-      font-size: 15px;
+      font-size: 10px;
       line-height: 16px;
     }
 
     input {
       @extend %font-primary;
       margin: 0;
-      padding: 0 0 0 20px;
+      padding: 0 0 0 15px;
       width: 100%;
       border: 0;
       background: transparent;
-      font-size: 13px;
+      font-weight: bold;
+      font-size: 11px;
+
+      &:-moz-placeholder { text-transform: uppercase; }
+      &::-moz-placeholder { text-transform: uppercase; }
+      &:-ms-input-placeholder { text-transform: uppercase; }
+      &::-webkit-input-placeholder { text-transform: uppercase; } 
     }
   }

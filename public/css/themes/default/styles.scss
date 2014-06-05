@@ -27,9 +27,11 @@
   $dark-royal: #2980b9;
   $light-navy: #34495e;
   $dark-navy: #2c3e50;
+  $clouds: #ecf0f1;
+  $purple: #8e44ad;
 
   // Theme
-  $primary: $light-navy;
+  $primary: $dark-royal;
   $primary-light: tint($primary, 20%);
   $primary-lighter: tint($primary, 40%);
   $primary-lightest: tint($primary, 60%);
@@ -37,7 +39,7 @@
   $primary-darker: shade($primary, 40%);
   $primary-darkest: shade($primary, 60%);
   
-  $secondary: #fff;
+  $secondary: $clouds;
   $secondary-light: tint($secondary, 20%);
   $secondary-lighter: tint($secondary, 40%);
   $secondary-lightest: tint($secondary, 60%);
@@ -45,7 +47,7 @@
   $secondary-darker: shade($secondary, 40%);
   $secondary-darkest: shade($secondary, 60%);
 
-  $tertiary: $dark-royal;
+  $tertiary: $dark-navy;
   $tertiary-light: tint($tertiary, 60%);
   $tertiary-lighter: tint($tertiary, 80%);
   $tertiary-lightest: tint($tertiary, 100%);
@@ -58,116 +60,113 @@
 // Theme Variables
 //==========================================================================
 
+  // Sidebar
+  //========================================================================
+  $sidebar-background: $secondary;
+  $sidebar-title-height: 35px;
+  $sidebar-title-color: darken($sidebar-background, 20%);
+  $sidebar-link-color: darken($sidebar-background, 40%);
+  $sidebar-link-background-hover: inherit;
+  $sidebar-link-color-hover: $primary;
+  $sidebar-link-background-active: $primary;
+  $sidebar-link-color-active: #fff;
+  
+    // Now Playing
+    $now-playing-artwork-missing-background: #000 url(../../../../static/img/missing-artwork.png);
+    $now-playing-info-height: 45px;
+    $now-playing-info-background: $sidebar-background;
+    $now-playing-info-track-name: darken($sidebar-background, 40%);
+    $now-playing-info-track-info: darken($sidebar-background, 20%);
+
+
   // Views
   //========================================================================
-  $view-background: $primary-lightest;
-  
+    $view-background: tint($secondary, 50%);
+    $view-box-shadow: 0px 0 4px rgba(0,0,0,0.2);
+
     // View Sidebar
-    $view-sidebar-width: 280px;
+    $view-sidebar-width: 240px;
     
       // View Sidebar Header
-      $view-sidebar-header-height: 40px;
-      $view-sidebar-header-background: rgba($primary, 0.9);
-      $view-sidebar-header-color: $secondary;
-      $view-sidebar-header-search-color: $primary-lightest;
-      $view-sidebar-header-search-color: $primary-lightest;
-      $view-sidebar-header-search-input-color: $secondary;
+      $view-sidebar-header-height: 35px;
+      $view-sidebar-header-background: $secondary;
+      $view-sidebar-header-color: darken($secondary, 20%);
+      $view-sidebar-header-search-color: darken($secondary, 20%);
+      $view-sidebar-header-search-input-color: $primary;
 
       // View Sidebar List
-      $view-sidebar-list-background: $primary-lightest;
+      $view-sidebar-list-background: $view-background;
       $view-sidebar-item-background: $view-sidebar-list-background;
-      $view-sidebar-item-background-hover: tint($primary-lighter, 60%);
-      $view-sidebar-item-background-active: tint($primary-lighter, 70%);
-      $view-sidebar-item-background-selected: tint($primary-lighter, 80%);
-      $view-sidebar-item-arrow-color: $primary-lighter;
-      $view-sidebar-item-info-name-color: $primary;
-      $view-sidebar-item-info-details-color: $primary-lighter;
+      $view-sidebar-item-info-name-color: darken($view-sidebar-list-background, 40%);
+      $view-sidebar-item-info-details-color: darken($view-sidebar-list-background, 20%);
+      
+      $view-sidebar-item-background-hover: inherit;
+      $view-sidebar-item-info-name-color-hover: #fff;
+      $view-sidebar-item-info-details-color-hover: #fff;
+      
+      $view-sidebar-item-background-selected: tint($primary, 40%);
+      $view-sidebar-item-info-name-color-selected: #fff;
+      $view-sidebar-item-info-details-color-selected: #fff;
 
+      $view-sidebar-item-background-focused: $primary;
+      
     // View Main
-    $view-main-header-padding: 12px 12px 6px 12px;
-    $view-main-header-background: tint($view-background, 50%);
-    $view-main-header-color: $primary-light;
-
-    $view-main-header-play-button-background: $dark-green;
-    $view-main-header-search-color: $primary-lighter;
-    $view-main-header-search-color: $primary-lighter;
-    $view-main-header-search-input-color: $primary;
-  
-  // Grid
-  //========================================================================
-  $media-list-color: $primary-dark;
-  
-    // Column Labels
-    $label-height: 28px; // Set equal to "rowHeight" in controllers/grid-controller.coffee
-    $label-background: tint($primary-lightest, 50%);
-    $label-color: $primary-light;
-    $label-color-hover: $primary;
-    $label-column-border: tint($primary-lightest, 15%);
-    $label-sort-arrow-color: $secondary;
+    $view-main-background: $view-background;
     
-    // Rows
-    $row-height: 24px; // Set equal to "headerRowHeight" in controllers/grid-controller.coffee
-    $row-background-color-hover: tint($primary-lighter, 55%);
-    $row-color: $primary-light;
-    $row-selected-background-color: $primary;
-    $row-selected-color: $secondary;
-    $row-padding: 8px; // Left & right value only (e.g. "12px")
-    $row-font-size: 11px;
-    $row-font-weight: normal;
+      // View Main Header
+      $view-main-header-padding: 12px 12px 6px 12px;
+      $view-main-header-background: $secondary;
+      $view-main-header-color: darken($secondary, 40%);
+      $view-main-header-play-button-background: $dark-green;
+      $view-main-header-search-color: darken($secondary, 20%);
+      $view-main-header-search-input-color: $primary;
+  
+        // View Main Header - Labels
+        $label-height: 28px; // Set equal to "rowHeight" in controllers/grid-controller.coffee
+        $label-background: $view-main-header-background;
+        $label-color: darken($secondary, 20%);
+        $label-color-hover: $primary;
+        $label-column-border: darken($view-main-header-background, 10%);
+        $label-sort-arrow-color: $primary;
+      
+      // View Main - Rows
+      $row-height: 24px; // Set equal to "headerRowHeight" in controllers/grid-controller.coffee
+      $row-color: darken($secondary, 40%);
+      $row-color-hover: darken($secondary, 60%);
+      $row-background-color-selected: tint($primary, 40%);
+      $row-color-selected: #fff;
+      $row-background-color-focused: $primary;
+      $row-padding: 8px; // Left & right value only (e.g. "12px")
+      $row-font-size: 11px;
+      $row-font-weight: normal;
 
   
   // Player
   //========================================================================
   $player-background: $primary;
-  $player-color: $primary-light;
-  $player-button-color: $primary-light;
-  $player-button-color-hover: $primary-lighter;
-  $player-button-color-active: $primary-lightest;
-  $player-button-text-shadow-active: 0 0 2px rgba(tint($primary, 50%), .5), 0 0 6px rgba(tint($primary, 50%), .3), 0 0 10px rgba($secondary, .1);
+  $player-color: tint($player-background, 80%);
+  $player-button-color: tint($player-background, 60%);
+  $player-button-color-hover: tint($player-background, 80%);
+  $player-button-color-active: tint($player-background, 100%);
 
     // Progress Bar
-    $player-slider-filled-background: $primary-lighter;
-    $player-slider-empty-background: $primary-dark;
-    $player-slider-handle-background: $primary-lighter;
-    $player-slider-handle-background-hover: $primary-lightest;
+    $player-slider-filled-background: tint($player-background, 80%);
+    $player-slider-empty-background: tint($player-background, 20%);
+    $player-slider-handle-background: tint($player-background, 80%);
+    $player-slider-handle-background-hover: tint($player-background, 100%);
 
-
-  // Sidebar
-  //========================================================================
-  $sidebar-background: $primary-darker;
-  $sidebar-color: $primary-lighter;
-  $sidebar-title-height: 35px;
-  $sidebar-title-color: $primary-light;
-  $sidebar-title-button-color: $secondary;
-  $sidebar-link-color: $primary-lightest;
-  $sidebar-link-background-hover: $primary-dark;
-  $sidebar-link-color-hover: $primary-lightest;
-  $sidebar-link-background-active: $primary-lightest;
-  $sidebar-link-color-active: $primary-dark;
-  
-    // Now Playing
-    $now-playing-artwork-missing-background: darken($primary-darker, 10%) url(../../../../static/img/missing-artwork.png);
-    $now-playing-sidebar-title-background: $primary;
-    $now-playing-sidebar-title-color: $primary-light;
-    $now-playing-sidebar-title-background-hover: tint($primary, 2%);
-    $now-playing-sidebar-title-color-hover: $secondary;
-    $now-playing-background-color: $primary-darker;
-    $now-playing-info-height: 45px;
-    $now-playing-info-background: $sidebar-background;
-    $now-playing-info-track-name: $primary-lightest;
-    $now-playing-info-track-info: $primary-light;
-
-
-  // Dropdowns
-  //========================================================================
-  $dropdown-menu-background: tint($primary-lightest, 75%);
-  $dropdown-menu-link-padding: 8px 10px;
-  $dropdown-menu-link-color: $primary-light;
-  $dropdown-menu-link-background-hover: tint($primary-lightest, 80%);
 
   // Misc
   //========================================================================
-  $missing-artwork-background: $primary-dark;
+    
+    // Artwork
+    $missing-artwork-background: #000;
+
+    // Dropdowns
+    $dropdown-menu-background: #fff;
+    $dropdown-menu-link-padding: 8px 10px;
+    $dropdown-menu-link-color: darken($secondary, 20%);
+    $dropdown-menu-link-background-hover: tint($secondary, 60%);
 
 
 //==========================================================================
