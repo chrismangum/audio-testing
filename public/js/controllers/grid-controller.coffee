@@ -1,3 +1,63 @@
+class Row
+  constructor: (@entity, @rowTop) ->
+
+  getClasses: ->
+    selected: @entity.selected
+
+  getStyles: ->
+    top: @rowTop
+    position: 'absolute'
+    width: '270px'
+
+app.directive 'list', ->
+  restrict: 'E'
+  transclude: true
+  replace: true
+  template: '
+    <div class="view-sidebar-list-viewport" style="overflow: auto">
+      <ul class="view-sidebar-list" style="overflow: visible; position: relative">
+        <li class="item" ng-repeat="row in renderedRows", ng-click="selectListItem(row.entity)", ng-class="row.getClasses()" ng-style="row.getStyles()" ng-transclude></li>
+      </ul>
+    </div>'
+  link: ($scope, el, attrs) ->
+    rowHeight = 57
+    $ul = el.children()
+    $scope.options = $scope.$eval attrs.options
+    $scope.rows = []
+    $scope.renderedRows = []
+    scrollTimer = null
+    canvasHeight = 0
+    scrollBuffer = 70
+
+    $scope.safeApply = () ->
+      unless $scope.$root.$$phase
+        $scope.$digest()
+
+    $scope.getVisibleRows = (canvasTop) ->
+      _.filter $scope.rows, (row, i) ->
+        (canvasTop - scrollBuffer) < (i * rowHeight + 40) < (canvasTop + canvasHeight + scrollBuffer)
+
+    $scope.renderRows = (canvasTop = el.scrollTop()) ->
+      $scope.renderedRows.length = 0
+      visibleRows = $scope.getVisibleRows canvasTop
+      _.each visibleRows, (row, i) ->
+        rowTop = $scope.rows.indexOf(row) * rowHeight + 40
+        $scope.renderedRows[i] = new Row row, rowTop
+
+    $scope.$watch $scope.options.data, (n, o) ->
+      $scope.rows = n
+      $scope.renderRows()
+      $ul.height rowHeight * n.length
+
+    el.bind 'scroll', (e) ->
+      $scope.renderRows e.target.scrollTop
+      $scope.safeApply()
+
+    calcCanvasHeight = ->
+      canvasHeight = $(window).height() - 61
+
+    calcCanvasHeight()
+    $(window).on 'resize', calcCanvasHeight
 
 app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
   songToSelect = false

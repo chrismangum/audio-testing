@@ -2,13 +2,12 @@
   .view-sidebar-header
     .search
       input(type="text", placeholder="Search", ng-model="search.list", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
-  ul.view-sidebar-list
-    li.item(ng-repeat="genre in data.genres | filter:{name: search.list}", ng-click="selectListItem(genre, 'genre')", ng-class="{selected: genre.selected}")
-      a
-        .item-info
-          .item-info-name {{genre.name}}
-          .item-info-details
-            ng-pluralize(count="genre.songs.length", when="{'1': '1 Song', 'other': '{} Songs'}")
+  list(options="listOptions")
+    a
+      .item-info
+        .item-info-name {{row.entity.name}}
+        .item-info-details
+          ng-pluralize(count="row.entity.songs.length", when="{'1': '1 Song', 'other': '{} Songs'}")
 .view-main(ng-class="{focused: data.focusedPane == 'grid'}")
   .view-main-header
     .view-details
