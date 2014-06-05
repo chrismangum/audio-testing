@@ -1,7 +1,57 @@
 
 app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
+  songToSelect = false
   $scope.search = {}
 
+  $scope.toggleFocusedPane = ->
+    $scope.data.focusedPane = switch $scope.data.focusedPane
+      when 'list' then 'grid'
+      else 'list'
+
+
+  ### List Functions ###
+  $scope.selectAdjacentListItem = (direction) ->
+    if $scope.params.group
+      type = $scope.params.group[0...-1]
+      index = $scope.data[$scope.params.group].indexOf $scope.selectedItems[type]
+      selectListItemIndex index + direction
+
+  scrollListToIndex = (index) ->
+    if index isnt -1
+      view = $scope.params.group
+      viewPort = $ '.view-sidebar-list'
+      top = viewPort.scrollTop()
+      height = viewPort.height()
+      bottom = top + height
+      rowHeight = 57
+      trackPosition = index * rowHeight
+      unless top + 40 < trackPosition + rowHeight < bottom
+        viewPort.scrollTop trackPosition
+
+  selectListItemIndex = (index) ->
+    view = $scope.params.group
+    if index < 0
+      index = 0
+    else if index >= $scope.data[view].length
+      index = $scope.data[view].length - 1
+    $scope.selectListItem $scope.data[view][index]
+    scrollListToIndex index
+
+  $scope.selectListItem = (item, song = true) ->
+    $scope.data.focusedPane = 'list'
+    type = $scope.params.group[0...-1]
+    songToSelect = song
+    if $scope.selectedItems[type]
+      $scope.selectedItems[type].selected = false
+    item.selected = true
+    $scope.selectedItems[type] = item
+    $scope.filterData item.songs
+
+  $scope.$on 'selectListItem', (e, item, song) ->
+    $scope.selectListItem item, song
+
+
+  ### Grid Preferences ###
   updateLocalStorage = (prefs) ->
     localStorage.columnPrefs = JSON.stringify prefs or $scope.columnPrefs
 
@@ -35,7 +85,6 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
     if n isnt o
       $scope.gridOptions.filterOptions.filterText = n
 
-  #put a throttle around this:
   $scope.$on 'ngGridEventSorted', do ->
     throttle = null
     (e, sortInfo) ->
@@ -45,8 +94,16 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
         $scope.columnPrefs.sortInfo =  _.pick sortInfo, 'fields', 'directions'
         updateLocalStorage()
         $scope.data.sortedData = $scope.gridOptions.sortedData
+        if songToSelect
+          if _.isObject songToSelect
+            $scope.selectTrack songToSelect
+          else
+            $scope.selectIndex 0
+          songToSelect = false
       ), 250
 
+
+  ### NG Grid Options ###
   availableColumns =
     trackNumber:
       displayName: '#'
@@ -83,7 +140,6 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
           <div ng-class="{ ngPinnedIcon: col.pinned, ngUnPinnedIcon: !col.pinned }" ng-click="togglePin(col)" ng-show="col.pinnable"></div>
         </div>
         <div ng-show="col.resizable" class="ngHeaderGrip" ng-click="col.gripClick($event)" ng-mousedown="col.gripOnMouseDown($event)"></div>'
-
 
   _.assign $scope.gridOptions,
     columnDefs: []
@@ -125,11 +181,8 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
     $scope.columnPrefs.order = order
     updateLocalStorage()
 
-  $scope.toggleColVisibility = (col) ->
-    availableColumns[col.field].visible = !col.visible
-    $scope.columnPrefs.visibility[col.field] = !col.visible
-    updateLocalStorage()
 
+  ### Grid Selection ###
   $scope.$on 'selectIndex', (e, index, focus) ->
     selectOne index, focus
     setTimeout (->
@@ -243,13 +296,14 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
   $scope.$on 'scrollToTrack', (e, track) ->
     scrollToTrack track
 
+
+  ### Column Sorting ###
   sortColumns = (e, fields) ->
     e = _.clone e
     e.shiftKey = true
-    _.forEach $scope.columns, (col) ->
-      if _.contains fields, col.field
-        col.sort e
-        true
+    _.forEach fields, (field) ->
+      _.find($scope.columns, field: field).sort e
+      true
 
   $scope.customSort = (e, col, columns) ->
     $scope.columns = columns
@@ -279,7 +333,11 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
   $(document).on 'keydown', (e) ->
     unless $scope.data.searchFocus
       switch e.keyCode
-        when 38
+        when 9 #tab
+          $scope.toggleFocusedPane()
+          $scope.safeApply()
+          false
+        when 38 #up arrow
           if $scope.data.focusedPane is 'grid'
             selectAdjacentTrack e, -1
             $scope.safeApply()
@@ -287,7 +345,7 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
             $scope.selectAdjacentListItem -1
             $scope.safeApply()
           false
-        when 40
+        when 40 #down arrow
           if $scope.data.focusedPane is 'grid'
             selectAdjacentTrack e, 1
             $scope.safeApply()

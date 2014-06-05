@@ -1,4 +1,4 @@
-.view-sidebar
+.view-sidebar(ng-class="{focused: data.focusedPane == 'list'}")
   .view-sidebar-header
     .search
       input(type="text", placeholder="Search", ng-model="search.list", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
@@ -12,14 +12,14 @@
           li
             a(ng-click="setAlbumSort('Title'); showDropdown = false") Title
   ul.view-sidebar-list
-    li.item(ng-repeat="album in data.albums | filter:{name: search.list}", ng-click="selectItem(album, 'album')", ng-class="{selected: album.selected}")
+    li.item(ng-repeat="album in data.albums | filter:{name: search.list}", ng-click="selectListItem(album, 'album')", ng-class="{selected: album.selected}")
       a
         .item-image
           img(ng-src="{{album.coverArtURL || '/static/img/missing-artwork.png'}}")
         .item-info
           .item-info-name {{album.name}}
           .item-info-details {{album.artist}}
-.view-main
+.view-main(ng-class="{focused: data.focusedPane == 'grid'}")
   .view-main-header
     .view-details
       .item-image
@@ -29,5 +29,5 @@
         .item-info-details {{selectedItems.album.artist}}
           button.button(ng-click="play()") Play All
     .search
-      input(type="text", placeholder="Search", ng-model="search.searchText", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
+      input(type="text", placeholder="Search", ng-model="search.grid", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
   .view-main-list(ng-grid="gridOptions")

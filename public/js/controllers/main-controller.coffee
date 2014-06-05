@@ -1,7 +1,6 @@
 
 app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
   ($scope, $routeParams, $timeout, $filter) ->
-    songToSelect = false
     $scope.params = $routeParams
     $scope.selectedItems = {}
     $scope.gridOptions = {}
@@ -15,36 +14,6 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
       nowPlaying: false
       searchFocus: false
       focusedPane: 'list'
-
-    $scope.toggleFocusedPane = ->
-      $scope.data.focusedPane = switch $scope.data.focusedPane
-        when 'list' then 'grid'
-        else 'list'
-
-    $scope.selectAdjacentListItem = (direction) ->
-      if $scope.params.group
-        type = $scope.params.group[0...-1]
-        index = $scope.data[$scope.params.group].indexOf $scope.selectedItems[type]
-        selectListItemIndex index + direction
-
-    selectListItemIndex = (index) ->
-      view = $scope.params.group
-      if index < 0
-        index = 0
-      else if index >= $scope.data[view].length
-        index = $scope.data[view].length - 1
-      $scope.selectItem $scope.data[view][index]
-      #scrollListToIndex index
-
-    $scope.selectItem = (item, song = true) ->
-      $scope.data.focusedPane = 'list'
-      type = $scope.params.group[0...-1]
-      songToSelect = song
-      if $scope.selectedItems[type]
-        $scope.selectedItems[type].selected = false
-      item.selected = true
-      $scope.selectedItems[type] = item
-      $scope.filterData item.songs
 
     $scope.setAlbumSort = (sort, preventSort) ->
       if sort is 'Artist'
@@ -67,12 +36,6 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
         if throttle
           $timeout.cancel throttle
         throttle = $timeout (->
-          if songToSelect
-            if _.isObject songToSelect
-              $scope.selectTrack songToSelect
-            else
-              $scope.selectIndex 0
-            songToSelect = false
         ), 250
 
     $scope.filterData = (songs) ->
@@ -93,6 +56,9 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
     $scope.scrollToTrack = (track) ->
       $scope.$broadcast 'scrollToTrack', track
 
+    $scope.selectListItem = (item, song) ->
+      $scope.$broadcast 'selectListItem', item, song
+
     $scope.safeApply = (fn) ->
       unless $scope.$$phase
         $scope.$apply fn
@@ -102,11 +68,11 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
         type = view[0...-1]
         if $scope.gridOptions.selectedItems.length
           item = $scope.gridOptions.selectedItems[0]
-          $scope.selectItem _.find($scope.data[view],
+          $scope.selectListItem _.find($scope.data[view],
             name: item[type]
           ), item
         else if $scope.data[view].length
-          $scope.selectItem $scope.data[view][0], false
+          $scope.selectListItem $scope.data[view][0], false
       else
         $scope.unfilterData()
         if $scope.gridOptions.selectedItems.length
@@ -207,12 +173,4 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
       $scope.sortViewData()
       $scope.checkRoute()
       $scope.safeApply()
-
-    $(document).on 'keydown', (e) ->
-      unless $scope.data.searchFocus
-        switch e.keyCode
-          when 9
-            $scope.toggleFocusedPane()
-            $scope.safeApply()
-            false
 ]
