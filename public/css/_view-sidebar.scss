@@ -54,11 +54,16 @@
 
   .view-sidebar-list {
     overflow-y: scroll;
-    margin: 0;
-    padding: 0;
     background: $view-sidebar-list-background;
-    list-style: none;
     flex: 1;
+    
+    ul {
+      position: relative;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
 
     .item {
       position: relative;

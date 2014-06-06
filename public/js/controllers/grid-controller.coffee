@@ -7,20 +7,20 @@ class Row
   getStyles: ->
     top: @rowTop
     position: 'absolute'
-    width: '270px'
+    width: '232px'
 
 app.directive 'list', ->
   restrict: 'E'
   transclude: true
   replace: true
   template: '
-    <div class="view-sidebar-list-viewport" style="overflow: auto">
-      <ul class="view-sidebar-list" style="overflow: visible; position: relative">
+    <div class="view-sidebar-list">
+      <ul>
         <li class="item" ng-repeat="row in renderedRows", ng-click="selectListItem(row.entity)", ng-class="row.getClasses()" ng-style="row.getStyles()" ng-transclude></li>
       </ul>
     </div>'
   link: ($scope, el, attrs) ->
-    rowHeight = 57
+    rowHeight = 54
     $ul = el.children()
     $scope.options = $scope.$eval attrs.options
     $scope.rows = []
@@ -35,13 +35,13 @@ app.directive 'list', ->
 
     $scope.getVisibleRows = (canvasTop) ->
       _.filter $scope.rows, (row, i) ->
-        (canvasTop - scrollBuffer) < (i * rowHeight + 40) < (canvasTop + canvasHeight + scrollBuffer)
+        (canvasTop - scrollBuffer) < (i * rowHeight) < (canvasTop + canvasHeight + scrollBuffer)
 
     $scope.renderRows = (canvasTop = el.scrollTop()) ->
       $scope.renderedRows.length = 0
       visibleRows = $scope.getVisibleRows canvasTop
       _.each visibleRows, (row, i) ->
-        rowTop = $scope.rows.indexOf(row) * rowHeight + 40
+        rowTop = $scope.rows.indexOf(row) * rowHeight
         $scope.renderedRows[i] = new Row row, rowTop
 
     $scope.$watch $scope.options.data, (n, o) ->
@@ -79,13 +79,13 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
   scrollListToIndex = (index) ->
     if index isnt -1
       view = $scope.params.group
-      viewPort = $ '.view-sidebar-list'
+      viewPort = $ '.view-sidebar-list ul'
       top = viewPort.scrollTop()
       height = viewPort.height()
       bottom = top + height
       rowHeight = 57
       trackPosition = index * rowHeight
-      unless top + 40 < trackPosition + rowHeight < bottom
+      unless top < trackPosition + rowHeight < bottom
         viewPort.scrollTop trackPosition
 
   selectListItemIndex = (index) ->
