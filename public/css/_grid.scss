@@ -52,7 +52,7 @@
     z-index: 1;
     overflow: hidden;
     background: $label-background;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    box-shadow: 0 0px 2px rgba(0,0,0,.4);
   }
 
   .ngHeaderCell {
@@ -83,6 +83,7 @@
     top: 0;
     right: $row-padding;
     color: $label-sort-arrow-color;
+    font-size: 11px;
     line-height: $label-height;
   }
 
@@ -99,7 +100,7 @@
     top: 14px;
     right: 14px;
     z-index: 1;
-    color: $view-main-header-color;
+    color: $view-main-header-column-button-color;
     font-size: 16px;
     line-height: 0;
     cursor: pointer;

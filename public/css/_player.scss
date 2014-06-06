@@ -9,7 +9,6 @@
     width: 100%;
     height: $player-height;
     background: $player-background;
-    color: $player-color;
     text-align: center;
 
     .button {
@@ -60,6 +59,8 @@
 
     .time {
       width: 30px;
+      color: $player-time-color;
+      font-weight: bold;
       font-size: 11px;
       line-height: 1;
 
@@ -107,7 +108,6 @@
       padding: 15px 5px;
       border-radius: 20px;
       background: $player-background;
-      border: 1px solid $player-color;
     }
   }
 

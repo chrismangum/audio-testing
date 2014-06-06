@@ -4,8 +4,14 @@
 
   .view-main {
     @extend %flex-column;
+    z-index: 2;
+    box-shadow: 0 0px 4px rgba(0,0,0,0.2);
     flex: 1;
     align-items: stretch;
+
+    &.view-main--songs {
+      box-shadow: none;
+    }
   }
 
 //==========================================================================
@@ -55,8 +61,8 @@
       background: $view-main-header-play-button-background;
       color: #fff;
       vertical-align: top;
-      font-size: 11px;
       font-weight: bold;
+      font-size: 11px;
 
       &:before {
         @extend %icon-play-fill;
@@ -85,6 +91,7 @@
 //==========================================================================
 
   .view-main-list {
+    overflow: hidden;
     width: 100%;
     background: $view-main-background;
     line-height: 1;

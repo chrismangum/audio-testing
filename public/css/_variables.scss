@@ -1,0 +1,132 @@
+//==========================================================================
+// Default Theme Variables
+//==========================================================================
+
+  // Colors
+  //========================================================================
+  $primary: #2c3e50 !default; // Dark Navy
+  $secondary: #ecf0f1 !default; // Clouds
+  $tertiary: #34495e !default; // Light Navy
+
+  $success: #27ae60 !default; // Dark Green
+  
+
+  // Sidebar
+  //========================================================================
+  $sidebar-width: 180px !default;
+  $sidebar-background: $secondary !default;
+  $sidebar-title-height: 32px !default;
+  $sidebar-title-color: darken($sidebar-background, 20%) !default;
+  $sidebar-link-color: darken($sidebar-background, 40%) !default;
+  $sidebar-link-background-hover: inherit !default;
+  $sidebar-link-color-hover: $primary !default;
+  $sidebar-link-background-active: $primary !default;
+  $sidebar-link-color-active: #fff !default;
+  
+    // Now Playing
+    $now-playing-artwork-missing-background: #000 url(../../../../static/img/missing-artwork.png) !default;
+    $now-playing-info-height: 45px !default;
+    $now-playing-info-background: $sidebar-background !default;
+    $now-playing-info-track-name: darken($sidebar-background, 40%) !default;
+    $now-playing-info-track-info: darken($sidebar-background, 20%) !default;
+
+
+  // Views
+  //========================================================================
+    $view-background: tint($secondary, 50%) !default;
+    $view-box-shadow: 0px 0 4px rgba(0,0,0,0.2) !default;
+
+    // View Sidebar
+    $view-sidebar-width: 240px !default;
+    
+      // View Sidebar Header
+      $view-sidebar-header-background: $secondary !default;
+      $view-sidebar-header-color: darken($secondary, 20%) !default;
+      $view-sidebar-header-search-color: darken($secondary, 20%) !default;
+      $view-sidebar-header-search-input-color: $primary !default;
+
+      // View Sidebar List
+      $view-sidebar-list-background: $view-background !default;
+      $view-sidebar-item-height: 54px !default;
+      $view-sidebar-item-background: $view-sidebar-list-background !default;
+      $view-sidebar-item-info-name-color: darken($view-sidebar-list-background, 40%) !default;
+      $view-sidebar-item-info-details-color: darken($view-sidebar-list-background, 20%) !default;
+      
+      $view-sidebar-item-background-hover: inherit !default;
+      $view-sidebar-item-info-name-color-hover: #fff !default;
+      $view-sidebar-item-info-details-color-hover: #fff !default;
+      
+      $view-sidebar-item-background-selected: tint($primary, 40%) !default;
+      $view-sidebar-item-info-name-color-selected: #fff !default;
+      $view-sidebar-item-info-details-color-selected: #fff !default;
+
+      $view-sidebar-item-background-focused: $primary !default;
+      
+    // View Main
+    $view-main-background: $view-background !default;
+    
+      // View Main Header
+      $view-main-header-background: $secondary !default;
+      $view-main-header-color: darken($secondary, 40%) !default;
+      $view-main-header-play-button-background: $success !default;
+      $view-main-header-search-color: darken($secondary, 20%) !default;
+      $view-main-header-search-input-color: $primary !default;
+      $view-main-header-column-button-color: darken($secondary, 20%) !default;
+  
+        // View Main Header - Labels
+        $label-height: 28px !default; // Set equal to "rowHeight" in controllers/grid-controller.coffee
+        $label-background: $view-main-header-background !default;
+        $label-color: darken($secondary, 20%) !default;
+        $label-color-hover: $primary !default;
+        $label-column-border: darken($view-main-header-background, 10%) !default;
+        $label-sort-arrow-color: $primary !default;
+      
+      // View Main - Rows
+      $row-height: 24px !default; // Set equal to "headerRowHeight" in controllers/grid-controller.coffee
+      $row-color: darken($secondary, 40%) !default;
+      $row-color-hover: darken($secondary, 60%) !default;
+      $row-background-color-selected: tint($primary, 40%) !default;
+      $row-color-selected: #fff !default;
+      $row-background-color-focused: $primary !default;
+      $row-padding: 8px !default; // Left & right value only (e.g. "12px")
+      $row-font-size: 11px !default;
+      $row-font-weight: normal !default;
+
+  
+  // Player
+  //========================================================================
+  $player-height: 60px !default;
+  $player-background: $tertiary !default;
+  $player-button-color: tint($player-background, 60%) !default;
+  $player-button-color-hover: tint($player-background, 80%) !default;
+  $player-button-color-active: tint($player-background, 100%) !default;
+
+    // Progress Bar
+    $player-time-color: tint($player-background, 60%) !default;
+    $player-slider-filled-background: tint($player-background, 80%) !default;
+    $player-slider-empty-background: tint($player-background, 20%) !default;
+    $player-slider-handle-background: tint($player-background, 80%) !default;
+    $player-slider-handle-background-hover: tint($player-background, 100%) !default;
+
+
+  // Misc
+  //========================================================================
+    
+    // Global
+    $body-background: tint($secondary, 50%) !default;
+    $app-min-width: 700px !default;
+
+    // Scrollbar
+    $scrollbar-size: 8px !default;
+    $scrollbar: darken($secondary, 20%) !default;
+    $scrollbar-background: $secondary !default;
+    $scrollbar-box-shadow: 0 0 8px shade($scrollbar-background, 10%) inset !default;
+
+    // Artwork
+    $missing-artwork-background: #000 !default;
+
+    // Dropdowns
+    $dropdown-menu-background: #fff !default;
+    $dropdown-menu-link-padding: 8px 10px !default;
+    $dropdown-menu-link-color: darken($secondary, 20%) !default;
+    $dropdown-menu-link-background-hover: tint($secondary, 60%) !default;
