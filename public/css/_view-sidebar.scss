@@ -74,6 +74,8 @@
     .item {
       position: relative;
       background: $view-sidebar-item-background;
+      width: 232px;
+      position: absolute;
 
       &.hover {
         background: $view-sidebar-item-background-hover;
