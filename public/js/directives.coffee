@@ -1,4 +1,55 @@
 
+app.directive 'list', ->
+  restrict: 'E'
+  transclude: true
+  replace: true
+  template:
+    '<div class="view-sidebar-list">
+      <ul>
+        <li class="item" ng-repeat="row in rows" ng-click="selectListItem(row.entity)" ng-class="{selected: row.entity.selected}" ng-style="{top: row.top}" ng-if="row.visible" ng-transclude></li>
+      </ul>
+    </div>'
+  link: ($scope, el, attrs) ->
+    rowHeight = 54
+    $ul = el.children()
+    $scope.options = $scope.$eval attrs.options
+    canvasHeight = 0
+    scrollBuffer = 70
+
+    class Row
+      constructor: (@entity, @top) ->
+
+    $scope.safeApply = ->
+      unless $scope.$root.$$phase
+        $scope.$digest()
+
+    $scope.updateRowVisibility = (canvasTop = el.scrollTop()) ->
+      _.forEach $scope.rows, (row, i) ->
+        bufferTop = canvasTop - scrollBuffer
+        bufferBottom = canvasTop + canvasHeight + scrollBuffer
+        row.visible = bufferTop < row.top < bufferBottom
+        true
+
+    calcCanvasHeight = ->
+      canvasHeight = $(window).height() - 101
+
+    calcCanvasHeight()
+
+    $scope.$watch $scope.options.data, (n, o) ->
+      if n
+        $ul.height rowHeight * n.length
+        $scope.rows = _.map n, (item, i) ->
+          new Row item, i * rowHeight
+        $scope.updateRowVisibility()
+
+    el.on 'scroll', (e) ->
+      $scope.updateRowVisibility e.target.scrollTop
+      $scope.safeApply()
+
+    $(window).on 'resize', ->
+      calcCanvasHeight()
+      $scope.updateRowVisibility()
+
 app.directive 'volumeSlider', ->
   restrict: 'E'
   template:
