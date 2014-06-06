@@ -7,6 +7,7 @@
     position: relative;
     width: $view-sidebar-width;
     line-height: 1;
+    overflow: hidden;
   }
     
 //==========================================================================
@@ -19,6 +20,7 @@
     padding: 8px 10px;
     width: 100%;
     background: $view-sidebar-header-background;
+    box-shadow: 0 0px 2px rgba(0,0,0,0.4);
     color: $view-sidebar-header-color;
     
     .search {
@@ -34,8 +36,9 @@
         color: $view-sidebar-header-search-input-color;
       }
     }
-
+    
     .dropdown-toggle {
+      padding-right: 15px;
       text-transform: uppercase;
       font-weight: bold;
       font-size: 11px;
@@ -43,7 +46,10 @@
 
       &:after {
         @extend %icon-arrow;
-        margin-left: 4px;
+        position: absolute;
+        right: 0;
+        font-size: 11px;
+        line-height: 1.5;
       }
     }
   }
