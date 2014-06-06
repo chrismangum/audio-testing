@@ -6,8 +6,6 @@ class Row
 
   getStyles: ->
     top: @rowTop
-    position: 'absolute'
-    width: '232px'
 
 app.directive 'list', ->
   restrict: 'E'
@@ -54,7 +52,7 @@ app.directive 'list', ->
       $scope.safeApply()
 
     calcCanvasHeight = ->
-      canvasHeight = $(window).height() - 61
+      canvasHeight = $(window).height() - 101
 
     calcCanvasHeight()
     $(window).on 'resize', calcCanvasHeight
