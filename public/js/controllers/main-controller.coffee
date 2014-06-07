@@ -14,6 +14,7 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
       nowPlaying: false
       searchFocus: false
       focusedPane: 'list'
+      songToSelect: false
 
     $scope.setAlbumSort = (sort, preventSort) ->
       if sort is 'Artist'
@@ -76,7 +77,7 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
       else
         $scope.unfilterData()
         if $scope.gridOptions.selectedItems.length
-          songToSelect = $scope.gridOptions.selectedItems[0]
+          $scope.data.songToSelect = $scope.gridOptions.selectedItems[0]
 
     createArtist = (track) ->
       artist =
