@@ -39,6 +39,8 @@ processData = (track, data, callback) ->
     data.trackNumber = data.trackNumber or data.tracknumber
     data.year = data.year or data.date or data.releaseDate
     data.coverArt = data.coverArt?.data.buffer or data.PIC?.data.data.buffer
+    if data.year
+      data.year = parseInt data.year, 10
     if data.trackNumber
       data.trackNumber = parseInt data.trackNumber, 10
     if data.coverArt
