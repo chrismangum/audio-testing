@@ -16,12 +16,36 @@ app.directive 'list', ->
     canvasHeight = 0
     scrollBuffer = 70
 
+    $scope.selectAdjacentListItem = (direction) ->
+      if $scope.params.group
+        type = $scope.params.group[0...-1]
+        index = $scope.data[$scope.params.group].indexOf $scope.selectedItems[type]
+        selectListItemIndex index + direction
+
+    scrollListToIndex = (index) ->
+      if index isnt -1
+        view = $scope.params.group
+        viewPort = $ '.view-sidebar-list'
+        top = viewPort.scrollTop()
+        height = viewPort.height()
+        bottom = top + height
+        rowHeight = 57
+        trackPosition = index * rowHeight
+        unless top < trackPosition + rowHeight < bottom
+          viewPort.scrollTop trackPosition
+
+    selectListItemIndex = (index) ->
+      view = $scope.params.group
+      if index < 0
+        index = 0
+      else if index >= $scope.data[view].length
+        index = $scope.data[view].length - 1
+      item = $scope.data[view][index]
+      $scope.selectListItem item
+      scrollListToIndex index
+
     class Row
       constructor: (@entity, @top) ->
-
-    $scope.safeApply = ->
-      unless $scope.$root.$$phase
-        $scope.$digest()
 
     $scope.updateRowVisibility = (canvasTop = el.scrollTop()) ->
       _.forEach $scope.rows, (row, i) ->
@@ -49,6 +73,20 @@ app.directive 'list', ->
     $(window).on 'resize', ->
       calcCanvasHeight()
       $scope.updateRowVisibility()
+
+    $(document).on 'keydown', (e) ->
+      unless $scope.data.searchFocus
+        switch e.keyCode
+          when 38 #up arrow
+            if $scope.data.focusedPane is 'list'
+              $scope.selectAdjacentListItem -1
+              $scope.safeApply()
+            false
+          when 40 #down arrow
+            if $scope.data.focusedPane is 'list'
+              $scope.selectAdjacentListItem 1
+              $scope.safeApply()
+            false
 
 app.directive 'volumeSlider', ->
   restrict: 'E'

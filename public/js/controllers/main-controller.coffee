@@ -48,17 +48,17 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
     $scope.play = (track) ->
       $scope.$broadcast 'play', track
 
-    $scope.selectTrack = (track) ->
-      $scope.$broadcast 'selectTrack', track
-
-    $scope.selectIndex = (index) ->
-      $scope.$broadcast 'selectIndex', index
-
-    $scope.scrollToTrack = (track) ->
-      $scope.$broadcast 'scrollToTrack', track
-
-    $scope.selectListItem = (item, song) ->
-      $scope.$broadcast 'selectListItem', item, song
+    $scope.selectListItem = (item) ->
+      $scope.data.focusedPane = 'list'
+      type = $scope.params.group[0...-1]
+      if $scope.selectedItems[type]
+        $scope.selectedItems[type].selected = false
+      item.selected = true
+      $scope.selectedItems[type] = item
+      #select first song if songToSelect isn't set
+      unless $scope.data.songToSelect
+        $scope.data.songToSelect = item.songs[0]
+      $scope.filterData item.songs
 
     $scope.safeApply = (fn) ->
       unless $scope.$$phase
@@ -69,11 +69,11 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
         type = view[0...-1]
         if $scope.gridOptions.selectedItems.length
           item = $scope.gridOptions.selectedItems[0]
-          $scope.selectListItem _.find($scope.data[view],
+          $scope.data.songToSelect = item
+          $scope.selectListItem _.find $scope.data[view],
             name: item[type]
-          ), item
         else if $scope.data[view].length
-          $scope.selectListItem $scope.data[view][0], false
+          $scope.selectListItem $scope.data[view][0]
       else
         $scope.unfilterData()
         if $scope.gridOptions.selectedItems.length
