@@ -48,6 +48,9 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
     $scope.play = (track) ->
       $scope.$broadcast 'play', track
 
+    $scope.scrollToTrack = (track) ->
+      $scope.$broadcast 'scrollToTrack', track
+
     $scope.selectListItem = (item) ->
       $scope.data.focusedPane = 'list'
       type = $scope.params.group[0...-1]
