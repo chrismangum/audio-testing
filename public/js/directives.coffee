@@ -33,6 +33,10 @@ app.directive 'list', ->
         unless top < trackPosition + rowHeight < bottom
           viewPort.scrollTop trackPosition
 
+    scrollListToItem = (item) ->
+      view = $scope.params.group
+      scrollListToIndex $scope.data[view].indexOf item
+
     selectListItemIndex = (index) ->
       view = $scope.params.group
       if index < 0
@@ -61,6 +65,7 @@ app.directive 'list', ->
     $scope.$watch $scope.options.data, (n, o) ->
       if n
         $ul.height rowHeight * n.length
+        scrollListToItem $scope.selectedItems[$scope.params.group[0...-1]]
         $scope.rows = _.map n, (item, i) ->
           new Row item, i * rowHeight
         $scope.updateRowVisibility()
