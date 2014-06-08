@@ -29,7 +29,6 @@ app.directive 'list', ->
         top = viewPort.scrollTop()
         height = viewPort.height()
         bottom = top + height
-        rowHeight = 57
         trackPosition = index * rowHeight
         unless top < trackPosition + rowHeight < bottom
           viewPort.scrollTop trackPosition
