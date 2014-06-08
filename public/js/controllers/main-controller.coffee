@@ -53,7 +53,6 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
           $scope.data.sortedData
         else
           $scope.gridOptions.gridData
-      console.log $scope.data.playlist
 
     $scope.play = (track) ->
       $scope.updatePlaylist()
