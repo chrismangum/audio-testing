@@ -1,5 +1,5 @@
 
-app.directive 'list', ->
+app.directive 'list', ($filter) ->
   restrict: 'E'
   transclude: true
   replace: true
@@ -62,13 +62,21 @@ app.directive 'list', ->
 
     calcCanvasHeight()
 
+    $scope.$watch 'search.list', (n, o) ->
+      if n isnt o
+        updateDataset $filter('filter') $scope.dataArray, name: n
+
+    updateDataset = (dataset) ->
+      $ul.height rowHeight * dataset.length
+      $scope.rows = _.map dataset, (item, i) ->
+        new Row item, i * rowHeight
+      $scope.updateRowVisibility()
+
     $scope.$watch $scope.options.data, (n, o) ->
       if n
-        $ul.height rowHeight * n.length
+        $scope.dataArray = n
+        updateDataset n
         scrollListToItem $scope.selectedItems[$scope.params.group[0...-1]]
-        $scope.rows = _.map n, (item, i) ->
-          new Row item, i * rowHeight
-        $scope.updateRowVisibility()
 
     el.on 'scroll', (e) ->
       $scope.updateRowVisibility e.target.scrollTop
