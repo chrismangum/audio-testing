@@ -3,18 +3,17 @@ app.controller 'player', ['$scope', '$timeout', ($scope, $timeout) ->
   $scope.progress = 0
   $scope.player = null
   $scope.repeat = false
-  $scope.shuffling = false
   $scope.playerSocket = null
 
   $scope.toggleShuffle = ->
-    $scope.shuffling = !$scope.shuffling
-    if $scope.shuffling
+    unless $scope.data.shuffledData.length
       $scope.data.shuffledData = _.shuffle $scope.gridOptions.gridData
     else
-      $scope.data.shuffledData = false
+      $scope.data.shuffledData = []
+    $scope.updatePlaylist()
 
   $scope.$watch 'gridOptions.gridData', (n, o) ->
-    if n isnt o and $scope.shuffling
+    if n isnt o and $scope.data.shuffledData.length
       $scope.data.shuffledData = _.shuffle n
 
   $scope.toggleRepeat = ->
@@ -27,6 +26,7 @@ app.controller 'player', ['$scope', '$timeout', ($scope, $timeout) ->
     if $scope.player
       $scope.player.togglePlayback()
     else
+      $scope.updatePlaylist()
       $scope.play()
 
   getAdjacentTrackInArray = (array, direction) ->
@@ -41,17 +41,12 @@ app.controller 'player', ['$scope', '$timeout', ($scope, $timeout) ->
     array[newIndex] or false
 
   $scope.getAdjacentTrack = (direction) ->
-    if $scope.shuffling
-      getAdjacentTrackInArray $scope.data.shuffledData, direction
-    else if $scope.data.sortedData.length
-      getAdjacentTrackInArray $scope.data.sortedData, direction
-    else
-      getAdjacentTrackInArray $scope.gridOptions.gridData, direction
+    getAdjacentTrackInArray $scope.data.playlist, direction
 
   getSelectedTrack = ->
     if $scope.gridOptions.selectedItems.length
       track = $scope.gridOptions.selectedItems[0]
-    else if $scope.shuffling
+    else if $scope.data.shuffledData.length
       track = $scope.data.shuffledData[0]
     else if $scope.data.sortedData.length
       track = $scope.data.sortedData[0]

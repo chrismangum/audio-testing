@@ -1,5 +1,6 @@
 
 app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
+  updatePlaylist = false
   $scope.search = {}
 
   $scope.toggleFocusedPane = ->
@@ -50,6 +51,9 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
         $scope.columnPrefs.sortInfo =  _.pick sortInfo, 'fields', 'directions'
         updateLocalStorage()
         $scope.data.sortedData = $scope.gridOptions.sortedData
+        if updatePlaylist
+          $scope.updatePlaylist()
+          updatePlaylist = false
         if $scope.data.songToSelect
           if _.isObject $scope.data.songToSelect
             $scope.selectTrack $scope.data.songToSelect
@@ -262,6 +266,7 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
       true
 
   $scope.customSort = (e, col, columns) ->
+    updatePlaylist = true
     $scope.columns = columns
     e.shiftKey = false
     switch col.field

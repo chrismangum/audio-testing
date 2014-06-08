@@ -45,7 +45,18 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
     $scope.unfilterData = ->
       $scope.gridOptions.gridData = $scope.data.songs
 
+    $scope.updatePlaylist = ->
+      $scope.data.playlist = switch
+        when $scope.data.shuffledData.length
+          $scope.data.shuffledData
+        when $scope.data.sortedData.length
+          $scope.data.sortedData
+        else
+          $scope.gridOptions.gridData
+      console.log $scope.data.playlist
+
     $scope.play = (track) ->
+      $scope.updatePlaylist()
       $scope.$broadcast 'play', track
 
     $scope.scrollToTrack = (track) ->

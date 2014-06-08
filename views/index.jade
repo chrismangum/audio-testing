@@ -69,7 +69,7 @@ html
       .player-buttons
         button.button(ng-class="{'active': repeat}", ng-click="toggleRepeat()")
           span(class="{{ repeat == 'one' ? 'icon-repeat-one' : 'icon-repeat' }}")
-        button.button(ng-class="{active: shuffling}", ng-click="toggleShuffle()")
+        button.button(ng-class="{active: data.shuffledData.length}", ng-click="toggleShuffle()")
           span.icon-shuffle
         volume-slider
     script(src="/socket.io/socket.io.js")
