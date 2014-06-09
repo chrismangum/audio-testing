@@ -1,0 +1,50 @@
+//==========================================================================
+// Modal
+//==========================================================================
+
+  .fade {
+    opacity: 0;
+    transition: opacity .2s ease;
+
+    &.in {
+      opacity: 1;
+    }
+  }
+
+  .modal-backdrop{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+  }
+
+  .modal {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+  }
+
+  .modal-dialog {
+    margin: 20px;
+    transition: all .3s ease;
+
+    .fade & {
+      transform: translate(0, -25%);
+    }
+
+    .in & {
+      transform: translate(0,0);
+    }
+  }
+
+  .modal-content {
+    margin: auto;
+    max-width: 600px;
+    padding: 20px;
+    background: $view-background;
+  }
