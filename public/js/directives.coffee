@@ -156,7 +156,7 @@ app.directive 'volumeSlider', ($storage) ->
       $scope.safeApply()
 
     setVolume = ->
-      $scope.volume = $(@).val()
+      $scope.volume = parseInt $(@).val(), 10
       updateVolume()
 
     slider = el
