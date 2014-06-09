@@ -5,7 +5,7 @@
     .dropdown-wrapper.actions
       a.dropdown-toggle(ng-click="showDropdown = !showDropdown")
         | Sorted By {{ albumSort.name }}
-      .dropdown.dropdown-right(ng-class="{show: showDropdown}")
+      .dropdown(ng-class="{show: showDropdown}")
         ul.dropdown-menu
           li
             a(ng-click="setAlbumSort('Artist'); showDropdown = false") Artist
