@@ -4,7 +4,6 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
     $scope.params = $routeParams
     $scope.selectedItems = {}
     $scope.gridOptions = {}
-    $scope.artwork = 'large'
     $scope.data =
       shuffledData: []
       sortedData: []
@@ -39,6 +38,14 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
         ]
       deferred.promise
 
+    #artwork size
+    $scope.artworkSize = $storage.artworkSize
+    $scope.toggleArtworkSize = ->
+      $scope.artworkSize = switch $scope.artworkSize
+        when 'large' then 'small'
+        else 'large'
+      $storage.artworkSize = $scope.artworkSize
+      $storage.save()
 
     $scope.setAlbumSort = (sort, preventSort) ->
       if sort is 'Artist'

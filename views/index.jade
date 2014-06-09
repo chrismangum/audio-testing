@@ -41,12 +41,12 @@ html
                 span.icon-playlist
                 | Hibbity Hoppity
         .now-playing-container(ng-class="{isPlaying: !!data.nowPlaying}")
-          .now-playing-artwork.now-playing-artwork-large(ng-class="{'hide-artwork': artwork == 'small'}")
-            button.button.resize-artwork(ng-click="artwork = 'small'")
+          .now-playing-artwork.now-playing-artwork-large(ng-class="{'hide-artwork': artworkSize == 'small'}")
+            button.button.resize-artwork(ng-click="toggleArtworkSize()")
               span.icon-minimize
             img(ng-if="data.nowPlaying.coverArtURL", ng-src="{{data.nowPlaying.coverArtURL}}")
           .now-playing
-            .now-playing-artwork.now-playing-artwork-small(ng-click="artwork = 'large'", ng-class="{'hide-artwork': artwork == 'large'}")
+            .now-playing-artwork.now-playing-artwork-small(ng-click="toggleArtworkSize()", ng-class="{'hide-artwork': artworkSize == 'large'}")
               button.button.resize-artwork
                 span.icon-maximize
               img(ng-if="data.nowPlaying.coverArtURL", ng-src="{{data.nowPlaying.coverArtURL}}")
