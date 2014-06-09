@@ -3549,7 +3549,7 @@ angular.module('ngGrid').run(['$templateCache', function($templateCache) {
     "\n" +
     "</div>\r" +
     "\n" +
-    "<div ng-show=\"showMenu\" class=\"ngColMenu\">\r" +
+    "<div class=\"ngColMenu\" ng-class=\"{ show: showMenu }\">\r" +
     "\n" +
     "    <div ng-show=\"showFilter\">\r" +
     "\n" +
