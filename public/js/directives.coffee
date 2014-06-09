@@ -109,7 +109,13 @@ app.directive 'volumeSlider', ($storage) ->
   template:
     '<div class="volume" ng-click="showSlider = !showSlider">
       <button class="button">
-        <span ng-class="{\'icon-volume-high\': volume > 66, \'icon-volume-medium\': volume > 33 && volume <= 66, \'icon-volume-low\': volume > 0 && volume <= 33, \'icon-volume-off\': !volume}"></span>
+        <span ng-if="muted" ng-click="toggleMute()" class="icon-mute"></span>
+        <span ng-if="!muted" ng-click="toggleMute()" ng-class="{
+          \'icon-volume-high\': volume > 66,
+          \'icon-volume-medium\': volume > 33 && volume <= 66,
+          \'icon-volume-low\': volume > 0 && volume <= 33,
+          \'icon-volume-off\': !volume
+        }"></span>
       </button>
       <div ng-class="{show: showSlider}">
         <div class="volume-slider"></div>
@@ -119,6 +125,16 @@ app.directive 'volumeSlider', ($storage) ->
   link: ($scope, el, attrs) ->
     $scope.showSlider = false
     $scope.volume = parseInt $storage.volume, 10
+    $scope.muted = false
+
+    $scope.toggleMute = ->
+      $scope.muted = !$scope.muted
+      if $scope.muted
+        $scope.volume = 0
+        updateVolume true, false
+      else
+        $scope.volume = parseInt $storage.volume, 10
+        updateVolume true, false
 
     increaseVolume = (amount = 10) ->
       $scope.volume += amount
@@ -130,12 +146,13 @@ app.directive 'volumeSlider', ($storage) ->
       $scope.volume = 0 if $scope.volume < 0
       updateVolume true
 
-    updateVolume = (setSlider) ->
+    updateVolume = (setSlider, save = true) ->
       if setSlider
         slider.val $scope.volume
       $scope.player?.setVolume $scope.volume
-      $storage.volume = $scope.volume
-      $storage.save()
+      if save
+        $storage.volume = $scope.volume
+        $storage.save()
       $scope.safeApply()
 
     setVolume = ->
