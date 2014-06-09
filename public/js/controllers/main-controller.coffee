@@ -1,6 +1,6 @@
 
-app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal', '$q'
-  ($scope, $routeParams, $timeout, $filter, $modal, $q) ->
+app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal', '$q', '$storage'
+  ($scope, $routeParams, $timeout, $filter, $modal, $q, $storage) ->
     $scope.params = $routeParams
     $scope.selectedItems = {}
     $scope.gridOptions = {}
@@ -50,10 +50,11 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
           name: 'Title'
           value: 'name'
       unless preventSort
+        $storage.albumSort = sort
+        $storage.save()
         $scope.sortViewData()
 
-    #default value:
-    $scope.setAlbumSort 'Artist', true
+    $scope.setAlbumSort $storage.albumSort, true
 
     $scope.$on 'ngGridEventSorted', do ->
       throttle = null
