@@ -39,6 +39,7 @@
     @extend %flex-row;
     box-shadow: $view-box-shadow;
     flex: 1;
+    z-index: 1;
   }
   
   a {

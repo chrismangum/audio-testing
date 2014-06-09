@@ -4,6 +4,21 @@
 
   @import "../../mixins";
 
+  @function light-color($color, $amount) {
+    @if (lightness($color) > 50) {
+      @return darken($color, $amount);
+    } @else {
+      @return lighten($color, $amount);
+    }
+  }
+
+  @function mix-color($color, $amount) {
+    @if (lightness($color) > 50) {
+      @return shade($color, $amount);
+    } @else {
+      @return tint($color, $amount);
+    }
+  }
 
 //==========================================================================
 // Override Default Theme Variables
@@ -11,9 +26,8 @@
   
   // Colors
   //========================================================================
-  //$primary: #16a085; // Sea Green
-  //$secondary: #bdc3c7; // Silver
-  //$tertiary: #d35400; // Pumpkin
+  // $primary: #2980b9; // Royal Blue
+  // $secondary: #333; // Dark Grey
 
 
 //==========================================================================

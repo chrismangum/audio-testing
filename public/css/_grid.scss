@@ -97,10 +97,10 @@
 
   .ngHeaderButton {
     position: absolute;
-    top: 14px;
-    right: 14px;
+    top: 8px;
+    right: 12px;
     z-index: 1;
-    color: $view-main-header-column-button-color;
+    color: $view-header-color-muted;
     font-size: 16px;
     line-height: 0;
     cursor: pointer;
@@ -130,15 +130,19 @@
     font-size: 11px;
     line-height: $label-height;
 
-    &:hover {
+    // &:hover {
+    //   color: $label-color-hover;
+    // }
+
+    .ngSorted & {
       color: $label-color-hover;
     }
   }
 
   .ngColMenu {
     position: absolute;
-    top: 34px;
-    right: 1px;
+    top: 24px;
+    right: 3px;
     z-index: 1;
   }
 
@@ -169,7 +173,7 @@
       cursor: pointer;
 
       &:hover {
-        background: $dropdown-menu-link-background-hover;
+        color: $dropdown-menu-link-color-hover;
       }
     }
 
@@ -205,19 +209,16 @@
   .ngRow {
     position: absolute;
     min-width: 100%;
-    color: $row-color;
+    color: $view-item-color;
     cursor: pointer;
 
-    &:hover {
-      color: $row-color-hover;
-    }
-
     &.selected {
-      background-color: $row-background-color-selected;
-      color: $row-color-selected;
+      background-color: $view-item-background-selected;
+      color: $view-item-color-selected;
 
       .focused & {
-        background-color: $row-background-color-focused;
+        background-color: $view-item-background-focused;
+        color: $view-item-color-focused;
       }
     }
   }
@@ -237,8 +238,7 @@
   .ngCellText {
     @extend %no-wrap;
     padding: 0 $row-padding;
-    font-weight: $row-font-weight;
-    font-size: $row-font-size;
+    font-size: 11px;
     line-height: $row-height;
 
     &.now-playing-indicator,
