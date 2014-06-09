@@ -48,7 +48,7 @@ app.controller 'grid', ['$scope', '$timeout', '$storage', ($scope, $timeout, $st
         </div>'
     artist:
       field: 'artist'
-      displayName: 'Artist (Albums A-Z)'
+      displayName: $storage.columnPrefs.artistColumn
       isSorted: true
     album:
       field: 'album'
@@ -267,10 +267,12 @@ app.controller 'grid', ['$scope', '$timeout', '$storage', ($scope, $timeout, $st
           if col.displayName is 'Artist (Albums A-Z)'
             col.displayName = 'Artist (Albums by Year)'
             availableColumns.artist.displayName = 'Artist (Albums by Year)'
+            $storage.columnPrefs.artistColumn = 'Artist (Albums by Year)'
             sortColumns e, ['year', 'album', 'trackNumber']
           else
             col.displayName = 'Artist (Albums A-Z)'
             availableColumns.artist.displayName = 'Artist (Albums A-Z)'
+            $storage.columnPrefs.artistColumn = 'Artist (Albums A-Z)'
             sortColumns e, ['album', 'trackNumber']
       when 'album'
         col.sort e
