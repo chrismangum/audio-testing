@@ -132,20 +132,20 @@ app.directive 'volumeSlider', ($storage) ->
 
     updateVolume = (setSlider) ->
       if setSlider
-        slider.val 100 - $scope.volume
+        slider.val $scope.volume
       $scope.player?.setVolume $scope.volume
       $storage.volume = $scope.volume
       $storage.save()
       $scope.safeApply()
 
     setVolume = ->
-      $scope.volume = 100 - $(@).val()
+      $scope.volume = $(@).val()
       updateVolume()
 
     slider = el
       .find '.volume-slider'
       .noUiSlider
-        start: 100 - $scope.volume
+        start: $scope.volume
         orientation: 'horizontal'
         connect: 'lower'
         range:
@@ -157,7 +157,7 @@ app.directive 'volumeSlider', ($storage) ->
     $scope.$watch 'player.volume', (n, o) ->
       if n isnt o
         $scope.volume = n
-        slider.val 100 - n
+        slider.val n
 
     $(document).on 'keydown', (e) ->
       unless $scope.data.searchFocus
