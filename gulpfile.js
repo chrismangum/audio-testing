@@ -58,7 +58,7 @@ gulp.task('jade', function () {
 gulp.task('nodemon', function () {
   plugin.nodemon({
     script: 'server/app.js',
-    ext: 'js,coffee',
+    ext: 'js',
     ignore: ['public/*', 'node_modules/*']
   });
 });
