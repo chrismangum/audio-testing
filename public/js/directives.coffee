@@ -86,7 +86,7 @@ app.directive 'list', ($filter) ->
       calcCanvasHeight()
       $scope.updateRowVisibility()
 
-    $(document).on 'keydown', (e) ->
+    arrowKeys = (e) ->
       unless $scope.data.searchFocus
         switch e.keyCode
           when 38 #up arrow
@@ -99,6 +99,10 @@ app.directive 'list', ($filter) ->
               $scope.selectAdjacentListItem 1
               $scope.safeApply()
             false
+
+    $(document).on 'keydown', arrowKeys
+    $scope.$on '$destroy', ->
+      $(document).off 'keydown', arrowKeys
 
 app.directive 'volumeSlider', ($storage) ->
   restrict: 'E'

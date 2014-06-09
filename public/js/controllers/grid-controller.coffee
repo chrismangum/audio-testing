@@ -112,7 +112,6 @@ app.controller 'grid', ['$scope', '$timeout', '$storage', ($scope, $timeout, $st
     $storage.save()
 
   $scope.$on 'newColumnOrder', (e, columns) ->
-    console.log columns
     order = _.compact _.pluck columns, 'field'
     _.forEach order, (val, i) ->
       $scope.gridOptions.columnDefs[i] = availableColumns[val]
