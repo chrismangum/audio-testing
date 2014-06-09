@@ -74,31 +74,31 @@
     }
   }
 
+  .noUi-base {
+    &:before {
+      background: $player-slider-filled-background;
+    }
+  }
+
+  .noUi-origin {
+    &:before {
+      background: $player-slider-empty-background;
+    }
+  }
+
+  .noUi-handle {
+    border-color: $player-background;
+    background: $player-slider-handle-background;
+
+    &:hover {
+      background: $player-slider-handle-background-hover;
+    }
+  }
+
   .progress-bar {
     position: relative;
     margin: 0 15px;
     flex: 1;
-
-    .noUi-base {
-      &:before {
-        background: $player-slider-filled-background;
-      }
-    }
-
-    .noUi-origin {
-      &:before {
-        background: $player-slider-empty-background;
-      }
-    }
-
-    .noUi-handle {
-      border-color: $player-background;
-      background: $player-slider-handle-background;
-
-      &:hover {
-        background: $player-slider-handle-background-hover;
-      }
-    }
   }
   
   .volume {
@@ -109,25 +109,4 @@
   .volume-slider {
     position: relative;
     width: 80px;
-
-    .noUi-base {
-      &:before {
-        background: $player-slider-empty-background;
-      }
-    }
-
-    .noUi-origin {
-      &:before {
-        background: $player-slider-filled-background;
-      }
-    }
-
-    .noUi-handle {
-      border-color: $player-background;
-      background: $player-slider-handle-background;
-
-      &:hover {
-        background: $player-slider-handle-background-hover;
-      }
-    }
   }
