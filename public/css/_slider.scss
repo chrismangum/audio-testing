@@ -2,6 +2,10 @@
 // Slider
 //==========================================================================
 
+  .noUi-horizontal {
+    margin: 0 8px;
+  }
+  
   .noUi-base,
   .noUi-origin {
 
@@ -38,6 +42,10 @@
     &:hover {
       cursor: pointer;
     }
+
+    &:before {
+      margin-left: -8px;
+    }
   }
 
   .noUi-origin {
@@ -46,6 +54,10 @@
     right: 0;
     bottom: 0;
     left: 0;
+
+    &:before {
+      margin-right: -8px;
+    }
   }
 
   .noUi-handle {

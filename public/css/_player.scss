@@ -100,20 +100,15 @@
       }
     }
   }
-
-  .volume-dropdown {
-    .dropdown {
-      bottom: 45px;
-      right: 8px;
-      padding: 15px 5px;
-      border-radius: 20px;
-      background: $player-background;
-    }
+  
+  .volume {
+    @extend %flex-row;
+    align-items: center;
   }
 
   .volume-slider {
     position: relative;
-    height: 100px;
+    width: 80px;
 
     .noUi-base {
       &:before {

@@ -107,11 +107,11 @@ app.directive 'list', ($filter) ->
 app.directive 'volumeSlider', ($storage) ->
   restrict: 'E'
   template:
-    '<div class="dropdown-wrapper volume-dropdown" ng-click="showSlider = !showSlider">
-      <button class="button dropdown-toggle">
+    '<div class="volume" ng-click="showSlider = !showSlider">
+      <button class="button">
         <span ng-class="{\'icon-volume-high\': volume > 66, \'icon-volume-medium\': volume > 33 && volume <= 66, \'icon-volume-low\': volume > 0 && volume <= 33, \'icon-volume-off\': !volume}"></span>
       </button>
-      <div class="dropdown" ng-class="{show: showSlider}">
+      <div ng-class="{show: showSlider}">
         <div class="volume-slider"></div>
       </div>
     </div>'
@@ -146,7 +146,7 @@ app.directive 'volumeSlider', ($storage) ->
       .find '.volume-slider'
       .noUiSlider
         start: 100 - $scope.volume
-        orientation: 'vertical'
+        orientation: 'horizontal'
         connect: 'lower'
         range:
           'min': 0
