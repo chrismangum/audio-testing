@@ -94,7 +94,7 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
       $scope.selectedItems[type] = item
       #select first song if songToSelect isn't set
       unless $scope.data.songToSelect
-        $scope.data.songToSelect = item.songs[0]
+        $scope.data.songToSelect = true
       $scope.filterData item.songs
 
     $scope.safeApply = (fn) ->
