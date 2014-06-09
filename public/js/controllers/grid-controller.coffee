@@ -48,6 +48,7 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
       if throttle
         $timeout.cancel throttle
       throttle = $timeout (->
+        sortInfo.columns[0].isSorted = true
         $scope.columnPrefs.sortInfo =  _.pick sortInfo, 'fields', 'directions'
         updateLocalStorage()
         $scope.data.sortedData = $scope.gridOptions.sortedData
@@ -78,6 +79,7 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
     artist:
       field: 'artist'
       displayName: 'Artist (Albums A-Z)'
+      isSorted: true
     album:
       field: 'album'
     genre:
@@ -93,10 +95,10 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
           <span ng-cell-text>{{ COL_FIELD }}</span>
         </div>'
       headerCellTemplate:
-        '<div class="ngHeaderSortColumn {{col.headerClass}}" ng-style="{\'cursor\': col.cursor}" ng-class="{ \'ngSorted\': !noSortVisible }">
+        '<div class="ngHeaderSortColumn" ng-style="{\'cursor\': col.cursor}" ng-class="{ \'ngSorted\': col.isSorted }">
           <div ng-click="customSort($event, col, columns)" ng-class="\'colt\' + col.index" class="ngHeaderText">{{col.displayName}}</div>
-          <div class="ngSortButtonDown" ng-show="col.showSortButtonDown()"></div>
-          <div class="ngSortButtonUp" ng-show="col.showSortButtonUp()"></div>
+          <div class="ngSortButtonDown" ng-show="col.isSorted && col.showSortButtonDown()" ng-click="customSort($event, col, columns, true)"></div>
+          <div class="ngSortButtonUp" ng-show="col.isSorted && col.showSortButtonUp()" ng-click="customSort($event, col, columns, true)"></div>
           <div ng-class="{ ngPinnedIcon: col.pinned, ngUnPinnedIcon: !col.pinned }" ng-click="togglePin(col)" ng-show="col.pinnable"></div>
         </div>
         <div ng-show="col.resizable" class="ngHeaderGrip" ng-click="col.gripClick($event)" ng-mousedown="col.gripOnMouseDown($event)"></div>'
@@ -265,20 +267,33 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
       _.find($scope.columns, field: field).sort e
       true
 
-  $scope.customSort = (e, col, columns) ->
+  $scope.customSort = (e, col, columns, toggleDirection) ->
     updatePlaylist = true
+    #remove sorted prop from all columns
+    _.forEach columns, (col) ->
+      delete col.isSorted
+    col.isSorted = true
     $scope.columns = columns
     e.shiftKey = false
     switch col.field
       when 'artist'
-        col.sortDirection = 'desc'
-        col.sort e
-        if col.displayName is 'Artist (Albums A-Z)'
-          col.displayName = 'Artist (Albums by Year)'
-          sortColumns e, ['year', 'album', 'trackNumber']
+        if toggleDirection
+          col.sort e
+          if col.displayName is 'Artist (Albums A-Z)'
+            sortColumns e, ['album', 'trackNumber']
+          else
+            sortColumns e, ['year', 'album', 'trackNumber']
         else
-          col.displayName = 'Artist (Albums A-Z)'
-          sortColumns e, ['album', 'trackNumber']
+          col.sortDirection = switch col.sortDirection
+            when 'desc' then 'asc'
+            else 'desc'
+          col.sort e
+          if col.displayName is 'Artist (Albums A-Z)'
+            col.displayName = 'Artist (Albums by Year)'
+            sortColumns e, ['year', 'album', 'trackNumber']
+          else
+            col.displayName = 'Artist (Albums A-Z)'
+            sortColumns e, ['album', 'trackNumber']
       when 'album'
         col.sort e
         sortColumns e, ['trackNumber']
