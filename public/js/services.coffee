@@ -6,6 +6,7 @@ app.factory '$storage', ->
         _.assign @, JSON.parse localStorage.mediaPlayer
       else
         _.assign @,
+          #defaults
           columnPrefs:
             visibility:
               trackNumber: true
@@ -18,11 +19,11 @@ app.factory '$storage', ->
               trackNumber: 30
             artistColumn: 'Artist (Albums A-Z)'
             order: [
-              'trackNumber',
-              'title',
-              'artist',
-              'album',
-              'genre',
+              'trackNumber'
+              'title'
+              'artist'
+              'album'
+              'genre'
               'year'
             ]
             sortInfo:
@@ -32,10 +33,5 @@ app.factory '$storage', ->
           albumSort: 'Artist'
         @save()
     save: ->
-      prefs = _.pick @, [
-        'columnPrefs'
-        'volume'
-        'albumSort'
-      ]
-      localStorage.mediaPlayer = JSON.stringify prefs
+      localStorage.mediaPlayer = JSON.stringify @
   new Storage
