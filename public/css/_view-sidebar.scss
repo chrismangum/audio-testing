@@ -19,21 +19,17 @@
     z-index: 2;
     padding: 8px 10px;
     width: 100%;
-    background: $view-sidebar-header-background;
+    background: $view-header-background;
     box-shadow: 0 0px 2px rgba(0,0,0,0.4);
-    color: $view-sidebar-header-color;
+    color: $view-header-color-muted;
     
     .search {
       flex: 1;
 
-      &:before {
-        color: $view-sidebar-header-search-color;
-      }
-
       input {
-        @include placeholder($view-sidebar-header-search-color);
+        @include placeholder($view-header-color-muted);
         padding-right: 8px;
-        color: $view-sidebar-header-search-input-color;
+        color: $view-header-color;
       }
     }
     
@@ -60,7 +56,7 @@
 
   .view-sidebar-list {
     overflow-y: scroll;
-    background: $view-sidebar-list-background;
+    background: $view-background;
     flex: 1;
     
     ul {
@@ -73,35 +69,24 @@
 
     .item {
       position: relative;
-      background: $view-sidebar-item-background;
       width: 232px;
       position: absolute;
 
-      &.hover {
-        background: $view-sidebar-item-background-hover;
-
-        .item-info-name {
-          color: $view-sidebar-item-info-name-color-hover;
-        }
-
-        .item-info-details {
-          color: $view-sidebar-item-info-details-color-hover;
-        }
-      }
-
       &.selected {
-        background: $view-sidebar-item-background-selected;
+        background: $view-item-background-selected;
+        
+        .item-info-name,
+        .item-info-details {
+          color: $view-item-color-selected;
+        }
         
         .focused & {
-          background: $view-sidebar-item-background-focused;
-        }
-        
-        .item-info-name {
-          color: $view-sidebar-item-info-name-color-selected;
-        }
+          background: $view-item-background-focused;
 
-        .item-info-details {
-          color: $view-sidebar-item-info-details-color-selected;
+          .item-info-name,
+          .item-info-details {
+            color: $view-item-color-focused;
+          }
         }
       }
 
@@ -127,14 +112,14 @@
     .item-info-name {
       @extend %no-wrap;
       padding-bottom: 4px;
-      color: $view-sidebar-item-info-name-color;
+      color: $view-item-color;
       font-weight: bold;
       font-size: 12px;
     }
 
     .item-info-details {
       @extend %no-wrap;
-      color: $view-sidebar-item-info-details-color;
+      color: $view-item-color-muted;
       font-size: 11px;
     }
   }
