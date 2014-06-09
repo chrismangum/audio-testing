@@ -290,9 +290,11 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
           col.sort e
           if col.displayName is 'Artist (Albums A-Z)'
             col.displayName = 'Artist (Albums by Year)'
+            availableColumns.artist.displayName = 'Artist (Albums by Year)'
             sortColumns e, ['year', 'album', 'trackNumber']
           else
             col.displayName = 'Artist (Albums A-Z)'
+            availableColumns.artist.displayName = 'Artist (Albums A-Z)'
             sortColumns e, ['album', 'trackNumber']
       when 'album'
         col.sort e
