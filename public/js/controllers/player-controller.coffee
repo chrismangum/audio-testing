@@ -1,5 +1,5 @@
 
-app.controller 'player', ['$scope', '$timeout', ($scope, $timeout) ->
+app.controller 'player', ['$scope', '$timeout', '$storage', ($scope, $timeout, $storage) ->
   $scope.progress = 0
   $scope.player = null
   $scope.repeat = false
@@ -62,7 +62,7 @@ app.controller 'player', ['$scope', '$timeout', ($scope, $timeout) ->
         track ?= getSelectedTrack()
         track.playing = play
         $scope.mainSocket.emit 'spawnPlayer'
-        $scope.player = new Player track, $scope
+        $scope.player = new Player track
       $scope.safeApply()
 
   $scope.$on 'play', (e, track) ->
@@ -113,73 +113,59 @@ app.controller 'player', ['$scope', '$timeout', ($scope, $timeout) ->
         when 55 then $scope.player?.seekToPercent 70
         when 56 then $scope.player?.seekToPercent 80
         when 57 then $scope.player?.seekToPercent 90
-        when 187 then $scope.player?.increaseVolume()
-        when 189 then $scope.player?.decreaseVolume()
+
+  class Player
+    constructor: (@entity) ->
+      if $storage.volume
+        @volume = parseInt $storage.volume, 10
+      $scope.data.nowPlaying = @entity
+
+    stop: ->
+      unless $scope.preventPlay
+        $scope.playerSocket.disconnect()
+      delete @entity.playing
+
+    seek: (timestamp) ->
+      $scope.playerSocket.emit 'seek', timestamp
+
+    play: ->
+      if @entity.playing
+        $scope.playerSocket.emit 'play', @entity, @volume
+
+    previous: ->
+      if @currentTime > 1000
+        @seek 0
+      else
+        $scope.play $scope.getAdjacentTrack(-1), @playing
+
+    setProgress: (currentTime) ->
+      @currentTime = currentTime
+      @progress = currentTime / @duration * 100
+      $scope.safeApply()
+
+    checkSong: (filePath) ->
+      if filePath isnt @entity.filePath
+        @play @entity
+
+    next: ->
+      $scope.play $scope.getAdjacentTrack(1), @playing
+
+    end: ->
+      if $scope.repeat is 'one'
+        $scope.play @entity
+      else
+        @next()
+
+    setVolume: (percent = @volume) ->
+      $scope.playerSocket.emit 'volume', percent
+
+    seekToPercent: (percent) ->
+      @seek percent / 100 * @duration
+
+    togglePlayback: ->
+      if @entity.playing
+        @stop()
+      else
+        $scope.play @entity
 ]
-
-class Player
-  constructor: (@entity, @scope) ->
-    if localStorage.volume
-      @volume = parseInt localStorage.volume, 10
-    @scope.data.nowPlaying = @entity
-
-  stop: ->
-    unless @scope.preventPlay
-      @scope.playerSocket.disconnect()
-    delete @entity.playing
-
-  seek: (timestamp) ->
-    @scope.playerSocket.emit 'seek', timestamp
-
-  play: ->
-    if @entity.playing
-      @scope.playerSocket.emit 'play', @entity, @volume
-
-  previous: ->
-    if @currentTime > 1000
-      @seek 0
-    else
-      @scope.play @scope.getAdjacentTrack(-1), @playing
-
-  setProgress: (currentTime) ->
-    @currentTime = currentTime
-    @progress = currentTime / @duration * 100
-    @scope.safeApply()
-
-  checkSong: (filePath) ->
-    if filePath isnt @entity.filePath
-      @play @entity
-
-  next: ->
-    @scope.play @scope.getAdjacentTrack(1), @playing
-
-  end: ->
-    if @scope.repeat is 'one'
-      @scope.play @entity
-    else
-      @next()
-
-  setVolume: (percent = @volume) ->
-    localStorage.volume = percent
-    @scope.playerSocket.emit 'volume', percent
-
-  increaseVolume: (amount = 10) ->
-    @volume += amount
-    @volume = 100 if @volume > 100
-    @setVolume()
-
-  decreaseVolume: (amount = 10) ->
-    @volume -= amount
-    @volume = 0 if @volume < 0
-    @setVolume()
-
-  seekToPercent: (percent) ->
-    @seek percent / 100 * @duration
-
-  togglePlayback: ->
-    if @entity.playing
-      @stop()
-    else
-      @scope.play @entity
-
 

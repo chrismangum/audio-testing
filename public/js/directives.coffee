@@ -100,7 +100,7 @@ app.directive 'list', ($filter) ->
               $scope.safeApply()
             false
 
-app.directive 'volumeSlider', ->
+app.directive 'volumeSlider', ($storage) ->
   restrict: 'E'
   template:
     '<div class="dropdown-wrapper volume-dropdown" ng-click="showSlider = !showSlider">
@@ -114,12 +114,29 @@ app.directive 'volumeSlider', ->
   replace: true
   link: ($scope, el, attrs) ->
     $scope.showSlider = false
-    $scope.volume = localStorage.volume or 100
+    $scope.volume = $storage.volume
+
+    increaseVolume = (amount = 10) ->
+      $scope.volume += amount
+      $scope.volume = 100 if $scope.volume > 100
+      updateVolume true
+
+    decreaseVolume = (amount = 10) ->
+      $scope.volume -= amount
+      $scope.volume = 0 if $scope.volume < 0
+      updateVolume true
+
+    updateVolume = (setSlider) ->
+      if setSlider
+        slider.val 100 - $scope.volume
+      $scope.player?.setVolume $scope.volume
+      $storage.volume = $scope.volume
+      $storage.save()
+      $scope.safeApply()
 
     setVolume = ->
       $scope.volume = 100 - $(@).val()
-      $scope.player?.setVolume $scope.volume
-      $scope.safeApply()
+      updateVolume()
 
     slider = el
       .find '.volume-slider'
@@ -137,6 +154,12 @@ app.directive 'volumeSlider', ->
       if n isnt o
         $scope.volume = n
         slider.val 100 - n
+
+    $(document).on 'keydown', (e) ->
+      unless $scope.data.searchFocus
+        switch e.keyCode
+          when 187 then increaseVolume()
+          when 189 then decreaseVolume()
 
 app.directive 'slider', ->
   restrict: 'E'
