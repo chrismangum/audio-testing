@@ -31,6 +31,7 @@ app.factory '$storage', ->
               directions: ['asc', 'asc', 'asc']
           volume: 100
           albumSort: 'Artist'
+          artworkSize: 'large'
         @save()
     save: ->
       localStorage.mediaPlayer = JSON.stringify @
