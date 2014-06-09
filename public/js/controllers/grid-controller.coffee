@@ -1,5 +1,5 @@
 
-app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
+app.controller 'grid', ['$scope', '$timeout', '$storage', ($scope, $timeout, $storage) ->
   updatePlaylist = false
   $scope.search = {}
 
@@ -7,36 +7,6 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
     $scope.data.focusedPane = switch $scope.data.focusedPane
       when 'list' then 'grid'
       else 'list'
-
-  ### Grid Preferences ###
-  updateLocalStorage = (prefs) ->
-    localStorage.columnPrefs = JSON.stringify prefs or $scope.columnPrefs
-
-  #defaults:
-  unless localStorage.columnPrefs
-    updateLocalStorage
-      visibility:
-        trackNumber: true
-        title: true
-        artist: true
-        album: true
-        genre: true
-        year: true
-      widths:
-        trackNumber: 30
-      order: [
-        'trackNumber',
-        'title',
-        'artist',
-        'album',
-        'genre',
-        'year'
-      ]
-      sortInfo:
-        fields: ['artist', 'album', 'trackNumber']
-        directions: ['asc', 'asc', 'asc']
-
-  $scope.columnPrefs = JSON.parse localStorage.columnPrefs
 
   $scope.$watch 'search.grid', (n, o) ->
     if n isnt o
@@ -49,8 +19,8 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
         $timeout.cancel throttle
       throttle = $timeout (->
         sortInfo.columns[0].isSorted = true
-        $scope.columnPrefs.sortInfo =  _.pick sortInfo, 'fields', 'directions'
-        updateLocalStorage()
+        $storage.columnPrefs.sortInfo =  _.pick sortInfo, 'fields', 'directions'
+        $storage.save()
         $scope.data.sortedData = $scope.gridOptions.sortedData
         if updatePlaylist
           $scope.updatePlaylist()
@@ -120,28 +90,29 @@ app.controller 'grid', ['$scope', '$timeout', ($scope, $timeout) ->
       </div>'
     selectedItems: []
     showColumnMenu: true
-    sortInfo: $scope.columnPrefs.sortInfo
+    sortInfo: $storage.columnPrefs.sortInfo
 
   #set saved column order / visibility
-  _.forEach $scope.columnPrefs.order, (val, i) ->
-    availableColumns[val].visible = $scope.columnPrefs.visibility[val]
+  _.forEach $storage.columnPrefs.order, (val, i) ->
+    availableColumns[val].visible = $storage.columnPrefs.visibility[val]
     $scope.gridOptions.columnDefs[i] = availableColumns[val]
 
   #set saved column widths
-  _.forEach $scope.columnPrefs.widths, (val, key) ->
+  _.forEach $storage.columnPrefs.widths, (val, key) ->
     availableColumns[key].width = val
 
   $scope.$on 'newColumnWidth', (e, col) ->
     availableColumns[col.field].width = col.width
-    $scope.columnPrefs.widths[col.field] = col.width
-    updateLocalStorage()
+    $storage.columnPrefs.widths[col.field] = col.width
+    $storage.save()
 
   $scope.$on 'newColumnOrder', (e, columns) ->
+    console.log columns
     order = _.compact _.pluck columns, 'field'
     _.forEach order, (val, i) ->
       $scope.gridOptions.columnDefs[i] = availableColumns[val]
-    $scope.columnPrefs.order = order
-    updateLocalStorage()
+    $storage.columnPrefs.order = order
+    $storage.save()
 
 
   ### Grid Selection ###
