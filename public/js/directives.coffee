@@ -118,7 +118,7 @@ app.directive 'volumeSlider', ($storage) ->
   replace: true
   link: ($scope, el, attrs) ->
     $scope.showSlider = false
-    $scope.volume = $storage.volume
+    $scope.volume = parseInt $storage.volume, 10
 
     increaseVolume = (amount = 10) ->
       $scope.volume += amount
