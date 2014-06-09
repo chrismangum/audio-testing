@@ -101,6 +101,11 @@ app.controller 'grid', ['$scope', '$timeout', '$storage', ($scope, $timeout, $st
   _.forEach $storage.columnPrefs.widths, (val, key) ->
     availableColumns[key].width = val
 
+  $scope.toggleColVisibility = (col) ->
+    availableColumns[col.field].visible = !col.visible
+    $storage.columnPrefs.visibility[col.field] = !col.visible
+    $storage.save()
+
   $scope.$on 'newColumnWidth', (e, col) ->
     availableColumns[col.field].width = col.width
     $storage.columnPrefs.widths[col.field] = col.width

@@ -2,7 +2,6 @@
 app.factory '$storage', ->
   class Storage
     constructor: ->
-      console.log 'initting storage service'
       if localStorage.mediaPlayer
         _.assign @, JSON.parse localStorage.mediaPlayer
       else
