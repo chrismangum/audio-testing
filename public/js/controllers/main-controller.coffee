@@ -4,6 +4,7 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
     $scope.params = $routeParams
     $scope.selectedItems = {}
     $scope.gridOptions = {}
+    $scope.artwork = 'large'
     $scope.data =
       shuffledData: []
       sortedData: []
