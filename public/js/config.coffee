@@ -1,4 +1,4 @@
-window.app = angular.module 'app', ['ngRoute', 'ngGrid']
+window.app = angular.module 'app', ['ngRoute', 'ngGrid', 'ui.bootstrap']
 
 app.config ['$routeProvider', '$locationProvider'
   ($routeProvider, $locationProvider) ->

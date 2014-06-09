@@ -1,6 +1,6 @@
 
-app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
-  ($scope, $routeParams, $timeout, $filter) ->
+app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal', '$q'
+  ($scope, $routeParams, $timeout, $filter, $modal, $q) ->
     $scope.params = $routeParams
     $scope.selectedItems = {}
     $scope.gridOptions = {}
@@ -16,6 +16,29 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter'
       searchFocus: false
       focusedPane: 'list'
       songToSelect: false
+
+    $scope.openModal = ->
+      deferred = $q.defer()
+      modal = $modal.open
+        template:
+          '<div>
+            <div class="modal-header">
+              <h4 class="modal-title">Jon\'s Fancy Modal</h4>
+            </div>
+            <div class="modal-body">
+              <p>Jon\'s modal... so fancy...</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-sm btn-default" ng-click="$close()">Close</button>
+              <button type="button" class="btn btn-sm btn-danger" ng-click="$dismiss()">Cancel</button>
+            </div>
+          </div>'
+        controller: ['$scope', (scope) ->
+          modal.result.then ->
+            deferred.resolve {}
+        ]
+      deferred.promise
+
 
     $scope.setAlbumSort = (sort, preventSort) ->
       if sort is 'Artist'
