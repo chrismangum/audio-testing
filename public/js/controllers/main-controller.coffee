@@ -152,8 +152,6 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
         artist.albums.push new Album [track]
       else
         album.songs.push track
-        unless album.coverArtURL
-          album.coverArtURL = track.coverArtURL or false
 
     checkArtist = (track) ->
       unless artist = _.find $scope.data.artists, {name: track.artist}
@@ -167,14 +165,6 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
         new Genre [track]
       else
         genre.songs.push track
-
-    getFirstCoverArt = (songs) ->
-      coverArtURL = _.find songs, (song) ->
-        _.has song, 'coverArtURL'
-      if coverArtURL
-        coverArtURL.coverArtURL
-      else
-        false
 
     parseData = (data) ->
       $scope.data.songs = _.values data.tracks
