@@ -124,34 +124,31 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
         if $scope.gridOptions.selectedItems.length
           $scope.data.songToSelect = $scope.gridOptions.selectedItems[0]
 
-    createArtist = (track) ->
-      artist =
-        songs: [track]
-        name: track.artist
-        coverArtURL: track.coverArtURL or false
-        albums: [createAlbum track]
-      $scope.data.artists.push artist
-      artist
+    class Artist
+      constructor: (track) ->
+        @songs = [track]
+        @name = track.artist
+        @coverArtURL = track.coverArtURL or false
+        @albums = [new Album track]
+        $scope.data.artists.push @
 
-    createAlbum = (track) ->
-      album =
-        songs: [track]
-        name: track.album
-        artist: track.artist
-        coverArtURL: track.coverArtURL or false
-      $scope.data.albums.push album
-      album
+    class Album
+      constructor: (track) ->
+        @songs = [track]
+        @name = track.album
+        @artist = track.artist
+        @coverArtURL = track.coverArtURL or false
+        $scope.data.albums.push @
 
-    createGenre = (track) ->
-      genre =
-        songs: [track]
-        name: track.genre
-      $scope.data.genres.push genre
-      genre
+    class Genre
+      constructor: (track) ->
+        @songs = [track]
+        @name = track.genre
+        $scope.data.genres.push @
 
     checkAlbum = (artist, track) ->
       unless album = _.find artist.albums, {name: track.album}
-        artist.albums.push createAlbum track
+        artist.albums.push new Album track
       else
         album.songs.push track
         unless album.coverArtURL
@@ -159,14 +156,14 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
 
     checkArtist = (track) ->
       unless artist = _.find $scope.data.artists, {name: track.artist}
-        createArtist track
+        new Artist track
       else
         artist.songs.push track
         checkAlbum artist, track
 
     checkGenre = (track) ->
       unless genre = _.find $scope.data.genres, {name: track.genre}
-        createGenre track
+        new Genre track
       else
         genre.songs.push track
 
