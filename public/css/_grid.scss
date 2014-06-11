@@ -97,8 +97,8 @@
 
   .ngHeaderButton {
     position: absolute;
-    top: 8px;
-    right: 12px;
+    top: 12px;
+    right: 16px;
     z-index: 1;
     color: $view-header-color-muted;
     font-size: 16px;
@@ -135,6 +135,7 @@
     // }
 
     .ngSorted & {
+      padding-right: 25px;
       color: $label-color-hover;
     }
   }
@@ -173,7 +174,7 @@
       cursor: pointer;
 
       &:hover {
-        color: $dropdown-menu-link-color-hover;
+        color: $dropdown-menu-link-hover-color;
       }
     }
 
@@ -213,12 +214,12 @@
     cursor: pointer;
 
     &.selected {
-      background-color: $view-item-background-selected;
-      color: $view-item-color-selected;
+      background: $view-item-selected-background;
+      color: $view-item-selected-color;
 
       .focused & {
-        background-color: $view-item-background-focused;
-        color: $view-item-color-focused;
+        background: $view-item-focused-background;
+        color: $view-item-focused-color;
       }
     }
   }

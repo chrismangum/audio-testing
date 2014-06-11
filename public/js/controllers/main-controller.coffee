@@ -20,17 +20,12 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
       deferred = $q.defer()
       modal = $modal.open
         template:
-          '<div>
-            <div class="modal-header">
-              <h4 class="modal-title">Jon\'s Fancy Modal</h4>
-            </div>
-            <div class="modal-body">
-              <p>Jon\'s modal... so fancy...</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-sm btn-default" ng-click="$close()">Close</button>
-              <button type="button" class="btn btn-sm btn-danger" ng-click="$dismiss()">Cancel</button>
-            </div>
+          '<div class="modal-header">
+            <span class="modal-name">Settings</span>
+            <button type="button" class="button close" ng-click="$close()"><span class="icon-close"></span></button>
+          </div>
+          <div class="modal-body">
+            
           </div>'
         controller: ['$scope', (scope) ->
           modal.result.then ->

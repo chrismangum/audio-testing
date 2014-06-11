@@ -4,32 +4,29 @@
 
   // Colors
   //========================================================================
-  $primary: #2c3e50 !default; // Dark Blue
+  $primary: #2980b9 !default; // Dark Blue
   $secondary: #ecf0f1 !default; // Light Grey
   $success: #27ae60 !default; // Green
+
+  $selection-background: linear-gradient(tint($primary, 15%), $primary) !default;
+  $selection-color: #fff !default;
 
 
   // Theme
   //========================================================================
-  $theme-sidebar: $secondary !default;
-  $theme-sidebar-selection: $primary !default;
-  $theme-view-header: $secondary !default;
+  $theme-view-header: shade($secondary, 20%) !default;
   $theme-view: $secondary !default;
-  $theme-view-selection: $primary !default;
-  $theme-player: $primary !default;
-  
+
 
   // Sidebar
   //========================================================================
   $sidebar-width: 180px !default;
-  $sidebar-background: $theme-sidebar !default;
-  $sidebar-title-height: 32px !default;
+  $sidebar-background: $secondary !default;
+  $sidebar-title-height: 40px !default;
   $sidebar-title-color: mix-color($sidebar-background, 20%) !default;
   $sidebar-link-color: mix-color($sidebar-background, 40%) !default;
-  $sidebar-link-background-hover: inherit !default;
-  $sidebar-link-color-hover: mix-color($sidebar-link-color, 20%) !default;
-  $sidebar-link-background-active: $theme-sidebar-selection !default;
-  $sidebar-link-color-active: mix-color($sidebar-link-background-active, 80%) !default;
+  $sidebar-link-active-background: $selection-background !default;
+  $sidebar-link-active-color: $selection-color !default;
   
     // Now Playing
     $now-playing-artwork-missing-background: #000 url(../../../../static/img/missing-artwork.png) !default;
@@ -46,10 +43,10 @@
 
   $view-item-color: mix-color($view-background, 40%) !default;
   $view-item-color-muted: mix-color($view-background, 20%) !default;
-  $view-item-background-selected: mix-color($view-background, 10%) !default;
-  $view-item-color-selected: mix-color($view-background, 40%) !default;
-  $view-item-background-focused: $theme-view-selection !default;
-  $view-item-color-focused: mix-color($view-item-background-focused, 80%) !default;
+  $view-item-selected-background: mix-color($view-background, 10%) !default;
+  $view-item-selected-color: mix-color($view-background, 40%) !default;
+  $view-item-focused-background: $selection-background !default;
+  $view-item-focused-color: $selection-color !default;
 
     // View Sidebar
     $view-sidebar-width: 240px !default;
@@ -62,9 +59,13 @@
 
   // View Headers
   //========================================================================
-  $view-header-background: $theme-view-header !default;
-  $view-header-color: mix-color($view-header-background, 60%) !default;
-  $view-header-color-muted: mix-color($view-header-background, 30%) !default;
+  $view-header-theme-background: #ecf0f1 !default;
+  $view-header-theme-color: shade($view-header-theme-background, 60%) !default;
+  $view-header-theme-color-muted: shade($view-header-theme-background, 30%) !default;
+
+  $view-header-background: $view-header-theme-background !default;
+  $view-header-color: $view-header-theme-color !default;
+  $view-header-color-muted: $view-header-theme-color-muted !default;
   $view-header-play-button-background: $success !default;
 
     // View Header - Column Labels
@@ -78,19 +79,22 @@
   
   // Player
   //========================================================================
+  $player-theme-background: $primary !default;
+  $player-theme-color: shade($player-theme-background, 40%) !default;
+  $player-theme-color-muted: shade($player-theme-background, 10%) !default;
+  $player-theme-color-loud: tint($player-theme-background, 80%) !default;
+
   $player-height: 60px !default;
-  $player-background: $theme-player !default;
-  $player-button-color: mix-color($player-background, 60%) !default;
-  $player-button-color-hover: mix-color($player-background, 80%) !default;
-  $player-button-color-active: mix-color($player-background, 100%) !default;
-
-    // Progress Bar
-    $player-time-color: mix-color($player-background, 60%) !default;
-    $player-slider-filled-background: mix-color($player-background, 80%) !default;
-    $player-slider-empty-background: mix-color($player-background, 20%) !default;
-    $player-slider-handle-background: mix-color($player-background, 80%) !default;
-    $player-slider-handle-background-hover: mix-color($player-background, 100%) !default;
-
+  $player-background: linear-gradient(tint($player-theme-background, 5%), $player-theme-background) !default;
+  $player-box-shadow: 0 2px 4px shade($player-theme-background, 10%) inset !default;
+  $player-color: $player-theme-color !default;
+  $player-color-active: $player-theme-color-loud !default;
+  
+  $slider-handle-background: $player-theme-color-loud !default;
+  $slider-line-filled-background: $player-theme-color-loud !default;
+  $slider-line-empty-background: $player-theme-color-muted !default;
+  $slider-line-box-shadow: none !default;
+  
 
   // Misc
   //========================================================================
@@ -102,7 +106,7 @@
     // Scrollbar
     $scrollbar-size: 8px !default;
     $scrollbar: mix-color($theme-view, 20%) !default;
-    $scrollbar-background: mix-color($theme-view, 40%) !default;
+    $scrollbar-background: mix-color($theme-view, 5%) !default;
     $scrollbar-box-shadow: 0 0 8px shade($scrollbar-background, 10%) inset !default;
 
     // Artwork
@@ -112,4 +116,4 @@
     $dropdown-menu-background: mix-color($theme-view, 20%) !default;
     $dropdown-menu-link-padding: 8px 12px !default;
     $dropdown-menu-link-color: mix-color($dropdown-menu-background, 20%) !default;
-    $dropdown-menu-link-color-hover: mix-color($dropdown-menu-background, 40%) !default;
+    $dropdown-menu-link-hover-color: mix-color($dropdown-menu-background, 40%) !default;

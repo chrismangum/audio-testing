@@ -17,7 +17,7 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.5);
   }
 
   .modal {
@@ -45,5 +45,20 @@
 
   .modal-content {
     padding: 20px;
-    background: $view-background;
+    background: #fff;
+    color: #222;
   }
+
+  .modal-header {
+    @extend %flex-row;
+    margin-bottom: 20px;
+    font-size: 20px;
+    line-height: 1;
+    justify-content: space-between;
+
+    .close {
+      font-size: 16px;
+      color: #ccc;
+    }
+  }
+

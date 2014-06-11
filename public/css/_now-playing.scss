@@ -6,7 +6,7 @@
     @extend %flex-column;
     position: relative;
     margin-bottom: -($sidebar-title-height + $sidebar-width + $now-playing-info-height);
-    transition: all .4s cubic-bezier(0, 0.75, 0.4, 1.25);
+    transition: all .35s cubic-bezier(0, 0.75, 0.4, 1.25);
 
     &.isPlaying {
       margin-bottom: 0;
@@ -86,11 +86,12 @@
     width: 100%;
     height: $now-playing-info-height;
     background: $now-playing-info-background;
+    box-shadow: 0 0 2px rgba(0,0,0,.4);
   }
 
   .now-playing-info {
     @extend %flex-column;
-    padding: 0 8px;
+    padding: 0 10px;
     align-items: flex-start;
     justify-content: center;
     flex: 1;

@@ -6,6 +6,7 @@
     @include scrollbar($scrollbar-size, $scrollbar-background, $scrollbar);
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
+    user-select: none;
     
     &:focus {
       outline: none;
@@ -37,9 +38,9 @@
   
   .view {
     @extend %flex-row;
+    z-index: 1;
     box-shadow: $view-box-shadow;
     flex: 1;
-    z-index: 1;
   }
   
   a {
@@ -53,10 +54,12 @@
   
   .button {
     @extend %font-primary;
+    margin: 0;
     padding: 0;
     border: 0;
     background: none;
     vertical-align: middle;
+    line-height: 0;
     transition: all .2s ease;
   
     &:hover {
