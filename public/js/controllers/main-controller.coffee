@@ -28,8 +28,8 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
               <p>Jon\'s modal... so fancy...</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-sm btn-default" ng-click="$close()">Close</button>
-              <button type="button" class="btn btn-sm btn-danger" ng-click="$dismiss()">Cancel</button>
+              <button type="button" ng-click="$close()">Close</button>
+              <button type="button" ng-click="$dismiss()">Cancel</button>
             </div>
           </div>'
         controller: ['$scope', (scope) ->
