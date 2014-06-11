@@ -125,30 +125,31 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
           $scope.data.songToSelect = $scope.gridOptions.selectedItems[0]
 
     class Artist
-      constructor: (track) ->
-        @songs = [track]
-        @name = track.artist
-        @coverArtURL = track.coverArtURL or false
-        @albums = [new Album track]
+      constructor: (@songs, albums) ->
+        @name = @songs[0].artist
+        @coverArtURL = @songs[0].coverArtURL or false
+        if @songs.length > 1
+          @albums = _.map _.groupBy(@songs, 'album'), (songs, albumName) ->
+            new Album songs
+        else
+          @albums = [new Album @songs]
         $scope.data.artists.push @
 
     class Album
-      constructor: (track) ->
-        @songs = [track]
-        @name = track.album
-        @artist = track.artist
-        @coverArtURL = track.coverArtURL or false
+      constructor: (@songs) ->
+        @name = @songs[0].album
+        @artist = @songs[0].artist
+        @coverArtURL = @songs[0].coverArtURL or false
         $scope.data.albums.push @
 
     class Genre
-      constructor: (track) ->
-        @songs = [track]
-        @name = track.genre
+      constructor: (@songs) ->
+        @name = @songs[0].genre
         $scope.data.genres.push @
 
     checkAlbum = (artist, track) ->
       unless album = _.find artist.albums, {name: track.album}
-        artist.albums.push new Album track
+        artist.albums.push new Album [track]
       else
         album.songs.push track
         unless album.coverArtURL
@@ -156,14 +157,14 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
 
     checkArtist = (track) ->
       unless artist = _.find $scope.data.artists, {name: track.artist}
-        new Artist track
+        new Artist [track]
       else
         artist.songs.push track
         checkAlbum artist, track
 
     checkGenre = (track) ->
       unless genre = _.find $scope.data.genres, {name: track.genre}
-        new Genre track
+        new Genre [track]
       else
         genre.songs.push track
 
@@ -177,21 +178,12 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
 
     parseData = (data) ->
       $scope.data.songs = _.values data.tracks
-      $scope.data.artists = _.compact _.map _.groupBy($scope.data.songs, 'artist'), (songs, artistName) ->
+      _.each _.groupBy($scope.data.songs, 'artist'), (songs, artistName) ->
         if artistName isnt "undefined"
-          songs: songs
-          name: artistName
-          coverArtURL: getFirstCoverArt songs
-          albums: _.map _.groupBy(songs, 'album'), (songs, albumName) ->
-            songs: songs
-            name: albumName
-            artist: artistName
-            coverArtURL: getFirstCoverArt songs
-      $scope.data.albums = _.flatten _.pluck($scope.data.artists, 'albums')
-      $scope.data.genres = _.compact _.map _.groupBy($scope.data.songs, 'genre'), (songs, genreName) ->
+          new Artist songs
+      _.each _.groupBy($scope.data.songs, 'genre'), (songs, genreName) ->
         if genreName isnt "undefined"
-          name: genreName
-          songs: songs
+          new Genre songs
 
     $scope.sortViewData = ->
       if $scope.params.group
