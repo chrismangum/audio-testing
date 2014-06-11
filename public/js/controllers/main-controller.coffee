@@ -125,7 +125,7 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
           $scope.data.songToSelect = $scope.gridOptions.selectedItems[0]
 
     class Artist
-      constructor: (@songs, albums) ->
+      constructor: (@songs) ->
         @name = @songs[0].artist
         @coverArtURL = @songs[0].coverArtURL or false
         if @songs.length > 1
