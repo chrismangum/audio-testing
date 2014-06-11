@@ -16,7 +16,7 @@ app.directive 'list', ($filter) ->
     canvasHeight = 0
     scrollBuffer = 70
 
-    $scope.selectAdjacentListItem = (direction) ->
+    selectAdjacentListItem = (direction) ->
       if $scope.params.group
         type = $scope.params.group[0...-1]
         index = $scope.data[$scope.params.group].indexOf $scope.selectedItems[type]
@@ -91,12 +91,12 @@ app.directive 'list', ($filter) ->
         switch e.keyCode
           when 38 #up arrow
             if $scope.data.focusedPane is 'list'
-              $scope.selectAdjacentListItem -1
+              selectAdjacentListItem -1
               $scope.safeApply()
             false
           when 40 #down arrow
             if $scope.data.focusedPane is 'list'
-              $scope.selectAdjacentListItem 1
+              selectAdjacentListItem 1
               $scope.safeApply()
             false
 

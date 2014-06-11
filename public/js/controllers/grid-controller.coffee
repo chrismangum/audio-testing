@@ -92,7 +92,7 @@ app.controller 'grid', ['$scope', '$timeout', '$storage', ($scope, $timeout, $st
     showColumnMenu: true
     sortInfo: $storage.columnPrefs.sortInfo
 
-  #set saved column order / visibility
+  #set saved column visibility and order
   _.forEach $storage.columnPrefs.order, (val, i) ->
     availableColumns[val].visible = $storage.columnPrefs.visibility[val]
     $scope.gridOptions.columnDefs[i] = availableColumns[val]
