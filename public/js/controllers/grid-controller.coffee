@@ -65,7 +65,7 @@ app.controller 'grid', ['$scope', '$timeout', '$storage', ($scope, $timeout, $st
           <span ng-cell-text>{{ COL_FIELD }}</span>
         </div>'
       headerCellTemplate:
-        '<div class="ngHeaderSortColumn" ng-style="{\'cursor\': col.cursor}" ng-class="{ \'ngSorted\': col.isSorted }">
+        '<div class="ngHeaderSortColumn" ng-class="{ \'ngSorted\': col.isSorted }">
           <div ng-click="customSort($event, col, columns)" ng-class="\'colt\' + col.index" class="ngHeaderText">{{col.displayName}}</div>
           <div class="ngSortButtonDown" ng-show="col.isSorted && col.showSortButtonDown()" ng-click="customSort($event, col, columns, true)"></div>
           <div class="ngSortButtonUp" ng-show="col.isSorted && col.showSortButtonUp()" ng-click="customSort($event, col, columns, true)"></div>
@@ -84,7 +84,7 @@ app.controller 'grid', ['$scope', '$timeout', '$storage', ($scope, $timeout, $st
     rowHeight: 24
     noTabInterference: true
     rowTemplate:
-      '<div ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}">
+      '<div ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}">
         <div class="ngVerticalBar ngVerticalBarVisible" ng-style="{height: rowHeight}">&nbsp;</div>
         <div ng-cell></div>
       </div>'
