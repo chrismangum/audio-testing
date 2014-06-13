@@ -118,7 +118,7 @@ class Json
         @save()
 
   getTrackMetaData: (track, callback, fullScan = '') ->
-    cp.exec "node ./getTrackMetaData.js '#{ track }' #{ fullScan }",
+    cp.exec "node ./getTrackMetaData.js \"#{ track }\" #{ fullScan }",
       (err, stdout, stderr) =>
         if err
           callback()
