@@ -108,7 +108,7 @@
 
   .ngHeaderButtonArrow {
     @extend %icon;
-    @extend .icon-columns;
+    @extend .icon-more;
   }
 
   .ngHeaderGrip {
@@ -142,8 +142,8 @@
 
   .ngColMenu {
     position: absolute;
-    top: 24px;
-    right: 3px;
+    top: 28px;
+    right: 8px;
     z-index: 1;
   }
 

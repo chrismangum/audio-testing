@@ -14,19 +14,19 @@ html
           ul
             li
               a(ng-href="/", ng-class="{active: !params.group}")
-                span.icon-playlist
+                span.icon-songs
                 | Songs
             li
               a(ng-href="/artists", ng-class="{active: params.group == 'artists'}")
-                span.icon-playlist
+                span.icon-artists
                 | Artists
             li
               a(ng-href="/albums", ng-class="{active: params.group == 'albums'}")
-                span.icon-playlist
+                span.icon-albums
                 | Albums
             li
               a(ng-href="/genres", ng-class="{active: params.group == 'genres'}")
-                span.icon-playlist
+                span.icon-genres
                 | Genres
           .label.sidebar-title Playlists
             button.button

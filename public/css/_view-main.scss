@@ -33,6 +33,7 @@
 
     .item-image {
       @extend %item-image;
+      margin: 0 12px 0 0;
       width: 66px;
       height: 66px;
       box-shadow: 0 1px 2px rgba(0,0,0,0.2);
@@ -40,7 +41,6 @@
 
     .item-info {
       @extend %flex-column;
-      padding-left: 12px;
       flex: 1;
       justify-content: center;
     }
@@ -69,7 +69,7 @@
       line-height: 1.2;
 
       &:before {
-        @extend %icon-play-fill;
+        @extend %icon-play;
         top: -1px;
         margin-right: 2px;
       }

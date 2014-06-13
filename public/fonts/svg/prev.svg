@@ -2,10 +2,11 @@
 <!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="1000px" height="1000px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
+	 width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
 <g>
-	<g>
-		<path d="M500,505.188l458,261.75V243.5L500,505.188z M42,505.188l458,261.75v-261.75V243.5L42,505.188z"/>
-	</g>
+	<path d="M8.177,11.06c0-1.237,0.8-1.856,2.4-1.856s2.4,0.619,2.4,1.856v17.879c0,1.238-0.8,1.857-2.4,1.857s-2.4-0.619-2.4-1.857
+		V11.06z M14.101,20.041c0-0.388,0.193-0.721,0.582-0.998l15.143-9.485c0.555-0.388,1.026-0.457,1.414-0.207
+		c0.389,0.249,0.583,0.734,0.583,1.455v18.388c0,0.722-0.194,1.206-0.583,1.455c-0.388,0.252-0.859,0.181-1.414-0.208l-15.143-9.484
+		C14.294,20.68,14.101,20.374,14.101,20.041z"/>
 </g>
 </svg>
