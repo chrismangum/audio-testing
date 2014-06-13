@@ -19,7 +19,7 @@ toBuffer = (ab) ->
 
 processCoverArt = (track, data) ->
   folderPath = path.dirname(track) + '/coverArt'
-  filePath = folderPath + '/' + data.artist + ' - ' + data.album + '.jpg'
+  filePath = folderPath + '/' + data.artist + ' - ' + data.album.replace('/', '') + '.jpg'
   unless fs.existsSync filePath
     unless fs.existsSync folderPath
       fs.mkdirSync folderPath
