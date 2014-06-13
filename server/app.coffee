@@ -121,7 +121,10 @@ class Json
     cp.exec "node ./getTrackMetaData.js \"#{ track }\" #{ fullScan }",
       (err, stdout, stderr) =>
         if err
-          callback()
+          unless fullScan
+            @getTrackMetaData track, callback, 'full'
+          else
+            callback()
         else
           if stdout.length
             @extendTrackInfo track, JSON.parse stdout
