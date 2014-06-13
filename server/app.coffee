@@ -18,7 +18,7 @@ process.chdir __dirname
 app.use express.logger 'dev'
 app.set 'json spaces', 0
 app.use '/static', express.static '../public'
-app.use '/target', express.static '../target'
+app.use '/target', express.static '../target', hidden: true
 app.get '*', (req, res) ->
   res.sendfile path.join __dirname, '../public/index.html'
 
