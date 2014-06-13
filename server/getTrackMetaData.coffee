@@ -27,11 +27,11 @@ processCoverArt = (track, data) ->
   filePath.slice 2
 
 stripOutNullChars = (data) ->
-  _.each data, (val, key) ->
+  _.forEach data, (val, key) ->
     if _.isString val
       data[key] = val.replace /\u0000/g, ''
 
-processData = (track, data, callback) ->
+processData = (track, data) ->
   player = AV.Player.fromBuffer data
   player.preload()
   player.on 'metadata', (data) ->
@@ -45,7 +45,7 @@ processData = (track, data, callback) ->
       data.trackNumber = parseInt data.trackNumber, 10
     if data.coverArt
       data.coverArtURL = processCoverArt track, data
-    callback null, _.pick data, [
+    process.stdout.write JSON.stringify _.pick data, [
       'title'
       'artist'
       'album'
@@ -55,19 +55,21 @@ processData = (track, data, callback) ->
       'coverArtURL'
     ]
 
-getTrackMetaData = (track, callback) ->
+getTrackMetaData = (track, fullScan) ->
   fileData = null
-  stream = fs.createReadStream track,
-    #read first 500KB of file
-    start: 0, end: 511999
-  stream.on 'data', (data) ->
-    unless fileData
-      fileData = data
-    else
-      fileData = Buffer.concat [fileData, data]
-  stream.on 'end', ->
-    processData track, fileData, callback
+  if fullScan
+    fs.readFile track, (err, data) ->
+      processData track, data
+  else
+    stream = fs.createReadStream track,
+      #read first 500KB of file
+      start: 0, end: 511999
+    stream.on 'data', (data) ->
+      unless fileData
+        fileData = data
+      else
+        fileData = Buffer.concat [fileData, data]
+    stream.on 'end', ->
+      processData track, fileData
 
-async.map process.argv.slice(2), getTrackMetaData,
-  (err, result) ->
-    process.stdout.write JSON.stringify result
+getTrackMetaData process.argv.slice(2, 3)[0], process.argv.length is 4

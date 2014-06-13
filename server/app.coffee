@@ -44,17 +44,17 @@ class Scanner
 
   getTotalSize: (tracks) ->
     totalSize = 0
-    _.each tracks, (track) ->
+    _.forEach tracks, (track) ->
       totalSize += track.fileSize
     totalSize
 
   scan: (filePath = @filePath) ->
     items = {}
-    _.each fs.readdirSync(filePath), (item) =>
+    _.forEach fs.readdirSync(filePath), (item) =>
       stat = fs.statSync filePath + item
       stat.type = @getFtype stat.mode
       if stat.type is 'directory'
-        items = _.extend items, @scan filePath + item + '/'
+        items = _.assign items, @scan filePath + item + '/'
       else if @hasValidExt item
         items[filePath + item] =
           title: item,
@@ -70,9 +70,6 @@ class Json
     @socket.emit 'json', @json
     unless @scanned
       @scanMetaData()
-
-  setSocket: (socket) ->
-    @socket = socket
 
   check: (socket) ->
     @socket = socket if socket
@@ -105,7 +102,12 @@ class Json
 
   scanMetaData: ->
     async.eachSeries _.keys(@json.tracks), ((track, callback) =>
-      @getTrackMetaData track, callback
+      if @socket.disconnected
+        callback true
+      else if @json.tracks[track].scanned
+        callback()
+      else
+        @getTrackMetaData track, callback
     ), (err) =>
       unless err
         console.log 'metadata scan complete. saving json...'
@@ -115,22 +117,20 @@ class Json
         console.log 'scan interrupted. saving json...'
         @save()
 
-  getTrackMetaData: (track, callback) ->
-    if @socket.disconnected
-      callback true
-    else if @json.tracks[track].scanned
-      callback()
-    else
-      cp.exec 'node ./getTrackMetaData.js "' + track + '"',
-        (err, stdout, stderr) =>
-          if err
-            console.log stderr
-          else if stdout.length
-            @extendTrackInfo track, JSON.parse(stdout)[0]
+  getTrackMetaData: (track, callback, fullScan = '') ->
+    cp.exec "node ./getTrackMetaData.js '#{ track }' #{ fullScan }",
+      (err, stdout, stderr) =>
+        if err
           callback()
+        else
+          if stdout.length
+            @extendTrackInfo track, JSON.parse stdout
+            callback()
+          else
+            @getTrackMetaData track, callback, 'full'
 
   extendTrackInfo: (track, obj) ->
-    _.extend @json.tracks[track], obj
+    _.assign @json.tracks[track], obj
     @json.tracks[track].scanned = true
     obj.filePath = track
     @socket.emit 'metadata', obj
