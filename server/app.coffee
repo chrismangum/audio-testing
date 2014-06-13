@@ -149,6 +149,7 @@ class Target
         input: process.stdin
         output: process.stdout
     @iface.question 'Please enter media directory:', (target) =>
+      target = target.trim()
       if fs.existsSync target
         @create target
         callback()
