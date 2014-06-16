@@ -58,14 +58,6 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
 
     $scope.setAlbumSort $storage.albumSort, true
 
-    $scope.$on 'ngGridEventSorted', do ->
-      throttle = null
-      (e, sortInfo) ->
-        if throttle
-          $timeout.cancel throttle
-        throttle = $timeout (->
-        ), 250
-
     $scope.filterData = (songs) ->
       $scope.gridOptions.gridData = songs
 
