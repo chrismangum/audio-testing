@@ -51,14 +51,48 @@
 
   .modal-header {
     @extend %flex-row;
-    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f5f5f5;
     font-size: 20px;
     line-height: 1;
     justify-content: space-between;
 
     .close {
-      font-size: 20px;
       color: #ccc;
+      font-size: 20px;
     }
   }
 
+  .settings {
+    .form-group {
+      @extend %flex-row;
+      padding: 10px 0;
+      border-bottom: 1px solid #f5f5f5;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    label {
+      color: #222;
+      font-weight: bold;
+
+      small {
+        font-weight: normal;
+        opacity: 0.5;
+      }
+    }
+
+    select,
+    button {
+      margin: 0;
+    }
+
+    button {
+      padding: 2px 6px 4px 6px;
+      border-radius: 2px;
+      background: #333;
+      color: #fff;
+      font-weight: bold;
+      line-height: 1.2;
+    }
+  }
