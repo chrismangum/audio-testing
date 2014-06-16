@@ -16,31 +16,54 @@
       ul {
         margin: 0 0 12px 0;
         padding: 0;
+        color: $sidebar-link-color;
         list-style: none;
         font-size: 0;
-
-        &:last-of-type {
-          margin-bottom: 0;
-        }
       }
 
-      a {
-        position: relative;
-        display: block;
-        padding: 5px 10px;
+      .sidebar-link {
+        @extend %flex-row;
+        padding: 0 10px;
+        height: 32px;
         color: $sidebar-link-color;
         font-weight: bold;
         font-size: 12px;
-        line-height: 22px;
+        align-items: center;
 
         &.active {
           background: $sidebar-link-active-background;
           color: $sidebar-link-active-color;
         }
 
-        > span {
-          margin: -2px 4px 0 0;
+        &.add-playlist {
+          opacity: 0.5;
+        }
+
+        &.edit-playlist {
+          @extend %flex-row;
+          color: $sidebar-link-color;
+
+          input {
+            @include placeholder($sidebar-link-color);
+            padding: 4px 0;
+            color: $sidebar-link-color;
+            font-weight: bold;
+            font-size: 12px;
+            flex: 1;
+          }
+        }
+
+        span[class*="icon"] {
+          display: block;
           font-size: 20px;
+
+          &:first-of-type {
+            margin-right: 4px;
+          }
+        }
+
+        .sidebar-link-name {
+          flex: 1;
         }
       }
     }
