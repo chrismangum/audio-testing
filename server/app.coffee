@@ -109,28 +109,24 @@ class Json
       else
         @getTrackMetaData track, callback
     ), (err) =>
-      unless err
-        console.log 'metadata scan complete. saving json...'
-        @scanned = true
+      if err
+        console.log 'scan interrupted. saving json...'
         @save()
       else
-        console.log 'scan interrupted. saving json...'
+        console.log 'metadata scan complete. saving json...'
+        @scanned = true
         @save()
 
   getTrackMetaData: (track, callback, fullScan = '') ->
     cp.exec "node ./getTrackMetaData.js \"#{ track }\" #{ fullScan }",
       (err, stdout, stderr) =>
-        if err
-          unless fullScan
-            @getTrackMetaData track, callback, 'full'
-          else
-            callback()
+        if stdout.length
+          @extendTrackInfo track, JSON.parse stdout
+          callback()
+        else if fullScan
+          callback()
         else
-          if stdout.length
-            @extendTrackInfo track, JSON.parse stdout
-            callback()
-          else
-            @getTrackMetaData track, callback, 'full'
+          @getTrackMetaData track, callback, 'full'
 
   extendTrackInfo: (track, obj) ->
     _.assign @json.tracks[track], obj
