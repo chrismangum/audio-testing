@@ -1,6 +1,6 @@
 
-app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal', '$q', '$storage'
-  ($scope, $routeParams, $timeout, $filter, $modal, $q, $storage) ->
+app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal', '$q', '$storage', '$location'
+  ($scope, $routeParams, $timeout, $filter, $modal, $q, $storage, $location) ->
     $scope.params = $routeParams
     $scope.selectedItems = {}
     $scope.gridOptions = {}
@@ -15,26 +15,7 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
       searchFocus: false
       focusedPane: 'list'
       songToSelect: false
-      playlists: []
-      playlist: []
     $scope.formFields = {}
-    $scope.songViewTitle = 'All Songs'
-
-    deactivatePlaylists = ->
-      _.forEach $scope.data.playlists, (playlist) ->
-        playlist.active = false
-        true
-
-    $scope.viewAllSongs = ->
-      deactivatePlaylists()
-      $scope.songViewTitle = 'All Songs'
-      $scope.unfilterData()
-
-    $scope.viewPlaylist = (playlist) ->
-      deactivatePlaylists()
-      playlist.active = true
-      $scope.filterData playlist.songs
-      $scope.songViewTitle = playlist.name
 
     $scope.addPlaylist = ->
       if $scope.formFields.playlistName
@@ -49,11 +30,11 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
         $scope.data.searchFocus = false
 
     $scope.deletePlaylist = (playlist) ->
-      if playlist.active
-        $scope.viewAllSongs()
       index = $scope.data.playlists.indexOf playlist
       $scope.mainSocket.emit 'deletePlaylist', index
       $scope.data.playlists.splice index, 1
+      if $scope.params.playlistName is playlist.name
+        $location.path '/'
 
     $scope.openModal = ->
       modal = $modal.open
@@ -137,6 +118,8 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
             name: item[type]
         else if $scope.data[view].length
           $scope.selectListItem $scope.data[view][0]
+      else if $scope.params.playlistName
+        $scope.filterData _.find $scope.data.playlists, name: $routeParams.playlistName
       else
         $scope.unfilterData()
         if $scope.gridOptions.selectedItems.length

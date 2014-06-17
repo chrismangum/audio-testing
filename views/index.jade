@@ -13,7 +13,7 @@ html
               span.icon-gear
           ul
             li
-              a.sidebar-link(ng-href="/", ng-class="{active: !params.group && songViewTitle == 'All Songs' }", ng-click="viewAllSongs()")
+              a.sidebar-link(ng-href="/", ng-class="{active: !params.group && !params.playlistName}")
                 span.icon-songs
                 div.sidebar-link-name Songs
             li
@@ -33,14 +33,16 @@ html
               span.icon-edit(ng-click="editMode = !editMode")
           ul
             li(ng-repeat="playlist in data.playlists")
-              a.sidebar-link(ng-class="{ 'edit-playlist': editMode, active: playlist.active }", ng-click="!editMode && viewPlaylist(playlist)")
+              a.sidebar-link(ng-if="!editMode", ng-href="/playlist/{{ playlist.name }}" ng-class="{active: params.playlistName == playlist.name}")
                 span.icon-playlist
-                div.sidebar-link-name(ng-if="!editMode") {{ playlist.name }}
-                form(ng-if="editMode")
+                div.sidebar-link-name {{ playlist.name }}
+              a.sidebar-link.edit-playlist(ng-if="editMode", ng-class="{active: params.playlistName == playlist.name}")
+                span.icon-playlist
+                form
                   input(type="text", ng-model="playlist.name")
                   span.icon-close(ng-click="deletePlaylist(playlist)")
             li
-              a.sidebar-link(ng-class="{ 'add-playlist': !newMode }", ng-click="newMode = true")
+              a.sidebar-link(ng-class="{'add-playlist': !newMode}", ng-click="newMode = true")
                 span.icon-playlist
                 div.sidebar-link-name(ng-if="!newMode") New Playlist
                 form(ng-if="newMode", ng-submit="addPlaylist()")

@@ -7,6 +7,9 @@ app.config ['$routeProvider', '$locationProvider'
         templateUrl: (params) ->
           '/static/' + params.group + '.html'
         controller: 'tmp'
+      .when '/playlist/:playlistName',
+        templateUrl: '/static/playlist.html'
+        controller: 'tmp'
       .otherwise
         templateUrl: '/static/songs.html'
         controller: 'tmp'

@@ -2,7 +2,7 @@
   .view-main-header
     .view-details
       .item-info
-        .item-info-name All Songs
+        .item-info-name {{ params.playlistName }}
         .item-info-details
           ng-pluralize(count="gridOptions.gridData.length", when="{'1': '1 Song', 'other': '{} Songs'}")
         .view-actions
