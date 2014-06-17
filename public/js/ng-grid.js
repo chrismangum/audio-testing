@@ -979,29 +979,31 @@ var ngEventProvider = function (grid, $scope, domUtilityService, $timeout) {
     };
     self.setDraggables = function() {
         if (!grid.config.jqueryUIDraggable) {
-            var columns = grid.$root.find('.ngHeaderSortColumn'); 
-            angular.forEach(columns, function(col){
-                if(col.className && col.className.indexOf("ngHeaderSortColumn") !== -1){
-                    col.setAttribute('draggable', 'true');
-                    if (col.addEventListener) { 
-                        col.addEventListener('dragstart', self.dragStart);
+            if (grid.$root) {
+                var columns = grid.$root.find('.ngHeaderSortColumn');
+                angular.forEach(columns, function(col){
+                    if(col.className && col.className.indexOf("ngHeaderSortColumn") !== -1){
+                        col.setAttribute('draggable', 'true');
+                        if (col.addEventListener) {
+                            col.addEventListener('dragstart', self.dragStart);
 
-                        angular.element(col).on('$destroy', function() {
-                            angular.element(col).off('dragstart', self.dragStart);
-                            col.removeEventListener('dragstart', self.dragStart);
-                        });
+                            angular.element(col).on('$destroy', function() {
+                                angular.element(col).off('dragstart', self.dragStart);
+                                col.removeEventListener('dragstart', self.dragStart);
+                            });
+                        }
                     }
+                });
+                if (navigator.userAgent.indexOf("MSIE") !== -1){
+                    var sortColumn = grid.$root.find('.ngHeaderSortColumn');
+                    sortColumn.bind('selectstart', function () {
+                        this.dragDrop();
+                        return false;
+                    });
+                    angular.element(sortColumn).on('$destroy', function() {
+                        sortColumn.off('selectstart');
+                    });
                 }
-            });
-            if (navigator.userAgent.indexOf("MSIE") !== -1){
-                var sortColumn = grid.$root.find('.ngHeaderSortColumn');
-                sortColumn.bind('selectstart', function () { 
-                    this.dragDrop(); 
-                    return false; 
-                });
-                angular.element(sortColumn).on('$destroy', function() {
-                    sortColumn.off('selectstart');
-                });
             }
         } else {
             if (grid.$root) {
