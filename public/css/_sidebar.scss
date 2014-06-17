@@ -44,8 +44,9 @@
           color: $sidebar-link-color;
 
           input {
-            @include placeholder($sidebar-link-color);
-            padding: 4px 0;
+            @include placeholder(rgba($sidebar-link-color, .5));
+            padding: 4px 6px;
+            border: 1px solid rgba($sidebar-link-color, .2);
             color: $sidebar-link-color;
             font-weight: bold;
             font-size: 12px;
@@ -60,6 +61,10 @@
           &:first-of-type {
             margin-right: 4px;
           }
+        }
+
+        .icon-close {
+          margin-left: 5px;
         }
 
         .sidebar-link-name {
