@@ -33,18 +33,18 @@ html
               span.icon-edit(ng-click="editMode = !editMode")
           ul
             li(ng-repeat="playlist in data.playlists")
-              a.sidebar-link
+              a.sidebar-link(ng-class="{ 'edit-playlist': editMode }")
                 span.icon-playlist
                 div.sidebar-link-name(ng-if="!editMode") {{ playlist.name }}
                 form(ng-if="editMode")
-                  input(type="text", placeholder="{{ playlist.name }}")
+                  input(type="text", ng-model="playlist.name")
                   span.icon-close(ng-click="deletePlaylist(playlist)")
             li
               a.sidebar-link(ng-class="{ 'add-playlist': !newMode }", ng-click="newMode = true")
                 span.icon-playlist
                 div.sidebar-link-name(ng-if="!newMode") New Playlist
                 form(ng-if="newMode", ng-submit="addPlaylist()")
-                  input(ng-model="formFields.playlistName", focus-me="newMode" placeholder="New Playlist", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
+                  input(ng-model="formFields.playlistName", focus-me="newMode" placeholder="New Playlist", ng-focus="data.searchFocus = true", ng-blur="addPlaylist()")
         .now-playing-container(ng-class="{isPlaying: !!data.nowPlaying}")
           .now-playing-artwork.now-playing-artwork-large(ng-class="{'hide-artwork': artworkSize == 'small'}")
             button.button.resize-artwork(ng-click="toggleArtworkSize()")
