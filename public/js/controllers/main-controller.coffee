@@ -25,7 +25,27 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
             <button type="button" class="button close" ng-click="$close()"><span class="icon-close"></span></button>
           </div>
           <div class="modal-body">
-
+            <div class="settings">
+              <div class="form-group">
+                <label for="settings-theme">Theme</label>
+                <select id="settings-theme">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Metadata</label>
+                <div class="button-group">
+                  <button class="button">Rescan Metadata</button>
+                  <button class="button">Reset Metadata</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Column Settings <small>Reset your column settings back to default.</small></label>
+                <button class="button">Reset Column Settings</button>
+              </div>
+            </div>
           </div>'
         controller: ['$scope', (scope) ->
           modal.result.then ->

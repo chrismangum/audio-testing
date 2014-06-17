@@ -85,12 +85,6 @@
     }
 
     input {
-      @extend %font-primary;
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      border: 0;
-      background: transparent;
       font-weight: bold;
       font-size: 11px;
       line-height: 1.5;
@@ -100,4 +94,13 @@
       &:-ms-input-placeholder { text-transform: uppercase; }
       &::-webkit-input-placeholder { text-transform: uppercase; } 
     }
+  }
+
+  input {
+    @extend %font-primary;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    border: 0;
+    background: transparent;
   }

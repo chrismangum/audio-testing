@@ -13,33 +13,46 @@ html
               span.icon-gear
           ul
             li
-              a(ng-href="/", ng-class="{active: !params.group}")
+              a.sidebar-link(ng-href="/", ng-class="{active: !params.group}")
                 span.icon-songs
-                | Songs
+                div.sidebar-link-name Songs
             li
-              a(ng-href="/artists", ng-class="{active: params.group == 'artists'}")
+              a.sidebar-link(ng-href="/artists", ng-class="{active: params.group == 'artists'}")
                 span.icon-artists
-                | Artists
+                div.sidebar-link-name Artists
             li
-              a(ng-href="/albums", ng-class="{active: params.group == 'albums'}")
+              a.sidebar-link(ng-href="/albums", ng-class="{active: params.group == 'albums'}")
                 span.icon-albums
-                | Albums
+                div.sidebar-link-name Albums
             li
-              a(ng-href="/genres", ng-class="{active: params.group == 'genres'}")
+              a.sidebar-link(ng-href="/genres", ng-class="{active: params.group == 'genres'}")
                 span.icon-genres
-                | Genres
+                div.sidebar-link-name Genres
           .label.sidebar-title Playlists
             button.button
-              span.icon-add
+              span.icon-edit
           ul
             li
-              a
+              a.sidebar-link
                 span.icon-playlist
-                | Smooth Jams
+                div.sidebar-link-name Smooth Jams
             li
-              a
+              a.sidebar-link
                 span.icon-playlist
-                | Hibbity Hoppity
+                div.sidebar-link-name Hibbity Hoppity
+            li
+              a.sidebar-link.add-playlist
+                span.icon-playlist
+                div.sidebar-link-name New Playlist
+            li
+              div.sidebar-link.edit-playlist
+                span.icon-playlist
+                input(type="text", placeholder="New Playlist")
+            li
+              div.sidebar-link.edit-playlist
+                span.icon-playlist
+                input(type="text", placeholder="Edit Playlists")
+                span.icon-close
         .now-playing-container(ng-class="{isPlaying: !!data.nowPlaying}")
           .now-playing-artwork.now-playing-artwork-large(ng-class="{'hide-artwork': artworkSize == 'small'}")
             button.button.resize-artwork(ng-click="toggleArtworkSize()")

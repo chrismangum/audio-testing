@@ -5,7 +5,7 @@
   .now-playing-container {
     @extend %flex-column;
     position: relative;
-    margin-bottom: -($sidebar-title-height + $sidebar-width + $now-playing-info-height);
+    margin-bottom: -($sidebar-width + $now-playing-info-height);
     transition: all .35s cubic-bezier(0, 0.75, 0.4, 1.25);
 
     &.isPlaying {

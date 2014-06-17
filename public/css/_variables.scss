@@ -8,7 +8,7 @@
   $secondary: #ecf0f1 !default; // Light Grey
   $success: #27ae60 !default; // Green
 
-  $selection-background: linear-gradient(tint($primary, 15%), $primary) !default;
+  $selection-background: $primary !default;
   $selection-color: #fff !default;
 
 
