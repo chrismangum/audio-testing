@@ -43,9 +43,16 @@
           @extend %flex-row;
           color: $sidebar-link-color;
 
+          form {
+            @extend %flex-row;
+            flex: 1;
+            align-items: center;
+            margin-left: -4px;
+          }
+
           input {
             @include placeholder(rgba($sidebar-link-color, .5));
-            padding: 4px 6px;
+            padding: 4px;
             border: 1px solid rgba($sidebar-link-color, .2);
             color: $sidebar-link-color;
             font-weight: bold;
@@ -64,7 +71,7 @@
         }
 
         .icon-close {
-          margin-left: 5px;
+          margin: 0 0 0 5px;
         }
 
         .sidebar-link-name {
