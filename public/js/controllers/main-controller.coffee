@@ -56,7 +56,6 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
       $scope.data.playlists.splice index, 1
 
     $scope.openModal = ->
-      deferred = $q.defer()
       modal = $modal.open
         template:
           '<div class="modal-header">
@@ -82,15 +81,15 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
               </div>
               <div class="form-group">
                 <label>Column Settings <small>Reset your column settings back to default.</small></label>
-                <button class="button">Reset Column Settings</button>
+                <button class="button" ng-click="resetColumnSettings()">Reset Column Settings</button>
               </div>
             </div>
           </div>'
-        controller: ['$scope', (scope) ->
-          modal.result.then ->
-            deferred.resolve {}
+        controller: ['$scope', '$route', (scope, $route) ->
+          scope.resetColumnSettings = ->
+            $storage.resetColumnSettings()
+            window.location.reload()
         ]
-      deferred.promise
 
     #artwork size
     $scope.artworkSize = $storage.artworkSize
