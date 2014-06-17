@@ -49,18 +49,6 @@
             align-items: center;
             margin-left: -4px;
           }
-
-          input {
-            @include placeholder(rgba($sidebar-link-color, .5));
-            padding: 5px 4px;
-            background: shade($sidebar-background, 2%);
-            border: 1px solid shade($sidebar-background, 10%);
-            box-shadow: 1px 1px 5px rgba(0,0,0,0.04) inset, 1px 1px 0 rgba(255,255,255,0.4);
-            color: $sidebar-link-color;
-            font-weight: bold;
-            font-size: 12px;
-            flex: 1;
-          }
         }
 
         span[class*="icon"] {
@@ -70,6 +58,18 @@
           &:first-of-type {
             margin-right: 4px;
           }
+        }
+        
+        input {
+          @include placeholder(rgba($sidebar-link-color, .5));
+          padding: 5px 4px;
+          background: shade($sidebar-background, 2%);
+          border: 1px solid shade($sidebar-background, 10%);
+          box-shadow: 1px 1px 5px rgba(0,0,0,0.04) inset, 1px 1px 0 rgba(255,255,255,0.4);
+          color: $sidebar-link-color;
+          font-weight: bold;
+          font-size: 12px;
+          flex: 1;
         }
 
         .icon-close {
