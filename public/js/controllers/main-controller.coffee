@@ -169,6 +169,18 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
         else
           $scope.data.albums = $filter('orderBy') $scope.data.albums, $scope.albumSort.value
 
+    refreshColumnSort = ->
+      columns = _.clone $scope.gridOptions.sortInfo.columns
+      mainCol = columns[0]
+      mainCol.sortDirection = switch mainCol.sortDirection
+        when 'desc' then 'asc'
+        else 'desc'
+      mainCol.sort()
+      _.forEach columns.slice(1), (col) ->
+        col.sort shiftKey: true
+        true
+      $scope.gridOptions.ngGrid.sortColumnsInit()
+
     $scope.mainSocket = io.connect location.origin
 
     $scope.mainSocket.on 'metadata', (data) ->
@@ -176,6 +188,7 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
       _.assign track, _.omit data, 'filePath'
       checkArtist track
       checkGenre track
+      refreshColumnSort()
       $scope.sortViewData()
       $scope.safeApply()
 
