@@ -30,29 +30,21 @@ html
                 div.sidebar-link-name Genres
           .label.sidebar-title Playlists
             button.button
-              span.icon-edit
+              span.icon-edit(ng-click="editMode = !editMode")
           ul
-            li
+            li(ng-repeat="playlist in data.playlists")
               a.sidebar-link
                 span.icon-playlist
-                div.sidebar-link-name Smooth Jams
+                div.sidebar-link-name(ng-if="!editMode") {{ playlist.name }}
+                form(ng-if="editMode")
+                  input(type="text", placeholder="{{ playlist.name }}")
+                  span.icon-close(ng-click="deletePlaylist(playlist)")
             li
-              a.sidebar-link
+              a.sidebar-link(ng-class="{ 'add-playlist': !newMode }", ng-click="newMode = true")
                 span.icon-playlist
-                div.sidebar-link-name Hibbity Hoppity
-            li
-              a.sidebar-link.add-playlist
-                span.icon-playlist
-                div.sidebar-link-name New Playlist
-            li
-              div.sidebar-link.edit-playlist
-                span.icon-playlist
-                input(type="text", placeholder="New Playlist")
-            li
-              div.sidebar-link.edit-playlist
-                span.icon-playlist
-                input(type="text", placeholder="Edit Playlists")
-                span.icon-close
+                div.sidebar-link-name(ng-if="!newMode") New Playlist
+                form(ng-if="newMode", ng-submit="addPlaylist()")
+                  input(ng-model="formFields.playlistName", focus-me="newMode" placeholder="New Playlist", ng-focus="data.searchFocus = true", ng-blur="data.searchFocus = false")
         .now-playing-container(ng-class="{isPlaying: !!data.nowPlaying}")
           .now-playing-artwork.now-playing-artwork-large(ng-class="{'hide-artwork': artworkSize == 'small'}")
             button.button.resize-artwork(ng-click="toggleArtworkSize()")

@@ -1,4 +1,11 @@
 
+app.directive 'focusMe', ($timeout) ->
+  ($scope, el, attrs) ->
+    $scope.$watch attrs.focusMe, (n) ->
+      if n
+        $timeout ->
+          el[0].focus()
+
 app.directive 'list', ($filter) ->
   restrict: 'E'
   transclude: true

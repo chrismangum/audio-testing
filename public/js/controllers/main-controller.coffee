@@ -15,6 +15,20 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
       searchFocus: false
       focusedPane: 'list'
       songToSelect: false
+      playlists: []
+      playlist: []
+    $scope.formFields = {}
+
+    $scope.addPlaylist = ->
+      if $scope.formFields.playlistName
+        $scope.newMode = false
+        $scope.data.playlists.push
+          name: $scope.formFields.playlistName
+        $scope.formFields.playlistName = ''
+        $scope.data.searchFocus = false
+
+    $scope.deletePlaylist = (playlist) ->
+      $scope.data.playlists = _.without $scope.data.playlists, playlist
 
     $scope.openModal = ->
       deferred = $q.defer()
