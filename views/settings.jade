@@ -1,22 +1,23 @@
-.modal-header
-  span.modal-name Settings
-  button.button.close(type="button", ng-click="$close()")
-    span.icon-close
-.modal-body
-  .settings
-    .form-group
-      label(for="settings-theme") Theme
-      select#settings-theme
-        option 1
-        option 2
-        option 3
-    .form-group
-      label Metadata
-      .button-group
-        button.button Rescan Metadata
-        button.button Reset Metadata
-    .form-group
-      label
-        | Column Settings
-        small Reset your column settings back to default.
-      button.button(ng-click="resetColumnSettings()") Reset Column Settings
+div
+  .modal-header
+    span.modal-name Settings
+    button.button.close(type="button", ng-click="$close()")
+      span.icon-close
+  .modal-body
+    .settings
+      .form-group
+        label(for="settings-theme") Theme
+        select#settings-theme
+          option 1
+          option 2
+          option 3
+      .form-group
+        label Metadata
+        .button-group
+          button.button Rescan Metadata
+          button.button Reset Metadata
+      .form-group
+        label
+          | Column Settings
+          small Reset your column settings back to default.
+        button.button(ng-click="resetColumnSettings()") Reset Column Settings
