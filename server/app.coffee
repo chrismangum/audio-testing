@@ -178,15 +178,14 @@ class Playlists
 
   deleteIndex: (index) ->
     if _.isNumber index
-      @playlists.splice index, index + 1
+      @playlists.splice index, 1
       @save()
-      @emit()
 
-  add: (playlist) ->
-    if _.isObject playlist
-      @playlists.push playlist
+  update: (playlists) ->
+    if _.isArray playlists
+      @playlists = _.map playlists, (playlist) ->
+        _.pick playlist, 'name', 'songs'
       @save()
-      @emit()
 
   save: ->
     fs.writeFileSync '../playlists.json', JSON.stringify @playlists
@@ -224,8 +223,8 @@ io.on 'connection', (socket) ->
   socket.on 'deletePlaylist', (index) ->
     playlists.deleteIndex index
 
-  socket.on 'addPlaylist', (playlist) ->
-    playlists.add playlist
+  socket.on 'updatePlaylists', (n) ->
+    playlists.update n
 
   socket.on 'spawnPlayer', ->
     if player.exited

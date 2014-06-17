@@ -13,7 +13,7 @@ html
               span.icon-gear
           ul
             li
-              a.sidebar-link(ng-href="/", ng-class="{active: !params.group}")
+              a.sidebar-link(ng-href="/", ng-class="{active: !params.group && songViewTitle == 'All Songs' }", ng-click="viewAllSongs()")
                 span.icon-songs
                 div.sidebar-link-name Songs
             li
@@ -33,7 +33,7 @@ html
               span.icon-edit(ng-click="editMode = !editMode")
           ul
             li(ng-repeat="playlist in data.playlists")
-              a.sidebar-link(ng-class="{ 'edit-playlist': editMode }")
+              a.sidebar-link(ng-class="{ 'edit-playlist': editMode, active: playlist.active }", ng-click="!editMode && viewPlaylist(playlist)")
                 span.icon-playlist
                 div.sidebar-link-name(ng-if="!editMode") {{ playlist.name }}
                 form(ng-if="editMode")

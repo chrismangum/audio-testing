@@ -2,9 +2,9 @@
   .view-main-header
     .view-details
       .item-info
-        .item-info-name All Songs
+        .item-info-name {{ songViewTitle }}
         .item-info-details
-          ng-pluralize(count="data.songs.length", when="{'1': '1 Song', 'other': '{} Songs'}")
+          ng-pluralize(count="gridOptions.gridData.length", when="{'1': '1 Song', 'other': '{} Songs'}")
         .view-actions
           button.button(ng-click="play()") Play All
     .search

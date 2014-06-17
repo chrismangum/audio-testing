@@ -18,18 +18,42 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
       playlists: []
       playlist: []
     $scope.formFields = {}
+    $scope.songViewTitle = 'All Songs'
+
+    deactivatePlaylists = ->
+      _.forEach $scope.data.playlists, (playlist) ->
+        playlist.active = false
+        true
+
+    $scope.viewAllSongs = ->
+      deactivatePlaylists()
+      $scope.songViewTitle = 'All Songs'
+      $scope.unfilterData()
+
+    $scope.viewPlaylist = (playlist) ->
+      deactivatePlaylists()
+      playlist.active = true
+      $scope.filterData playlist.songs
+      $scope.songViewTitle = playlist.name
 
     $scope.addPlaylist = ->
       if $scope.formFields.playlistName
         $scope.newMode = false
-        $scope.mainSocket.emit 'addPlaylist',
+        $scope.data.playlists.push
           name: $scope.formFields.playlistName
           songs: []
+        $scope.data.playlists = _.sortBy $scope.data.playlists, (playlist) ->
+          playlist.name.toLowerCase()
+        $scope.mainSocket.emit 'updatePlaylists', $scope.data.playlists
         $scope.formFields.playlistName = ''
         $scope.data.searchFocus = false
 
     $scope.deletePlaylist = (playlist) ->
-      $scope.mainSocket.emit 'deletePlaylist', $scope.data.playlists.indexOf playlist
+      if playlist.active
+        $scope.viewAllSongs()
+      index = $scope.data.playlists.indexOf playlist
+      $scope.mainSocket.emit 'deletePlaylist', index
+      $scope.data.playlists.splice index, 1
 
     $scope.openModal = ->
       deferred = $q.defer()
