@@ -160,10 +160,47 @@ class Target
       @exists = true
       fs.symlinkSync target, '../target'
 
+class Playlists
+  constructor: (@socket) ->
+    if fs.existsSync '../playlists.json'
+      @exists = true
+      @playlists = JSON.parse fs.readFileSync '../playlists.json'
+    else
+      @playlists = []
+      @save()
+    @emit()
+
+  emit: ->
+    @socket.emit 'playlists', @playlists
+
+  setSocket: (socket) ->
+    @socket = socket
+
+  deleteIndex: (index) ->
+    if _.isNumber index
+      @playlists.splice index, index + 1
+      @save()
+      @emit()
+
+  add: (playlist) ->
+    if _.isObject playlist
+      @playlists.push playlist
+      @save()
+      @emit()
+
+  save: ->
+    fs.writeFileSync '../playlists.json', JSON.stringify @playlists
+
+
 io.on 'connection', (socket) ->
   player =
     exited: true
   spawnQueue = false
+
+  unless playlists?
+    playlists = new Playlists socket
+  else
+    playlists.setSocket socket
 
   unless target?
     target = new Target()
@@ -183,6 +220,12 @@ io.on 'connection', (socket) ->
       if spawnQueue
         spawnQueue = false
         spawnPlayer()
+
+  socket.on 'deletePlaylist', (index) ->
+    playlists.deleteIndex index
+
+  socket.on 'addPlaylist', (playlist) ->
+    playlists.add playlist
 
   socket.on 'spawnPlayer', ->
     if player.exited

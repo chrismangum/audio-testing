@@ -22,13 +22,14 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
     $scope.addPlaylist = ->
       if $scope.formFields.playlistName
         $scope.newMode = false
-        $scope.data.playlists.push
+        $scope.mainSocket.emit 'addPlaylist',
           name: $scope.formFields.playlistName
+          songs: []
         $scope.formFields.playlistName = ''
         $scope.data.searchFocus = false
 
     $scope.deletePlaylist = (playlist) ->
-      $scope.data.playlists = _.without $scope.data.playlists, playlist
+      $scope.mainSocket.emit 'deletePlaylist', $scope.data.playlists.indexOf playlist
 
     $scope.openModal = ->
       deferred = $q.defer()
@@ -216,6 +217,10 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
       $scope.gridOptions.ngGrid.sortColumnsInit()
 
     $scope.mainSocket = io.connect location.origin
+
+    $scope.mainSocket.on 'playlists', (playlists) ->
+      $scope.data.playlists = playlists
+      $scope.safeApply()
 
     $scope.mainSocket.on 'metadata', (data) ->
       track = $scope.data.tracks[data.filePath]
