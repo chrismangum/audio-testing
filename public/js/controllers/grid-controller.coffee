@@ -35,6 +35,25 @@ app.controller 'grid', ['$scope', '$timeout', '$storage', ($scope, $timeout, $st
 
 
   ### NG Grid Options ###
+  _.assign $scope.gridOptions,
+    columnDefs: []
+    data: 'gridOptions.gridData'
+    filterOptions: {}
+    gridData: []
+    enableColumnReordering: true
+    enableColumnResize: true
+    headerRowHeight: 28
+    rowHeight: 24
+    noTabInterference: true
+    rowTemplate:
+      '<div ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}">
+        <div class="ngVerticalBar ngVerticalBarVisible" ng-style="{height: rowHeight}">&nbsp;</div>
+        <div ng-cell></div>
+      </div>'
+    selectedItems: []
+    showColumnMenu: true
+    sortInfo: $storage.columnPrefs.sortInfo
+
   availableColumns =
     trackNumber:
       displayName: '#'
@@ -58,7 +77,7 @@ app.controller 'grid', ['$scope', '$timeout', '$storage', ($scope, $timeout, $st
       field: 'year'
 
   #set cellTemplate default for all columns:
-  _.forEach availableColumns, (col) ->
+  for key, col of availableColumns
     _.defaults col,
       cellTemplate:
         '<div class="ngCellText" ng-class="col.colIndex()" ng-dblclick="play(row.entity)">
@@ -73,32 +92,13 @@ app.controller 'grid', ['$scope', '$timeout', '$storage', ($scope, $timeout, $st
         </div>
         <div ng-show="col.resizable" class="ngHeaderGrip" ng-click="col.gripClick($event)" ng-mousedown="col.gripOnMouseDown($event)"></div>'
 
-  _.assign $scope.gridOptions,
-    columnDefs: []
-    data: 'gridOptions.gridData'
-    filterOptions: {}
-    gridData: []
-    enableColumnReordering: true
-    enableColumnResize: true
-    headerRowHeight: 28
-    rowHeight: 24
-    noTabInterference: true
-    rowTemplate:
-      '<div ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}">
-        <div class="ngVerticalBar ngVerticalBarVisible" ng-style="{height: rowHeight}">&nbsp;</div>
-        <div ng-cell></div>
-      </div>'
-    selectedItems: []
-    showColumnMenu: true
-    sortInfo: $storage.columnPrefs.sortInfo
-
   #set saved column visibility and order
-  _.forEach $storage.columnPrefs.order, (val, i) ->
+  for val, i in $storage.columnPrefs.order
     availableColumns[val].visible = $storage.columnPrefs.visibility[val]
     $scope.gridOptions.columnDefs[i] = availableColumns[val]
 
   #set saved column widths
-  _.forEach $storage.columnPrefs.widths, (val, key) ->
+  for key, val of $storage.columnPrefs.widths
     availableColumns[key].width = val
 
   $scope.toggleColVisibility = (col) ->
@@ -113,7 +113,7 @@ app.controller 'grid', ['$scope', '$timeout', '$storage', ($scope, $timeout, $st
 
   $scope.$on 'newColumnOrder', (e, columns) ->
     order = _.compact _.pluck columns, 'field'
-    _.forEach order, (val, i) ->
+    for val, i in order
       $scope.gridOptions.columnDefs[i] = availableColumns[val]
     $storage.columnPrefs.order = order
     $storage.save()
@@ -197,7 +197,7 @@ app.controller 'grid', ['$scope', '$timeout', '$storage', ($scope, $timeout, $st
     else
       range = _.range startIndex, endIndex - 1, -1
     $scope.gridOptions.selectAll false
-    _.forEach range, (n) ->
+    for n in range
       $scope.gridOptions.selectRow n, true
 
   $scope.selectRow = (e, track) ->
@@ -238,15 +238,13 @@ app.controller 'grid', ['$scope', '$timeout', '$storage', ($scope, $timeout, $st
   sortColumns = (e, fields) ->
     e = _.clone e
     e.shiftKey = true
-    _.forEach fields, (field) ->
+    for field in fields
       _.find($scope.columns, field: field).sort e
-      true
 
   $scope.customSort = (e, col, columns, toggleDirection) ->
     updatePlaylist = true
-    #remove sorted prop from all columns
-    _.forEach columns, (col) ->
-      delete col.isSorted
+    for column in columns
+      delete column.isSorted
     col.isSorted = true
     $scope.columns = columns
     e.shiftKey = false
