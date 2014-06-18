@@ -190,9 +190,8 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
         when 'desc' then 'asc'
         else 'desc'
       mainCol.sort()
-      _.forEach columns.slice(1), (col) ->
+      for col in columns.slice 1
         col.sort shiftKey: true
-        true
       $scope.gridOptions.ngGrid.sortColumnsInit()
 
     $scope.mainSocket = io.connect location.origin
