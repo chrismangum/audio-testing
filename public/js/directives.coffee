@@ -22,6 +22,7 @@ app.directive 'list', ($filter) ->
     $scope.options = $scope.$eval attrs.options
     canvasHeight = 0
     scrollBuffer = 70
+    canvasTop = 0
 
     selectAdjacentListItem = (direction) ->
       if $scope.params.group
@@ -56,13 +57,17 @@ app.directive 'list', ($filter) ->
 
     class Row
       constructor: (@entity, @top) ->
+        @calcVisibility()
 
-    $scope.updateRowVisibility = (canvasTop = el.scrollTop()) ->
-      _.forEach $scope.rows, (row, i) ->
+      calcVisibility: ->
         bufferTop = canvasTop - scrollBuffer
         bufferBottom = canvasTop + canvasHeight + scrollBuffer
-        row.visible = bufferTop < row.top < bufferBottom
-        true
+        @visible = bufferTop < @top < bufferBottom
+
+    $scope.updateRowVisibility = ->
+      canvasTop = el.scrollTop()
+      for row in $scope.rows
+        row.calcVisibility()
 
     calcCanvasHeight = ->
       canvasHeight = $(window).height() - 101
@@ -77,7 +82,6 @@ app.directive 'list', ($filter) ->
       $ul.height rowHeight * dataset.length
       $scope.rows = _.map dataset, (item, i) ->
         new Row item, i * rowHeight
-      $scope.updateRowVisibility()
 
     $scope.$watch $scope.options.data, (n, o) ->
       if n
@@ -86,10 +90,10 @@ app.directive 'list', ($filter) ->
         scrollListToItem $scope.selectedItems[$scope.params.group[0...-1]]
 
     el.on 'scroll', (e) ->
-      $scope.updateRowVisibility e.target.scrollTop
+      $scope.updateRowVisibility()
       $scope.safeApply()
 
-    $(window).on 'resize', ->
+    windowResize = ->
       calcCanvasHeight()
       $scope.updateRowVisibility()
 
@@ -107,8 +111,10 @@ app.directive 'list', ($filter) ->
               $scope.safeApply()
             false
 
+    $(window).on 'resize', windowResize
     $(document).on 'keydown', arrowKeys
     $scope.$on '$destroy', ->
+      $(window).off 'resize', windowResize
       $(document).off 'keydown', arrowKeys
 
 app.directive 'volumeSlider', ($storage) ->
