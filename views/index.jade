@@ -42,10 +42,10 @@ html
                   input(type="text", ng-model="playlist.name")
                   span.icon-close(ng-click="deletePlaylist(playlist)")
             li
-              a.sidebar-link(ng-class="{'add-playlist': !newMode}", ng-click="newMode = true")
+              a.sidebar-link(ng-class="{'add-playlist': !newMode, error: forms.newPlaylist.$invalid}", ng-click="newMode = true")
                 span.icon-playlist
                 div.sidebar-link-name(ng-if="!newMode") New Playlist
-                form(ng-if="newMode", ng-submit="addPlaylist()")
+                form(ng-if="newMode", name="forms.newPlaylist" ng-submit="addPlaylist()")
                   input(ng-model="formFields.playlistName", focus-me="newMode" placeholder="New Playlist", ng-focus="data.searchFocus = true", ng-blur="addPlaylist()")
         .now-playing-container(ng-class="{isPlaying: !!data.nowPlaying}")
           .now-playing-artwork.now-playing-artwork-large(ng-class="{'hide-artwork': artworkSize == 'small'}")

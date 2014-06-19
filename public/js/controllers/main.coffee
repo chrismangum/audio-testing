@@ -16,16 +16,24 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
       focusedPane: 'list'
       songToSelect: false
     $scope.formFields = {}
+    $scope.forms = {}
 
     $scope.addPlaylist = ->
-      if $scope.formFields.playlistName
-        $scope.data.playlists.push
-          name: $scope.formFields.playlistName
-          songs: []
-        $scope.data.playlists = _.sortBy $scope.data.playlists, (playlist) ->
-          playlist.name.toLowerCase()
-        $scope.mainSocket.emit 'updatePlaylists', $scope.data.playlists
-        $scope.formFields.playlistName = ''
+      name = $scope.formFields.playlistName
+      if name
+        playlists = $scope.data.playlists
+        unless _.find(playlists, name: name)
+          $scope.forms.newPlaylist.$setValidity "formFields.playlistName", true
+          playlists.push
+            name: name
+            songs: []
+          $scope.data.playlists = _.sortBy playlists, (playlist) ->
+            playlist.name.toLowerCase()
+          $scope.mainSocket.emit 'updatePlaylists', $scope.data.playlists
+          $scope.formFields.playlistName = ''
+        else
+          $scope.forms.newPlaylist.$setValidity "formFields.playlistName", false
+          return
       $scope.data.searchFocus = false
       $scope.newMode = false
 
