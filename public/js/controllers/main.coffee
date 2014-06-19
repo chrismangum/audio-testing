@@ -19,7 +19,6 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
 
     $scope.addPlaylist = ->
       if $scope.formFields.playlistName
-        $scope.newMode = false
         $scope.data.playlists.push
           name: $scope.formFields.playlistName
           songs: []
@@ -27,7 +26,8 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
           playlist.name.toLowerCase()
         $scope.mainSocket.emit 'updatePlaylists', $scope.data.playlists
         $scope.formFields.playlistName = ''
-        $scope.data.searchFocus = false
+      $scope.data.searchFocus = false
+      $scope.newMode = false
 
     $scope.deletePlaylist = (playlist) ->
       index = $scope.data.playlists.indexOf playlist
