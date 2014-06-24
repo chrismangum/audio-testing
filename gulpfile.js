@@ -81,9 +81,10 @@ gulp.task('nodemon', function () {
 gulp.task('watch', function () {
   gulp.watch(paths.clientJS, ['clientJS']);
   gulp.watch(paths.serverJS, ['serverJS']);
-  gulp.watch(paths.jade, ['jade']);
+  gulp.watch(paths.jade, ['views']);
   gulp.watch(paths.scss, ['css']);
   gulp.watch(paths.svg, ['css']);
 });
 
-gulp.task('default', ['clientJS', 'serverJS', 'jade', 'wiredep', 'css', 'watch', 'nodemon']);
+gulp.task('views', ['jade', 'wiredep']);
+gulp.task('default', ['clientJS', 'serverJS', 'views', 'css', 'watch', 'nodemon']);
