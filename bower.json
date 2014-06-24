@@ -13,6 +13,11 @@
     "test",
     "tests"
   ],
+  "overrides": {
+    "classval": {
+      "main": "jquery.classval.js"
+    }
+  },
   "dependencies": {
     "jquery": "~2.1.0",
     "angular": "~1.2.16",

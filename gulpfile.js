@@ -1,5 +1,6 @@
 var gulp = require('gulp'),
-    plugin = require('gulp-load-plugins')({camelize:true});
+    plugin = require('gulp-load-plugins')({camelize:true}),
+    wiredep = require('wiredep').stream;
 
 var paths = {
   clientJS: 'public/js/**/*.coffee',
@@ -55,6 +56,20 @@ gulp.task('jade', function () {
     .pipe(gulp.dest('public/'));
 });
 
+gulp.task('wiredep', function () {
+  gulp.src('./public/index.html')
+    .pipe(wiredep({
+      fileTypes: {
+        html: {
+          replace: {
+            js: '<script src="/static/{{filePath}}"></script>'
+          }
+        }
+      }
+    }))
+    .pipe(gulp.dest('./public'));
+});
+
 gulp.task('nodemon', function () {
   plugin.nodemon({
     script: 'server/app.js',
@@ -71,4 +86,4 @@ gulp.task('watch', function () {
   gulp.watch(paths.svg, ['css']);
 });
 
-gulp.task('default', ['clientJS', 'serverJS', 'jade', 'css', 'watch', 'nodemon']);
+gulp.task('default', ['clientJS', 'serverJS', 'jade', 'wiredep', 'css', 'watch', 'nodemon']);

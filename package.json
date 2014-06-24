@@ -33,6 +33,7 @@
     "lodash": "^2.4.1",
     "readline": "0.0.3",
     "socket.io": "^1.0.3",
-    "speaker": "~0.0.10"
+    "speaker": "~0.0.10",
+    "wiredep": "^1.8.1"
   }
 }
