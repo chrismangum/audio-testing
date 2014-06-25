@@ -7,7 +7,8 @@ var paths = {
   serverJS: 'server/*.coffee',
   jade: 'views/*.jade',
   scss: ['public/css/**/*.scss', '!public/css/_icon-font.scss'],
-  svg: 'public/svg/*.svg'
+  svg: 'public/svg/*.svg',
+  index: 'public/index.html'
 };
 
 gulp.task('clientJS', function () {
@@ -57,7 +58,7 @@ gulp.task('jade', function () {
 });
 
 gulp.task('wiredep', function () {
-  gulp.src('./public/index.html')
+  gulp.src(paths.index)
     .pipe(wiredep({
       fileTypes: {
         html: {
@@ -81,10 +82,10 @@ gulp.task('nodemon', function () {
 gulp.task('watch', function () {
   gulp.watch(paths.clientJS, ['clientJS']);
   gulp.watch(paths.serverJS, ['serverJS']);
-  gulp.watch(paths.jade, ['views']);
+  gulp.watch(paths.jade, ['jade']);
+  gulp.watch(paths.index, ['wiredep']);
   gulp.watch(paths.scss, ['css']);
   gulp.watch(paths.svg, ['css']);
 });
 
-gulp.task('views', ['jade', 'wiredep']);
-gulp.task('default', ['clientJS', 'serverJS', 'views', 'css', 'watch', 'nodemon']);
+gulp.task('default', ['clientJS', 'serverJS', 'jade', 'css', 'watch', 'nodemon']);
