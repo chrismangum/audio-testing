@@ -1,6 +1,8 @@
 var gulp = require('gulp'),
-    plugin = require('gulp-load-plugins')({camelize:true}),
-    wiredep = require('wiredep').stream;
+  plugin = require('gulp-load-plugins')({
+    camelize: true
+  }),
+  wiredep = require('wiredep').stream;
 
 var paths = {
   clientJS: 'public/js/**/*.coffee',
@@ -21,7 +23,6 @@ gulp.task('clientJS', function () {
 gulp.task('serverJS', function () {
   gulp.src(paths.serverJS)
     .pipe(plugin.coffee())
-    //.pipe(plugin.concat('app.js'))
     .pipe(gulp.dest('server'));
 });
 
