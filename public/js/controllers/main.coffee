@@ -138,11 +138,17 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
         @name = @songs[0].artist
         @coverArtURL = @songs[0].coverArtURL or false
         if @songs.length > 1
-          @albums = _.map _.groupBy(@songs, 'album'), (songs, albumName) ->
+          @albums = for songs in _.groupBy @songs, 'album'
             new Album songs
         else
           @albums = [new Album @songs]
         $scope.data.artists.push @
+
+      checkAlbum: (track) ->
+        if album = _.find @albums, {name: track.album}
+          album.songs.push track
+        else
+          @albums.push new Album [track]
 
     class Album
       constructor: (@songs) ->
@@ -156,33 +162,29 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
         @name = @songs[0].genre
         $scope.data.genres.push @
 
-    checkAlbum = (artist, track) ->
-      unless album = _.find artist.albums, {name: track.album}
-        artist.albums.push new Album [track]
-      else
-        album.songs.push track
-
     checkArtist = (track) ->
-      unless artist = _.find $scope.data.artists, {name: track.artist}
-        new Artist [track]
-      else
+      if artist = _.find $scope.data.artists, {name: track.artist}
         artist.songs.push track
-        checkAlbum artist, track
+        artist.checkAlbum track
+      else
+        new Artist [track]
 
     checkGenre = (track) ->
-      unless genre = _.find $scope.data.genres, {name: track.genre}
-        new Genre [track]
-      else
+      if genre = _.find $scope.data.genres, {name: track.genre}
         genre.songs.push track
+      else
+        new Genre [track]
+
+    groupBy = (data, groupBy) ->
+      _.omit _.groupBy(data, groupBy), 'undefined'
 
     parseData = (data) ->
       $scope.data.songs = _.values data.tracks
-      _.each _.groupBy($scope.data.songs, 'artist'), (songs, artistName) ->
-        if artistName isnt "undefined"
-          new Artist songs
-      _.each _.groupBy($scope.data.songs, 'genre'), (songs, genreName) ->
-        if genreName isnt "undefined"
-          new Genre songs
+      for artistName, songs of groupBy $scope.data.songs, 'artist'
+        new Artist songs
+      for genreName, songs of groupBy $scope.data.songs, 'genre'
+        new Genre songs
+      return
 
     $scope.sortViewData = ->
       if $scope.params.group
