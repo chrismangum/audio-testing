@@ -176,13 +176,14 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
         new Genre [track]
 
     groupBy = (data, groupBy) ->
-      _.omit _.groupBy(data, groupBy), 'undefined'
+      grouped = _.groupBy data, groupBy
+      (items for key, items of grouped when key isnt 'undefined')
 
     parseData = (data) ->
-      $scope.data.songs = _.values data.tracks
-      for artistName, songs of groupBy $scope.data.songs, 'artist'
+      $scope.data.songs = (track for key, track of data.tracks)
+      for songs in groupBy $scope.data.songs, 'artist'
         new Artist songs
-      for genreName, songs of groupBy $scope.data.songs, 'genre'
+      for songs in groupBy $scope.data.songs, 'genre'
         new Genre songs
       return
 

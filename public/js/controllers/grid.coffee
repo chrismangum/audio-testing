@@ -112,10 +112,9 @@ app.controller 'grid', ['$scope', '$timeout', '$storage', ($scope, $timeout, $st
     $storage.save()
 
   $scope.$on 'newColumnOrder', (e, columns) ->
-    order = _.compact _.pluck columns, 'field'
-    for val, i in order
-      $scope.gridOptions.columnDefs[i] = availableColumns[val]
-    $storage.columnPrefs.order = order
+    $storage.columnPrefs.order = for column, i in columns
+      $scope.gridOptions.columnDefs[i] = availableColumns[column.field]
+      column.field
     $storage.save()
 
 
@@ -172,7 +171,7 @@ app.controller 'grid', ['$scope', '$timeout', '$storage', ($scope, $timeout, $st
     scrollToIndex index
 
   selectOneToggle = (track) ->
-    selected = _.contains $scope.gridOptions.selectedItems, track
+    selected = track in $scope.gridOptions.selectedItems
     $scope.gridOptions.selectRow getTrackPosition(track), not selected
 
   getTrackAtPosition = (index) ->
