@@ -22,7 +22,7 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
       name = $scope.formFields.playlistName
       if name
         playlists = $scope.data.playlists
-        unless _.find(playlists, name: name)
+        unless _.find playlists, {name: name}
           $scope.forms.newPlaylist.$setValidity "formFields.playlistName", true
           playlists.push
             name: name
