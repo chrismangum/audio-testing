@@ -138,7 +138,7 @@ app.controller 'main', ['$scope', '$routeParams', '$timeout', '$filter', '$modal
         @name = @songs[0].artist
         @coverArtURL = @songs[0].coverArtURL or false
         if @songs.length > 1
-          @albums = for songs in _.groupBy @songs, 'album'
+          @albums = for songs in groupBy @songs, 'album'
             new Album songs
         else
           @albums = [new Album @songs]
