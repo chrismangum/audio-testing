@@ -121,15 +121,11 @@ app.controller 'grid', ['$scope', '$timeout', '$storage', ($scope, $timeout, $st
   ### Grid Selection ###
   $scope.selectIndex = (index) ->
     selectOne index
-    setTimeout (->
-      scrollToIndex index
-    ), 1
+    _.defer scrollToIndex, index
 
   $scope.selectTrack = (track) ->
     selectOne track
-    setTimeout (->
-      scrollToTrack track
-    ), 1
+    _.defer scrollToTrack, track
 
   selectOne = (track) ->
     if track?
